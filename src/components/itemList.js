@@ -2,8 +2,74 @@ import React, { Component } from 'react';
 import '../style/itemList.css';
 import lightstar from '../Icon Simplestore/star.png';
 import darkstar from '../Icon Simplestore/star (1).png';
-
 import Addbasket from '../Icon Simplestore/Asset.png';
+
+
+function Rate(props){
+    if(props.rating === 0){
+        return(
+            <React.Fragment>
+            <img src={lightstar} />
+            <img src={lightstar} />
+            <img src={lightstar} />
+            <img src={lightstar} /> 
+            <img src={lightstar} /> 
+            </React.Fragment>
+        )
+    }else if(props.rating === 1){
+        return(
+            <React.Fragment>
+            <img src={darkstar} />
+            <img src={lightstar} />
+            <img src={lightstar} />
+            <img src={lightstar} /> 
+            <img src={lightstar} /> 
+            </React.Fragment>
+        )
+    }else if(props.rating === 2){
+        return(
+            <React.Fragment>
+            <img src={darkstar} />
+            <img src={darkstar} />
+            <img src={lightstar} />
+            <img src={lightstar} /> 
+            <img src={lightstar} /> 
+            </React.Fragment>
+        )
+    }else if(props.rating === 3){
+        return(
+            <React.Fragment>
+            <img src={darkstar} />
+            <img src={darkstar} />
+            <img src={darkstar} />
+            <img src={lightstar} /> 
+            <img src={lightstar} /> 
+            </React.Fragment>
+        )
+    }else if(props.rating === 4){
+        return(
+        <React.Fragment>
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} /> 
+        <img src={lightstar} /> 
+        </React.Fragment>
+        )
+    }else{
+        return(
+        <React.Fragment>
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} /> 
+        <img src={darkstar} /> 
+        </React.Fragment>
+        )
+    }
+    
+}
+
 class ItemList extends  Component{
 constructor(){
     super();
@@ -30,57 +96,7 @@ componentDidMount(){
 }
 
 render(){
-//     let rating;
-//     if(item.rate == 0){
-//         rating =(
-//         <div className="rate">
-//           <img src={lightstar} />
-//           <img src={lightstar} />
-//           <img src={lightstar} />
-//           <img src={lightstar} />
-//       </div>
-//         )
-//    }
-//    else if(item.rate == 1){
-//     rating =(
-//     <div className="rate">
-//       <img src={darkstar} />
-//       <img src={lightstar} />
-//       <img src={lightstar} />
-//       <img src={lightstar} />
-//   </div>
-//     )
-// }
-//    else if(item.rate == 2){
-//     rating =(
-//     <div className="rate">
-//       <img src={darkstar} />
-//       <img src={darkstar} />
-//       <img src={lightstar} />
-//       <img src={lightstar} />
-//   </div>
-//     )
-// }
-//     else if(item.rate == 3){
-//         rating =(
-//         <div className="rate">
-//           <img src={darkstar} />
-//           <img src={darkstar} />
-//           <img src={darkstar} />
-//           <img src={lightstar} />
-//       </div>
-//         )
-//    }
-//    else {
-//     rating =(
-//         <div className="rate">
-//           <img src={darkstar} />
-//           <img src={darkstar} />
-//           <img src={darkstar} />
-//           <img src={darkstar} />
-//       </div>
-//         )
-//    }
+
 
     return(
 
@@ -101,7 +117,9 @@ render(){
                     <p>{item.title}</p>
                     <p>{item.price}</p>
                    
-                      
+                     <div className="rate">
+                         <Rate rating={item.rate} />
+                     </div>  
                          
                 </div>
             </div>
