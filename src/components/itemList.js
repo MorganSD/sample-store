@@ -1,73 +1,20 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import '../style/itemList.css';
 import lightstar from '../Icon Simplestore/star.png';
 import darkstar from '../Icon Simplestore/star (1).png';
 import Addbasket from '../Icon Simplestore/Asset.png';
+import noPhoto from '../Icon Simplestore/noPhoto.png';
+import Rate from './rate';
 
-
-function Rate(props){
-    if(props.rating === 0){
-        return(
-            <React.Fragment>
-            <img src={lightstar} />
-            <img src={lightstar} />
-            <img src={lightstar} />
-            <img src={lightstar} /> 
-            <img src={lightstar} /> 
-            </React.Fragment>
-        )
-    }else if(props.rating === 1){
-        return(
-            <React.Fragment>
-            <img src={darkstar} />
-            <img src={lightstar} />
-            <img src={lightstar} />
-            <img src={lightstar} /> 
-            <img src={lightstar} /> 
-            </React.Fragment>
-        )
-    }else if(props.rating === 2){
-        return(
-            <React.Fragment>
-            <img src={darkstar} />
-            <img src={darkstar} />
-            <img src={lightstar} />
-            <img src={lightstar} /> 
-            <img src={lightstar} /> 
-            </React.Fragment>
-        )
-    }else if(props.rating === 3){
-        return(
-            <React.Fragment>
-            <img src={darkstar} />
-            <img src={darkstar} />
-            <img src={darkstar} />
-            <img src={lightstar} /> 
-            <img src={lightstar} /> 
-            </React.Fragment>
-        )
-    }else if(props.rating === 4){
-        return(
-        <React.Fragment>
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} /> 
-        <img src={lightstar} /> 
-        </React.Fragment>
-        )
+function Thumbnail(props){
+    if(props.thumbnail != null){
+        return <img src={props.thumbnail} />
     }else{
         return(
-        <React.Fragment>
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} /> 
-        <img src={darkstar} /> 
-        </React.Fragment>
+            <img src={noPhoto} />
         )
     }
-    
 }
 
 class ItemList extends  Component{
@@ -104,21 +51,27 @@ render(){
             {this.state.items ? (
             this.state.items.map(item => (
             <div className="itemBox">
+                
                 <figure>
-                    <img src={item.thumbnail}/>
+                    <Link to={`/item/${item.address}`}>
+                        <Thumbnail thumbnail={item.thumbnail} />
+                     </Link>
                     <figcaption>
                         <span>
                             <img src={Addbasket}/>  
                             افزودن به سبد خرید
                         </span> 
                     </figcaption>
+                   
                 </figure>
+              
+               
                 <div className="item-summery">
                     <p>{item.title}</p>
-                    <p>{item.price}</p>
+                    <p>{item.price} تومان</p>
                    
                      <div className="rate">
-                         <Rate rating={item.rate} />
+                         <Rate product={item} />
                      </div>  
                          
                 </div>

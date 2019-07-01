@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
 import Header from './components/header';
@@ -8,20 +9,14 @@ import './style/responsive.css';
 
 class App extends Component {
   render () {
-    const headerApi = {
-      headers :{
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'x-api-key': '0f855b9c2f5ee2a21e530bcaa82a645286724fba',
-        accept: 'application/json',
-        'x-store-sub-address':'sib'
-        }}
 
-    
     return(
     <React.Fragment>
+      <Router basename={process.env.PUBLIC_URL}>
         <Header />
-        <Home />
-        {/* <Detail />  */}
+        <Route exact path="/" component={Home} />
+        <Route path="/item/:address" component={Detail} />
+      </Router>
     </React.Fragment>
   )
   }

@@ -1,0 +1,91 @@
+
+#detail{
+    /* border: 1px solid red; */
+    width: 80%;
+    margin-right: 10%;
+    min-height: 400px;
+    height: auto;
+    margin-top: 60px;
+}
+
+#detail .logo{
+    width: 350px;
+    height: 100px;
+    border: 1px solid red;
+    float: right;
+    line-height: 100px;
+
+}
+.breadcrumb{
+    width: calc(100% - 350px);
+    height: 100px;
+    /* border: 1px solid red; */
+    float: left;
+    padding-right: 35px;
+  
+    
+}
+ .breadcrumb>li{
+    float:right;
+    margin: 0 10px;
+    font-size: 14px;
+    color: grey;
+    width: auto;
+    height: 100%;
+    /* border: 1px solid red; */
+    line-height: 100px;
+    position: relative;
+}
+
+.breadcrumb>li>img{
+    height: 15px;
+    transform: rotate(180deg);
+    position: absolute;
+    top: 42%;
+    right: -15px;
+}
+.breadcrumb a{
+    color:grey;
+}
+.breadcrumb>li:last-of-type>a{
+    color: blue;
+}
+.detailSummery{
+    width: 100%;
+    height: 500px;
+    /* height: auto; */
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    /* border: 1px solid yellow */
+}
+.detailSummery .itemPic{
+    width: 350px;
+    /* border: 1px solid red; */
+}
+.detailSummeryContent{
+    width: calc(100% - 350px);
+    border: 1px solid red;
+    padding: 30px 35px 40px 0;
+}
+.detailSummeryContent>h2{
+    float: right;
+    font-size: 22px;
+}
+.detailSummeryContent>.rate{
+    float: left;
+
+}
+.detailSummeryContent>.rate>img{
+    width: 17px;
+    float:right;
+    margin: 0 2px;
+    margin-top: 7px;
+}
+.detailSummeryContent>.rate>sup{
+    font-size: 12px;
+    float: right;
+   color: grey
+}

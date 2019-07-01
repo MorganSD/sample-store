@@ -1,0 +1,67 @@
+
+.sidebar{
+    width: 270px;
+    height: 100%;
+}
+.inputDN{
+    display: none;
+}
+.sidebar .logo{
+    width: 100%;
+    height: 70px;
+    border: 1px solid red
+}
+.catSideBar{
+    width: 100%;
+    min-height: 100px;
+
+}
+.catSideBar>li{
+    width: 100%;
+    min-height: 50px;
+ 
+}
+.catSideBar>li label{
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 5px;
+    border-bottom: 1px solid grey;
+    position: relative;
+    cursor: pointer;
+}
+.catSideBar>li label p{
+    float: right;
+    
+}
+.catSideBar>li label img{
+    float: left;
+    margin-top: 20px;
+    width: 13px;
+}
+.catSideBar>li .sidebar-cat-content{
+    display: block;
+    width: 100%;
+    height: 0;
+    background: rgba(173, 173, 173, 0.514);
+    padding: 0;
+    transition: .4s;
+    transform-origin: top;
+    overflow: hidden;
+    /* transform: scaleY(0) */
+}
+.catSideBar>li .sidebar-cat-content>li{
+    padding: 0 20px 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.catBranches>input:checked + label>img{
+    transform: rotate(180deg)
+}
+.catBranches>input:checked ~ .sidebar-cat-content{
+    /* transform: scaleY(1) */
+    padding: 10px 0;
+    height: auto;
+}

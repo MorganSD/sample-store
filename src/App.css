@@ -5,6 +5,26 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+@font-face{
+  font-family :'iranyekan';
+    src:
+     /* url('./fonts/iranyekanwebbold.eot') format('eot'),  
+     url('./fonts/iranyekanwebbold.woff') format('woff'),
+     url('./fonts/iranyekanwebbold.ttf') format('truetype'), */
+     /* url('./fonts/iranyekanweblight.eot') format('eot'),  
+     url('./fonts/iranyekanweblight.woff') format('woff'),
+     url('./fonts/iranyekanweblight.ttf') format('truetype'), */
+     url('./fonts/iranyekanwebregular.eot') format('eot'),  
+     url('./fonts/iranyekanwebregular.woff') format('woff'),
+     url('./fonts/iranyekanwebregular.ttf') format('truetype');
+font-style:normal;
+font-weight:normal;
+/* font-style:bold;
+font-weight:bold;
+font-style:lighter;
+font-weight:lighter;  */
+  
+}
 body{
   font-size: 100%;
   direction: rtl;
