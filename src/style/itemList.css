@@ -85,8 +85,8 @@
     font-size: 14px;
     
 }
-.itemBox> .item-summery p{
-  
+.itemBox> .item-summery p>a{
+  color: black;
 }
 .itemBox> .item-summery .rate{
     width: 100%;

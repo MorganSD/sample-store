@@ -67,7 +67,7 @@ render(){
               
                
                 <div className="item-summery">
-                    <p>{item.title}</p>
+                    <p><Link to={`/item/${item.address}`}>{item.title}</Link></p>
                     <p>{item.price} تومان</p>
                    
                      <div className="rate">

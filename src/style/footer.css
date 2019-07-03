@@ -1,0 +1,32 @@
+.footer{
+    width: 95%;
+    margin-right: 2.5%;
+    min-height: 100px;
+    border-top: 1px solid black;
+    margin-top: 100px;
+}
+.footer>li{
+    float: left;
+    font-size: 13px;
+    color: grey;
+    padding: 0 10px;
+    line-height: 100px;
+    position: relative;
+}
+.footer>li:nth-of-type(1){
+    float: right;
+    color: black;
+    line-height: normal;
+    padding: 20px 10px;
+}
+.footer>li>img{
+    /* position: absolute; */
+    width: 30px;
+    margin: 7px 10px;
+    float: right;
+    /* top:0;
+    right: 0; */
+}
+.footer>li>p{
+    float: left;
+}

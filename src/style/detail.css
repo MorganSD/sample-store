@@ -10,17 +10,25 @@
 
 #detail .logo{
     width: 350px;
-    height: 100px;
-    border: 1px solid red;
+    height: 130px;
+    /* border: 1px solid red; */
     float: right;
     line-height: 100px;
 
 }
+#detail .logo>img{
+    width: 190px;
+    float: right;
+    margin-top: 20px;
+}
+#detail .logo>p{
+    float: right;
+}
 .breadcrumb{
-    width: calc(100% - 350px);
+    width: auto;
     height: 100px;
     /* border: 1px solid red; */
-    float: left;
+    float: right;
     padding-right: 35px;
   
     
@@ -67,7 +75,7 @@
 }
 .detailSummeryContent{
     width: calc(100% - 350px);
-    border: 1px solid red;
+    /* border: 1px solid red; */
     padding: 30px 35px 40px 0;
 }
 .detailSummeryContent>h2{
@@ -88,4 +96,92 @@
     font-size: 12px;
     float: right;
    color: grey
+}
+.detailSummeryContent>div{
+    width: 100%;
+    min-height: 100px;
+    /* border: 1px solid red; */
+    margin-top: 100px
+}
+.detailSummeryContent>div>p:last-of-type{
+    font-size: 14px;
+    color: grey;
+    text-align: justify
+}
+.detialGeneral{
+    width: 100%;
+    min-height: 200px;
+    height: auto;
+    /* border: 1px solid red; */
+    margin-top: 50px;
+}
+.detialGeneral>ul{
+    width: 100%;
+    height: 70px;
+    /* border: 1px solid red; */
+}
+.detialGeneral>ul>li{
+    width: auto;
+    height: 100%;
+    float: right;
+    line-height: 70px;
+    font-size: 20px;
+    margin-left: 30px;
+}
+.detialGeneral>ul>li>a{
+    color: black
+}
+.detialGeneral>div{
+    width: 100%;
+    min-height: 100px;
+    height: auto;
+    margin-top: 30px;
+    /* border: 1px solid black; */
+}
+.detialGeneral>div>table{
+    width: 100%;
+    border: 1px solid  rgb(184, 184, 184);;
+    border-collapse:collapse;
+}
+.detialGeneral>div>table>tbody{
+    width: 100%;
+    
+}
+.detialGeneral>div>table td{
+    width: auto;
+    border-bottom: 1px solid  rgb(184, 184, 184);
+}
+.detialGeneral>div>table td:nth-of-type(even){
+    border-right:1px solid  rgb(184, 184, 184);;
+    width: 80%;
+    padding: 10px 20px;
+
+}
+.detialGeneral>div>table td:nth-of-type(odd){
+    width: 20%;
+    text-align: center; 
+}
+.detialGeneral>div>table tr:nth-of-type(even){
+background: rgb(184, 184, 184);
+
+}
+.detialGeneral>div>table tr{
+    min-height: 40px;
+}
+.basket-btn{
+    display: block;
+    width: 300px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background: #1F2C32;
+    color: white;
+    font-size: 16px;
+    line-height: 50px;
+    margin: 40px 0 20px;
+    cursor: pointer;
+}
+.basket-btn img{
+    width: 22px;
+    margin-left: 5px;
 }
