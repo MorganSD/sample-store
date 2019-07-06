@@ -1,4 +1,6 @@
 
+
+
 #detail{
     /* border: 1px solid red; */
     width: 80%;
@@ -16,12 +18,18 @@
     line-height: 100px;
 
 }
-#detail .logo>img{
+#detail .logo>a{
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+#detail .logo>a>img{
     width: 190px;
     float: right;
     margin-top: 20px;
+    cursor: pointer;
 }
-#detail .logo>p{
+#detail .logo>a>p{
     float: right;
 }
 .breadcrumb{
@@ -52,6 +60,7 @@
     top: 42%;
     right: -15px;
 }
+
 .breadcrumb a{
     color:grey;
 }
@@ -131,41 +140,35 @@
 .detialGeneral>ul>li>a{
     color: black
 }
-.detialGeneral>div{
-    width: 100%;
-    min-height: 100px;
-    height: auto;
-    margin-top: 30px;
-    /* border: 1px solid black; */
-}
-.detialGeneral>div>table{
+
+.react-tabs table{
     width: 100%;
     border: 1px solid  rgb(184, 184, 184);;
     border-collapse:collapse;
 }
-.detialGeneral>div>table>tbody{
+.react-tabs table>tbody{
     width: 100%;
     
 }
-.detialGeneral>div>table td{
+.react-tabs table td{
     width: auto;
     border-bottom: 1px solid  rgb(184, 184, 184);
 }
-.detialGeneral>div>table td:nth-of-type(even){
+.react-tabs table td:nth-of-type(even){
     border-right:1px solid  rgb(184, 184, 184);;
     width: 80%;
     padding: 10px 20px;
 
 }
-.detialGeneral>div>table td:nth-of-type(odd){
+.react-tabs table td:nth-of-type(odd){
     width: 20%;
     text-align: center; 
 }
-.detialGeneral>div>table tr:nth-of-type(even){
+.react-tabs table tr:nth-of-type(even){
 background: rgb(184, 184, 184);
 
 }
-.detialGeneral>div>table tr{
+.react-tabs table tr{
     min-height: 40px;
 }
 .basket-btn{
@@ -184,4 +187,67 @@ background: rgb(184, 184, 184);
 .basket-btn img{
     width: 22px;
     margin-left: 5px;
+}
+.comment-rate{
+    width: 100%;
+    min-height: 100px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+
+}
+.comment-rate>div:nth-of-type(1){
+    width: 70px;
+    height: 70px;
+    border: 1px solid red;
+    float: right;
+}
+.commnet-star{
+    width: 200px;
+    height: 50px;
+    border: 1px solid red;
+    float: right;
+}
+.commnet-star>img{
+    width: 15px;
+    margin-left: 2px;
+}
+.comment-box{
+    width: 100%;
+    min-height: 60px;
+    /* border: 1px solid red; */
+    padding:10px 0;
+    /* border-top:1px solid black; */
+    border-bottom: 1px solid #000;
+    margin: 20px 0;
+}
+
+.comment-box>img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid grey;
+    float: right;
+    margin-top: 10px;
+   
+}
+.comment-box>div{
+    width: calc(100% - 70px);
+    height: auto;
+    margin-right: 70px;
+    font-size: 14px;
+    
+}
+.comment-box>div>p{
+    color: gray;
+    margin-bottom: 10px;
+}
+.comment-box>div>p>span:nth-of-type(2){
+    float: left;
+}
+.related{
+    width: auto;
+    height: 300px;
+    border: 1px solid red;
+    margin-top: 40px;
+    overflow: hidden;
 }
