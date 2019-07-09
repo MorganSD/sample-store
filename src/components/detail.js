@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../style/detail.css";
 import breadcrumbIcon from "../Icon Simplestore/apple-keyboard-control-3.png";
-import Slider from "./itemImgSlider";
+import SliderImg from "./itemImgSlider";
 import Rate from "./rate";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Addbasket from "../Icon Simplestore/Asset-white.png";
@@ -9,10 +9,44 @@ import formaloo from "../Icon Simplestore/formaloo-01.png";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "../style/react-tabs.css";
 import noPhoto from "../Icon Simplestore/noPhoto.png";
+import lightstar from "../Icon Simplestore/star.png";
+import darkstar from "../Icon Simplestore/star (1).png";
+import halfStar from "../Icon Simplestore/Group 771.png";
 import "../style/itemList.css";
-import Thumbnail from '../components/itemList';
-import { Carousel } from 'react-responsive-carousel';
-
+// import Thumbnail from "../components/itemList";
+import Carousel from '../components/carousel';
+function Breadcrum(props) {
+  if (props.product.bread_crumb) {
+    if(props.product.bread_crumb.length === 0 ){
+      return null;
+    }else{
+      console.log("bread", props.product.bread_crumb.address);
+      if(props.product.bread_crumb.parent_category != null){
+        return (
+          <li>
+            <Link to={`/${props.product.bread_crumb.address}`}>
+              {props.product.bread_crumb.parent_category}
+            </Link>
+            <img src={breadcrumbIcon} />
+          </li>
+        );
+      }
+    
+      if (props.product.bread_crumb.title != null) {
+        return (
+          <li>
+            <a src="#">{props.product.bread_crumb.title}</a>
+            <img src={breadcrumbIcon} />
+          </li>
+        );
+      }
+    }
+    
+  }else{
+    return null;
+  }
+ 
+}
 
 function About(props) {
   if (props.about === null || props.about === "") {
@@ -22,101 +56,146 @@ function About(props) {
   }
 }
 function Technical(props) {
-  return (
-    <table>
-      <tbody>
-        {props.tech ? (
-          props.tech.map(data => (
-            <tr>
-              <td>{data.title}</td>
-              <td>{data.value}</td>
-            </tr>
-          ))
-        ) : (
-          <h3>مشخصاتی ثبت نشده است</h3>
-        )}
-      </tbody>
-    </table>
-  );
-}
-function Comment(props) {}
-
-
-
-// function Related(props) {
-  
-
-//     return (
-//       <Carousel>
-//          <section className="homeList">
-//             {props.product ? (
-//             props.product.map(item => (
-//             <div className="itemBox">
-                
-//                 <figure>
-//                     <Link to={`/item/${item.address}`}>
-//                         <Thumbnail thumbnail={item.thumbnail} />
-//                      </Link>
-//                     <figcaption>
-//                         <span>
-//                             <img src={Addbasket}/>  
-//                             افزودن به سبد خرید
-//                         </span> 
-//                     </figcaption>
-                   
-//                 </figure>
-              
-               
-//                 <div className="item-summery">
-//                     <p><Link to={`/item/${item.address}`}>{item.title}</Link></p>
-//                     <p>{item.price} تومان</p>
-                   
-//                      <div className="rate">
-//                          <Rate product={item} />
-//                      </div>  
-                         
-//                 </div>
-//             </div>
-//             ))
-// ):
-// <h1>not found</h1>
-// }
-           
-//         </section>
-
-
-//       </Carousel>
-//     );
-  
- 
-// }
-function Breadcrum(props) {
-  if (props.product.bread_crumb.parent_category != null) {
-    return (
-      <li>
-        <a src="#">{props.product.bread_crumb.parent_category}</a>
-      </li>
-    );
+  if (props.tech.data) {
+    if (props.tech.data.length === 0) {
+      return <p>مشخصاتی درباره این محصول ثبت نشده است</p>;
+    } else {
+      return (
+        <table>
+          <tbody>
+            {props.tech.data.map(data => (
+              <tr key={data.slug}>
+                <td>{data.title}</td>
+                <td>{data.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      );
+    }
+  } else {
+    return <p>مشخصاتی درباره این محصول ثبت نشده است</p>;
   }
-  if (props.product.bread_crumb.title != null) {
+}
+
+function CommentRate(props) {
+  if (props.product.rate >= 0 && props.product.rate < 1) {
     return (
-      <li>
-        <img src={breadcrumbIcon} />
-        <a src="#">{props.product.bread_crumb.title}</a>
-      </li>
+      <React.Fragment>
+        <p>از ۵ </p>
+        <img src={halfStar} />
+      </React.Fragment>
     );
+  } else if (props.product.rate >= 1 && props.product.rate < 2) {
+    return (
+      <React.Fragment>
+        <p>از ۵ </p>
+        <img src={darkstar} />
+      </React.Fragment>
+    );
+  } else if (props.product.rate >= 2 && props.product.rate < 3) {
+    return (
+      <React.Fragment>
+        <p>از ۵ </p>
+        <img src={darkstar} />
+        <img src={darkstar} />
+      </React.Fragment>
+    );
+  } else if (props.product.rate >= 3 && props.product.rate < 4) {
+    return (
+      <React.Fragment>
+        <span>از ۵ </span>
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+      </React.Fragment>
+    );
+  } else if (props.product.rate >= 4 && props.product.rate < 5) {
+    return (
+      <React.Fragment>
+        <p>از ۵ </p>
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+      </React.Fragment>
+    );
+  } else if (props.product.rate === 5) {
+    return (
+      <React.Fragment>
+        <p>از ۵ </p>
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+        <img src={darkstar} />
+      </React.Fragment>
+    );
+  } else {
+    return <span />;
+  }
+}
+
+
+function Related(props) {
+  if (props.related.related_products) {
+    let relatedProduct = props.related.related_products.length;
+    console.log("length", relatedProduct);
+    if (relatedProduct === 0) {
+      return null;
+    } else {
+      return (
+        <div className="related">
+          <Carousel product={props.related.related_products} />
+        </div>
+      );
+    }
+  } else {
+    return null;
+  }
+}
+
+function Comments(props) {
+  if (props.comment.answered_questions) {
+    if (props.comment.answered_questions.length === 0) {
+      return <p>نظری ثبت نشده است</p>;
+    } else {
+      return (
+        <>
+          {props.comment.answered_questions.map(comment => (
+            <div className="comment-box">
+              <img src={noPhoto} />
+              <div>
+                <p>
+                  <span>نام و نام خانوادگی</span>
+                  <span>rate</span>
+                </p>
+
+                <div>
+                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
+                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
+                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
+                  کاربردی می باشد.
+                </div>
+              </div>
+            </div>
+          ))}
+        </>
+      );
+    }
   }
 }
 class Detail extends Component {
   constructor() {
     super();
     this.state = {
-      // lists: [],
       product: []
     };
   }
   componentWillMount() {
     const { address } = this.props.match.params;
+    console.log(address);
     let lists = fetch(
       `http://api.projectant.aasoo.ir/shelves/product/address/${address}`,
       {
@@ -133,35 +212,54 @@ class Detail extends Component {
         console.log(response.data.product);
         this.setState({
           product: response.data.product
-          // product: response.data.products.find(item => item.address === address)
         });
       });
   }
-
+componentDidUpdate(prevProps){
+  if(prevProps.match.params != this.props.match.params){
+    let {address} = this.props.match.params
+    let lists = fetch(
+      `http://api.projectant.aasoo.ir/shelves/product/address/${address}`,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "x-api-key": "0f855b9c2f5ee2a21e530bcaa82a645286724fba",
+          accept: "application/json",
+          "x-store-sub-address": "sib"
+        }
+      }
+    )
+      .then(response => response.json())
+      .then(response => {
+        console.log(response.data.product);
+        this.setState({
+          product: response.data.product
+        });
+      });
+  }
+}
   render() {
-    console.log(this.state.product);
-    return this.state.product ? (
+    // console.log(this.state.product);
+    return (
       <div id="detail">
         <div className="logo">
-          <Link to="/">
+          <Link to="/all">
             <img src={formaloo} />
             <p>فرم ساز آنلاین فرمالو</p>
           </Link>
         </div>
-        {this.state.product.categories ? (
+        
           <ol className="breadcrumb">
-            <Breadcrum product={this.state.product} />
+            {/* <Breadcrum product={this.state.product} /> */}
             <li>
               <img src={breadcrumbIcon} />
               <a src="#">{this.state.product.title}</a>
             </li>
           </ol>
-        ) : (
-          <h2 />
-        )}
+       
         <div className="detailSummery">
           <div className="itemPic">
-            <Slider />
+            <SliderImg />
           </div>
           <div className="detailSummeryContent">
             <h2>{this.state.product.title}</h2>
@@ -190,43 +288,25 @@ class Detail extends Component {
             <About about={this.state.product.description} />
           </TabPanel>
           <TabPanel>
-            <Technical tech={this.state.product.data} />
+            <Technical tech={this.state.product} />
           </TabPanel>
           <TabPanel>
-            {/* <Comment comment={this.state.product}  /> */}
             <div className="comment-rate">
-              <div>average</div>
-              <div className="commnet-star">
-                <Rate product={this.state.product} />
-                <p>{this.state.product.ratings_count}</p>
-              </div>
-            </div>
-            <div className="comment-box">
-              <img src={noPhoto} />
               <div>
-                <p>
-                  <span>نام و نام خانوادگی</span>
-                  <span>rate</span>
-                </p>
-
-                <div>
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
+                <div>{this.state.product.rate}</div>
+                <div className="commnet-star">
+                  <CommentRate product={this.state.product} />
+                  <p>{this.state.product.ratings_count} مشارکت کننده</p>
                 </div>
               </div>
+              <span className="submitComment">ثبت نظر</span>
             </div>
+            <Comments comment={this.state.product} />
           </TabPanel>
         </Tabs>
 
-       
-          {/* <Related product={this.state.product.related_products} /> */}
-        
+        <Related related={this.state.product} />
       </div>
-    ) : (
-      <h1 />
     );
   }
 }

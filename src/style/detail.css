@@ -1,253 +1,369 @@
-
-
-
-#detail{
-    /* border: 1px solid red; */
-    width: 80%;
-    margin-right: 10%;
-    min-height: 400px;
-    height: auto;
-    margin-top: 60px;
+#detail {
+  /* border: 1px solid red; */
+  width: 80%;
+  margin-right: 10%;
+  min-height: 400px;
+  height: auto;
+  margin-top: 60px;
 }
 
-#detail .logo{
-    width: 350px;
-    height: 130px;
-    /* border: 1px solid red; */
-    float: right;
-    line-height: 100px;
-
+#detail .logo {
+  width: 350px;
+  height: 130px;
+  /* border: 1px solid red; */
+  float: right;
+  line-height: 100px;
 }
-#detail .logo>a{
-    width: 100%;
-    height: 100%;
-    color: black;
+#detail .logo > a {
+  width: 100%;
+  height: 100%;
+  color: black;
 }
-#detail .logo>a>img{
-    width: 190px;
-    float: right;
-    margin-top: 20px;
-    cursor: pointer;
+#detail .logo > a > img {
+  width: 190px;
+  float: right;
+  margin-top: 20px;
+  cursor: pointer;
 }
-#detail .logo>a>p{
-    float: right;
+#detail .logo > a > p {
+  float: right;
 }
-.breadcrumb{
-    width: auto;
-    height: 100px;
-    /* border: 1px solid red; */
-    float: right;
-    padding-right: 35px;
-  
-    
+.breadcrumb {
+  width: auto;
+  height: 100px;
+  /* border: 1px solid red; */
+  float: right;
+  padding-right: 35px;
 }
- .breadcrumb>li{
-    float:right;
-    margin: 0 10px;
-    font-size: 14px;
-    color: grey;
-    width: auto;
-    height: 100%;
-    /* border: 1px solid red; */
-    line-height: 100px;
-    position: relative;
+.breadcrumb > li {
+  float: right;
+  margin: 0 10px;
+  font-size: 14px;
+  color: grey;
+  width: auto;
+  height: 100%;
+  /* border: 1px solid red; */
+  line-height: 100px;
+  position: relative;
 }
 
-.breadcrumb>li>img{
-    height: 15px;
-    transform: rotate(180deg);
-    position: absolute;
-    top: 42%;
-    right: -15px;
+.breadcrumb > li > img {
+  height: 15px;
+  transform: rotate(180deg);
+  position: absolute;
+  top: 42%;
+  left: -15px;
+}
+.breadcrumb > li:last-of-type > img {
+  display: none;
+}
+.breadcrumb a {
+  color: grey;
+}
+.breadcrumb > li:last-of-type > a {
+  color: blue;
+}
+.detailSummery {
+  width: 100%;
+  height: 500px;
+  /* height: auto; */
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  /* border: 1px solid yellow */
+}
+.detailSummery .itemPic {
+  width: 350px;
+  /* border: 1px solid red; */
+}
+.detailSummeryContent {
+  width: calc(100% - 350px);
+  /* border: 1px solid red; */
+  padding: 30px 35px 40px 0;
+}
+.detailSummeryContent > h2 {
+  float: right;
+  font-size: 22px;
+}
+.detailSummeryContent > .rate {
+  float: left;
+}
+.detailSummeryContent > .rate > img {
+  width: 17px;
+  float: right;
+  margin: 0 2px;
+  margin-top: 7px;
+}
+.detailSummeryContent > .rate > sup {
+  font-size: 12px;
+  float: right;
+  color: grey;
+}
+.detailSummeryContent > div {
+  width: 100%;
+  min-height: 100px;
+  /* border: 1px solid red; */
+  margin-top: 100px;
+}
+.detailSummeryContent > div > p:last-of-type {
+  font-size: 14px;
+  color: grey;
+  text-align: justify;
+}
+.detialGeneral {
+  width: 100%;
+  min-height: 200px;
+  height: auto;
+  /* border: 1px solid red; */
+  margin-top: 50px;
+}
+.detialGeneral > ul {
+  width: 100%;
+  height: 70px;
+  /* border: 1px solid red; */
+}
+.detialGeneral > ul > li {
+  width: auto;
+  height: 100%;
+  float: right;
+  line-height: 70px;
+  font-size: 20px;
+  margin-left: 30px;
+}
+.detialGeneral > ul > li > a {
+  color: black;
 }
 
-.breadcrumb a{
-    color:grey;
+.react-tabs table {
+  width: 100%;
+  border: 1px solid rgb(184, 184, 184);
+  border-collapse: collapse;
 }
-.breadcrumb>li:last-of-type>a{
-    color: blue;
+.react-tabs table > tbody {
+  width: 100%;
 }
-.detailSummery{
-    width: 100%;
-    height: 500px;
-    /* height: auto; */
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    /* border: 1px solid yellow */
+.react-tabs table td {
+  width: auto;
+  border-bottom: 1px solid rgb(184, 184, 184);
 }
-.detailSummery .itemPic{
-    width: 350px;
-    /* border: 1px solid red; */
+.react-tabs table td:nth-of-type(even) {
+  border-right: 1px solid rgb(184, 184, 184);
+  width: 80%;
+  padding: 10px 20px;
 }
-.detailSummeryContent{
-    width: calc(100% - 350px);
-    /* border: 1px solid red; */
-    padding: 30px 35px 40px 0;
+.react-tabs table td:nth-of-type(odd) {
+  width: 20%;
+  text-align: center;
 }
-.detailSummeryContent>h2{
-    float: right;
-    font-size: 22px;
+.react-tabs table tr:nth-of-type(even) {
+  background: rgb(184, 184, 184);
 }
-.detailSummeryContent>.rate{
-    float: left;
+.react-tabs table tr {
+  min-height: 40px;
+}
+.basket-btn {
+  display: block;
+  width: 300px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  background: #1f2c32;
+  color: white;
+  font-size: 16px;
+  line-height: 50px;
+  margin: 40px 0 20px;
+  cursor: pointer;
+}
+.basket-btn img {
+  width: 22px;
+  margin-left: 5px;
+}
+.comment-rate {
+  width: 100%;
+  min-height: 100px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 19px 0;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
 
 }
-.detailSummeryContent>.rate>img{
-    width: 17px;
-    float:right;
-    margin: 0 2px;
-    margin-top: 7px;
-}
-.detailSummeryContent>.rate>sup{
-    font-size: 12px;
-    float: right;
-   color: grey
-}
-.detailSummeryContent>div{
-    width: 100%;
-    min-height: 100px;
-    /* border: 1px solid red; */
-    margin-top: 100px
-}
-.detailSummeryContent>div>p:last-of-type{
-    font-size: 14px;
-    color: grey;
-    text-align: justify
-}
-.detialGeneral{
-    width: 100%;
-    min-height: 200px;
-    height: auto;
-    /* border: 1px solid red; */
-    margin-top: 50px;
-}
-.detialGeneral>ul{
-    width: 100%;
-    height: 70px;
-    /* border: 1px solid red; */
-}
-.detialGeneral>ul>li{
-    width: auto;
-    height: 100%;
-    float: right;
-    line-height: 70px;
-    font-size: 20px;
-    margin-left: 30px;
-}
-.detialGeneral>ul>li>a{
-    color: black
-}
-
-.react-tabs table{
-    width: 100%;
-    border: 1px solid  rgb(184, 184, 184);;
-    border-collapse:collapse;
-}
-.react-tabs table>tbody{
-    width: 100%;
-    
-}
-.react-tabs table td{
-    width: auto;
-    border-bottom: 1px solid  rgb(184, 184, 184);
-}
-.react-tabs table td:nth-of-type(even){
-    border-right:1px solid  rgb(184, 184, 184);;
-    width: 80%;
-    padding: 10px 20px;
-
-}
-.react-tabs table td:nth-of-type(odd){
-    width: 20%;
-    text-align: center; 
-}
-.react-tabs table tr:nth-of-type(even){
-background: rgb(184, 184, 184);
-
-}
-.react-tabs table tr{
-    min-height: 40px;
-}
-.basket-btn{
-    display: block;
-    width: 300px;
-    height: 50px;
-    border: none;
-    border-radius: 5px;
-    background: #1F2C32;
-    color: white;
-    font-size: 16px;
-    line-height: 50px;
-    margin: 40px 0 20px;
-    cursor: pointer;
-}
-.basket-btn img{
-    width: 22px;
+.comment-rate >div> div:nth-of-type(1) {
+  width: auto;
+  height: 70px;
+  /* border: 1px solid red; */
+  float: right;
+  font-size: 50px;
+    text-align: center;
+    line-height: 60px;
     margin-left: 5px;
 }
-.comment-rate{
-    width: 100%;
-    min-height: 100px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-
-}
-.comment-rate>div:nth-of-type(1){
-    width: 70px;
-    height: 70px;
-    border: 1px solid red;
-    float: right;
-}
-.commnet-star{
+.comment-rate  .submitComment{
+    display: block;
     width: 200px;
     height: 50px;
-    border: 1px solid red;
-    float: right;
-}
-.commnet-star>img{
-    width: 15px;
-    margin-left: 2px;
-}
-.comment-box{
-    width: 100%;
-    min-height: 60px;
+    background: #1F2C32;
     /* border: 1px solid red; */
-    padding:10px 0;
-    /* border-top:1px solid black; */
-    border-bottom: 1px solid #000;
-    margin: 20px 0;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    color: white;
+    cursor: pointer;
+    margin-top: 6px;
+}
+.commnet-star {
+  width: 200px;
+  height: 50px;
+  /* border: 1px solid red; */
+  float: right;
+}
+.commnet-star>p:nth-of-type(1){
+  float: right;
+  margin-left: 3px;
+}
+.commnet-star>span:first-child{
+font-size: 15px;
+color: grey;
+}
+.commnet-star > img {
+  width: 15px;
+  margin-left: 2px;
+}
+.comment-box {
+  width: 100%;
+  min-height: 60px;
+  /* border: 1px solid red; */
+  padding: 10px 0;
+  /* border-top:1px solid black; */
+  border-bottom: 1px solid #000;
+  margin: 20px 0;
 }
 
-.comment-box>img{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid grey;
-    float: right;
-    margin-top: 10px;
-   
+.comment-box > img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid grey;
+  float: right;
+  margin-top: 10px;
 }
-.comment-box>div{
-    width: calc(100% - 70px);
-    height: auto;
-    margin-right: 70px;
-    font-size: 14px;
-    
+.comment-box > div {
+  width: calc(100% - 70px);
+  height: auto;
+  margin-right: 70px;
+  font-size: 14px;
 }
-.comment-box>div>p{
-    color: gray;
-    margin-bottom: 10px;
+.comment-box > div > p {
+  color: gray;
+  margin-bottom: 10px;
 }
-.comment-box>div>p>span:nth-of-type(2){
-    float: left;
+.comment-box > div > p > span:nth-of-type(2) {
+  float: left;
 }
-.related{
-    width: auto;
-    height: 300px;
-    border: 1px solid red;
-    margin-top: 40px;
-    overflow: hidden;
+.related {
+  width: 100%;
+  height: 420px;
+  /* border: 1px solid red; */
+  margin-top: 60px;
+  position: relative;
+  /* overflow: hidden; */
+ 
 }
+.related>div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.related >div>p:first-child{
+  text-align: center;
+  font-size: 24px;
+  height: 70px;
+  
+}
+.related  .carousel{
+  height: calc(100% - 70px);
+  /* border: 1px solid black; */
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.related  .carousel>div{
+  width: 250px;
+  height: 100%;
+  /* border: 1px solid green; */
+  margin-left: 25px;
+  
+  
+}
+.related  .carousel>div:nth-of-type(4n){
+  margin-left: 0;
+}
+.related  .carousel>div>figure{
+  width: 100%;
+  height: 75%;
+  /* background: grey; */
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.related  .carousel>div>figure>a{
+display: block;
+  width: 100%;
+height: 100%;
+position: absolute;
+top: 0;
+right: 0;
+}
+.related  .carousel>div>figure>a>img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.related  .carousel>div>figure>figcaption{
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  bottom: 0;right: 0;
+  background:rgba(128, 128, 128, 0.548); 
+ line-height: 40px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  transform-origin: bottom;
+  transform: translateY(40px);
+  transition: .4s;
+}
+.related  .carousel>div>figure:hover>figcaption{
+  transform: translateY(0);
+}
+.related  .carouselArrow{
+  position: absolute;
+  width: 15px;
+  top: 50%;
+}
+.related  .carouselArrow:nth-of-type(1){
+  right: -40px;
+}
+.related .carouselArrow:nth-of-type(2){
+  left: -40px;
+  transform: rotate(180deg)
+}
+.related-Rate>img{
+  width: 15px;
+  margin-left: 2px;
+}
+
+
+
+/* @import "~slick-carousel/slick/slick.css"; */
+/* @import "~slick-carousel/slick/slick-theme.css"; */
