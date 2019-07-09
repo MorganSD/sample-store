@@ -13,6 +13,7 @@ header .userTool{
 header .userTool>li{
     width: auto;
     height: 100%;
+    cursor: pointer;
     /* border: 1px solid red */
 }
 header .userTool>li:first-child{
@@ -112,4 +113,116 @@ header .userTool>li:nth-of-type(3)::after{
 }
 .categoryList>li:hover::before{
     transform: scaleX(1)
+}
+.searchList{
+    min-width: 200px;
+    height: auto;
+    /* border: 1px solid red; */
+    /* margin-top: 10px; */
+    background: rgb(187, 187, 187);
+    position: absolute;
+    right: 2.5%;
+    top: 50px;
+    z-index: 2;
+}
+.searchList>li{
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    border-bottom: 1px solid rgb(99, 98, 98);
+}
+.searchList>li>a{
+    font-size: 14px;
+    color: black
+}
+
+.popUps{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: rgba(128, 128, 128, 0.664);
+    z-index: 4;
+}
+.popUps>img:nth-of-type(1){
+    width: 18px;
+    position: absolute;
+    top: 160px;
+    right: calc(50% - 194px);
+    cursor: pointer;
+}
+.login-box{
+    width: 400px;
+    min-height: 300px;
+    margin: 150px auto;
+    background: white;
+    padding: 10px 0;
+    border-radius: 5px
+}
+.login-box>p:nth-of-type(1){
+    text-align: center;
+    padding-bottom: 10px;
+    width: 100%;
+    border-bottom: 1px solid rgb(201, 201, 201);
+}
+.login-box>form{
+    width: 100%;
+    min-height: 200px;
+    border-bottom: 1px solid #000;
+    padding: 10px 10px 0;
+}
+.login-box>form>label{
+   display: block;
+}
+.login-box>form>input{
+width: 100%;
+height: 35px;
+outline: none;
+border: 1px solid rgb(182, 181, 181);
+border-radius: 5px;
+margin: 10px 0 5px;
+font-size: 15px;
+direction: ltr;
+padding: 0 8px
+}
+.login-box>form>input::placeholder{
+    direction: rtl;
+}
+.login-box>form>a{
+    float: left;
+    font-size: 12px;
+    color: #1F2C32
+}
+.login-box>form>button:nth-of-type(1){
+    width: 80%;
+    height: 40px;
+    border: none;
+    background: #1F2C32;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px calc(50% - 40%);
+    font-size: 15px;
+}
+.login-box>form>span{
+    display: block;
+    width: 100%;
+    height: auto;
+    color: red;
+    font-size: 12px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+.login-box>div:nth-of-type(1){
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 15px;
+}
+.login-box>div:nth-of-type(1)>a{
+    color: blue;
+    border-bottom: 1px solid blue;
 }
