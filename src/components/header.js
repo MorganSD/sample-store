@@ -3,6 +3,8 @@ import '../style/navbar.css';
 import searchIcon from '../Icon Simplestore/search.png';
 import like from '../Icon Simplestore/like.png';
 import basket from '../Icon Simplestore/shopping-cart (2).png';
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
 class Header extends Component{
     constructor(){
         super();
@@ -26,6 +28,7 @@ componentDidMount(){
     }
     )
 }
+
 
     render(){
         return(
@@ -59,7 +62,7 @@ componentDidMount(){
                 { this.state.categories ? (this.state.categories.map(category => (
                
 
-                    <li key={category.title}>{category.title}</li>
+                    <li key={category.title}><Link to={`/${category.address}`} >{category.title}</Link></li>
                     
                     ))):
                     <li> </li>

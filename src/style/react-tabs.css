@@ -1,0 +1,30 @@
+.react-tabs{
+    width: 100%;
+    min-height: 100px;
+    /* border: 1px solid red; */
+    position: relative;
+}
+.react-tabs__tab {
+    float: right;
+    width: auto;
+    height: 40px;
+    margin-left: 40px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.react-tabs__tab-list{
+    width: 100%;
+    height: 60px;
+}
+.react-tabs__tab--selected{
+    border-bottom: 2px solid grey;
+    outline: none;
+}
+.react-tabs__tab-panel{
+    display: block;
+    width: 100%;
+    height: auto;
+  
+
+}
+

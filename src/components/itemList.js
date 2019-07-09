@@ -18,15 +18,54 @@ function Thumbnail(props){
 }
 
 class ItemList extends  Component{
-constructor(){
-    super();
+constructor(props){
+    super(props);
     this.state={
-        items : []
+        items :[]
+        
     }
 }
+componentWillMount(){
+    // console.log(;first)
+    if(this.props.cat === 'all'){
+        let items = fetch(`http://api.projectant.aasoo.ir/shelves/products/`,{ headers :{
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'x-api-key': '0f855b9c2f5ee2a21e530bcaa82a645286724fba',
+                    accept: 'application/json',
+                    'x-store-sub-address':'sib'
+                    }}
+                    )
+                .then(response => response.json())
+                .then(response => {console.log(response.data.products)
+                    this.setState({
+                        items:response.data.products
+                    })
+                }
+                )
+    }
+}
+componentDidUpdate(prevProps,prevState){
+  if(prevProps.cat != this.props.cat){  
+   
+   console.log('new cat',this.props.cat)
+// if(this.props.cat == 'all'){
+//     let items = fetch(`http://api.projectant.aasoo.ir/shelves/products/`,{ headers :{
+//         'Content-Type': 'application/x-www-form-urlencoded',
+//         'x-api-key': '0f855b9c2f5ee2a21e530bcaa82a645286724fba',
+//         accept: 'application/json',
+//         'x-store-sub-address':'sib'
+//         }}
+//         )
+//     .then(response => response.json())
+//     .then(response => {console.log(response.data.products)
+//         this.setState({
+//             items:response.data.products
+//         })
+//     }
+//     )
 
-componentDidMount(){
-    let items = fetch('http://api.projectant.aasoo.ir/shelves/products/',{ headers :{
+// }else{
+    let items = fetch(`http://api.projectant.aasoo.ir/shelves/category/address/${this.props.cat}/products/`,{ headers :{
         'Content-Type': 'application/x-www-form-urlencoded',
         'x-api-key': '0f855b9c2f5ee2a21e530bcaa82a645286724fba',
         accept: 'application/json',
@@ -41,7 +80,7 @@ componentDidMount(){
     }
     )
 }
-
+}
 render(){
 
 

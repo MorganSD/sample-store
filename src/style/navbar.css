@@ -80,6 +80,9 @@ header .userTool>li:nth-of-type(3)::after{
     cursor: pointer;
     font-size: 14px;
 }
+.categoryList>li a{
+    color: black;
+}
 .categoryList>li::after{
 
     content: '';

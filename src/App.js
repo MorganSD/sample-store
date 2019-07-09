@@ -15,8 +15,9 @@ class App extends Component {
     <React.Fragment>
       <Router basename={process.env.PUBLIC_URL}>
         <Header />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/:category" component={Home} />
         <Route path="/item/:address" component={Detail} />
+        
         <Footer />
       </Router>
     </React.Fragment>

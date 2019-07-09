@@ -38,23 +38,4 @@ a{
 }
 
 
-@font-face{
-  /* font-family :'iranyekan';
-  src: local('iranyekan') url('font/iranyekanwebbold\(fanum\).eot') format('eot'),  
-          url('font/iranyekanwebbold\(fanum\).woff') format('woff'),
-          url('font/iranyekanwebbold\(fanum\).ttf') format('truetype'),
-          url('font/iranyekanweblight\(fanum\).eot') format('eot'),  
-          url('font/iranyekanweblight\(fanum\).woff') format('woff'),
-          url('font/iranyekanweblight\(fanum\).ttf') format('truetype'),
-          url('font/iranyekanwebregular\(fanum\).eot') format('eot'),  
-          url('font/iranyekanwebregular\(fanum\).woff') format('woff'),
-          url('font/iranyekanwebregular\(fanum\).ttf') format('truetype');
-    font-style:normal;
-    font-style:bold;
-    /* font-style:light; */
-    /* font-weight:normal; */
-    /* font-weight:bold; */
-    /* font-weight:light; */
-  
-    
-        } 
+
