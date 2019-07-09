@@ -9,6 +9,7 @@
     display: -o-flex;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 60px;
 }
 .itemBox{
     width: 200px;

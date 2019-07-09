@@ -9,6 +9,7 @@ class Home extends Component {
    this.state = {
      category : 'all'
    }
+   this.sorting = this.sorting.bind(this)
  }
 
 componentDidMount(){
@@ -31,6 +32,11 @@ componentDidUpdate(prevProps,prevState){
     //  console.log('didUpdate',this.state.category)
 
 }
+sorting(event){
+  this.setState({
+    category : event.target.value
+  })
+}
   render() {
   
     console.log('w cat', this.state.category)
@@ -38,6 +44,12 @@ componentDidUpdate(prevProps,prevState){
       
       <div id="home">
         <Sidebar />
+        <select className='sort' onChange={this.sorting}>
+        <option value = 'all'>همه</option>
+        
+            <option value='price'>گران ترین</option>
+            <option value='-price'>ارزان ترین</option>
+            </select>
         <ItemList cat={this.state.category}/>
       </div>
     );
