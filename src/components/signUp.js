@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { userSignUpRequest } from '../actions/signUpActions';
 import PropTypes from 'prop-types';
+import * as EmailValidator from 'email-validator';
 
 
 class SignUp extends Component{
@@ -26,14 +27,49 @@ class SignUp extends Component{
           [event.target.name]: event.target.value
         });
       }
-
-    signUpForm(e){
-        e.preventDefault();
-        
-        this.props.userSignUpRequest(this.state); 
+    isFormValid(){
+        if(this.state.name != null ||  this.state.name != ''){
+            console.log('name valid')
+            if(this.state.email != null ||  this.state.email != ''){
+                console.log('mail not null')        
+                let mailValidation = EmailValidator.validate(this.state.email); 
+                if(mailValidation){
+                    console.log('mail valid')
+                    if(this.state.phone != null ||  this.state.phone != ''){
+                        console.log('phone valid')
+                        if(this.state.password != null ||  this.state.password != ''){
+                            console.log('pass valid');
+                            return true;
+                        }else{
+                            // document.getElementsByClassName("signUpError").innerHTML = 'رمز عبور را وارد کنید'
+                            return false ;
+                              
+                        }
+                    }else{
+                        return false
+                    }
+                }else{
+                    return false
+                }
+                
+            }else{
+                return false
+            }
+        }else{
+            return false
+        }
+    }
+    signUpForm(){
+        if(!this.isFormValid){
+            return false;
+        }
+        else{
+            this.props.userSignUpRequest(this.state);
+        }
   
     }
     render(){
+        const isFormValid = this.isFormValid();
         return(
             <React.Fragment>
             <p className="signInForm">ثبت نام در فرمالو</p>
@@ -61,7 +97,7 @@ class SignUp extends Component{
                 <input name='re_password' type ="password" onChange={this.handleChange} value={this.state.re_password}/>
                 <span className='signUpError'></span> */}
 
-                <button type="submit">ثبت نام</button>
+                <button disabled={!isFormValid} type="submit">ثبت نام</button>
             </form>
             <p>
                 حساب کاربری دارید ؟
