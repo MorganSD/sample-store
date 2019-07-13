@@ -1,191 +1,25 @@
 import React, { Component } from "react";
-import "../style/detail.css";
-import breadcrumbIcon from "../Icon Simplestore/apple-keyboard-control-3.png";
 import SliderImg from "./itemImgSlider";
 import Rate from "./rate";
+import Technical from '../components/details/technical-features';
+import About from './details/about';
+import CommentRate from './details/comment rates';
+import Related from './details/related products';
+import Comments from './details/comment';
+import Breadcrum from './details/breadcrum';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import axios from '../axios';
+
 import Addbasket from "../Icon Simplestore/Asset-white.png";
 import formaloo from "../Icon Simplestore/formaloo-01.png";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import breadcrumbIcon from "../Icon Simplestore/apple-keyboard-control-3.png";
+
+import "../style/detail.css";
 import "../style/react-tabs.css";
-import noPhoto from "../Icon Simplestore/noPhoto.png";
-import lightstar from "../Icon Simplestore/star.png";
-import darkstar from "../Icon Simplestore/star (1).png";
-import halfStar from "../Icon Simplestore/Group 771.png";
 import "../style/itemList.css";
-// import Thumbnail from "../components/itemList";
-import Carousel from '../components/carousel';
-function Breadcrum(props) {
-  if (props.product.bread_crumb) {
-    if(props.product.bread_crumb.length === 0 ){
-      return null;
-    }else{
-      console.log("bread", props.product.bread_crumb.address);
-      if(props.product.bread_crumb.parent_category != null){
-        return (
-          <li>
-            <Link to={`/${props.product.bread_crumb.address}`}>
-              {props.product.bread_crumb.parent_category}
-            </Link>
-            <img src={breadcrumbIcon} />
-          </li>
-        );
-      }
-    
-      if (props.product.bread_crumb.title != null) {
-        return (
-          <li>
-            <a src="#">{props.product.bread_crumb.title}</a>
-            <img src={breadcrumbIcon} />
-          </li>
-        );
-      }
-    }
-    
-  }else{
-    return null;
-  }
- 
-}
-
-function About(props) {
-  if (props.about === null || props.about === "") {
-    return <p>اطلاعاتی درباره ی این محصول ثبت نشده است</p>;
-  } else {
-    return <div>{props.about}</div>;
-  }
-}
-function Technical(props) {
-  if (props.tech.data) {
-    if (props.tech.data.length === 0) {
-      return <p>مشخصاتی درباره این محصول ثبت نشده است</p>;
-    } else {
-      return (
-        <table>
-          <tbody>
-            {props.tech.data.map(data => (
-              <tr key={data.slug}>
-                <td>{data.title}</td>
-                <td>{data.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      );
-    }
-  } else {
-    return <p>مشخصاتی درباره این محصول ثبت نشده است</p>;
-  }
-}
-
-function CommentRate(props) {
-  if (props.product.rate >= 0 && props.product.rate < 1) {
-    return (
-      <React.Fragment>
-        <p>از ۵ </p>
-        <img src={halfStar} />
-      </React.Fragment>
-    );
-  } else if (props.product.rate >= 1 && props.product.rate < 2) {
-    return (
-      <React.Fragment>
-        <p>از ۵ </p>
-        <img src={darkstar} />
-      </React.Fragment>
-    );
-  } else if (props.product.rate >= 2 && props.product.rate < 3) {
-    return (
-      <React.Fragment>
-        <p>از ۵ </p>
-        <img src={darkstar} />
-        <img src={darkstar} />
-      </React.Fragment>
-    );
-  } else if (props.product.rate >= 3 && props.product.rate < 4) {
-    return (
-      <React.Fragment>
-        <span>از ۵ </span>
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-      </React.Fragment>
-    );
-  } else if (props.product.rate >= 4 && props.product.rate < 5) {
-    return (
-      <React.Fragment>
-        <p>از ۵ </p>
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-      </React.Fragment>
-    );
-  } else if (props.product.rate === 5) {
-    return (
-      <React.Fragment>
-        <p>از ۵ </p>
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-        <img src={darkstar} />
-      </React.Fragment>
-    );
-  } else {
-    return <span />;
-  }
-}
 
 
-function Related(props) {
-  if (props.related.related_products) {
-    let relatedProduct = props.related.related_products.length;
-    console.log("length", relatedProduct);
-    if (relatedProduct === 0) {
-      return null;
-    } else {
-      return (
-        <div className="related">
-          <Carousel product={props.related.related_products} />
-        </div>
-      );
-    }
-  } else {
-    return null;
-  }
-}
-
-function Comments(props) {
-  if (props.comment.answered_questions) {
-    if (props.comment.answered_questions.length === 0) {
-      return <p>نظری ثبت نشده است</p>;
-    } else {
-      return (
-        <>
-          {props.comment.answered_questions.map(comment => (
-            <div className="comment-box">
-              <img src={noPhoto} />
-              <div>
-                <p>
-                  <span>نام و نام خانوادگی</span>
-                  <span>rate</span>
-                </p>
-
-                <div>
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                  استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                  مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                  تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                  کاربردی می باشد.
-                </div>
-              </div>
-            </div>
-          ))}
-        </>
-      );
-    }
-  }
-}
 class Detail extends Component {
   constructor() {
     super();
@@ -196,46 +30,24 @@ class Detail extends Component {
   componentWillMount() {
     const { address } = this.props.match.params;
     console.log(address);
-    let lists = fetch(
-      `http://api.projectant.aasoo.ir/shelves/product/address/${address}`,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "x-api-key": "0f855b9c2f5ee2a21e530bcaa82a645286724fba",
-          accept: "application/json",
-          "x-store-sub-address": "sib"
-        }
-      }
+    axios.get(`/shelves/product/address/${address}`)
+    .then( response => 
+      this.setState({
+        product: response.data.data.product
+      })
     )
-      .then(response => response.json())
-      .then(response => {
-        console.log(response.data.product);
-        this.setState({
-          product: response.data.product
-        });
-      });
+   
   }
 componentDidUpdate(prevProps){
   if(prevProps.match.params != this.props.match.params){
     let {address} = this.props.match.params
-    let lists = fetch(
-      `http://api.projectant.aasoo.ir/shelves/product/address/${address}`,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "x-api-key": "0f855b9c2f5ee2a21e530bcaa82a645286724fba",
-          accept: "application/json",
-          "x-store-sub-address": "sib"
-        }
-      }
+    axios.get(`/shelves/product/address/${address}`)
+    .then( response => 
+      this.setState({
+        product: response.data.data.product
+      })
     )
-      .then(response => response.json())
-      .then(response => {
-        console.log(response.data.product);
-        this.setState({
-          product: response.data.product
-        });
-      });
+   
   }
 }
   render() {
@@ -295,7 +107,10 @@ componentDidUpdate(prevProps){
               <div>
                 <div>{this.state.product.rate}</div>
                 <div className="commnet-star">
-                  <CommentRate product={this.state.product} />
+                  <div>
+                    <CommentRate product={this.state.product} />
+                    </div>
+                  
                   <p>{this.state.product.ratings_count} مشارکت کننده</p>
                 </div>
               </div>

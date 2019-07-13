@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import searchIcon from '../Icon Simplestore/search.png';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import axios from '../axios';
 
 class Search extends Component{
     constructor(){
@@ -14,20 +15,14 @@ class Search extends Component{
     }
 
     componentDidMount(){
-        let products = fetch(`http://api.projectant.aasoo.ir/shelves/products/`,{ headers :{
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'x-api-key': '0f855b9c2f5ee2a21e530bcaa82a645286724fba',
-            accept: 'application/json',
-            'x-store-sub-address':'sib'
-            }}
-            )
-        .then(response => response.json())
-        .then(response => {console.log(response.data.products)
-            this.setState({
-                products:response.data.products
-            })
-        }
-        )
+      
+        axios.get(`/shelves/products/`)
+      .then(response => {
+        // console.log(response)
+        this.setState({
+            products: response.data.data.products 
+        })
+      })
     }
 searching(event){
     this.setState({
@@ -53,10 +48,10 @@ searching(event){
                     { this.state.searchState ?
                         filtered.map(item => (
                     <li>
-                        <Link to={`/item/${item.address}`}>
+                        <a href={`/item/${item.address}`}>
                         {item.title}
                         
-                        </Link>
+                        </a>
                     </li>
                    )) :
                    (
