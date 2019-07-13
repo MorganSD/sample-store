@@ -13,12 +13,17 @@
     border-bottom: 2px solid rgb(179, 179, 179); 
     line-height: 50px;
 }
-.sidebar  .logo>img{
+.sidebar .logo>a{
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+.sidebar  .logo>a>img{
     width: 145px;
     float: right;
     margin-top: 5px;
 }
-.sidebar  .logo>p{
+.sidebar  .logo>a>p{
     float: right;
     font-size: 14px;
 }
@@ -73,6 +78,6 @@
 }
 .catBranches>input:checked ~ .sidebar-cat-content{
     /* transform: scaleY(1) */
-    padding: 10px 0;
-    height: auto;
+    /* padding: 10px 0;
+    height: auto; */
 }

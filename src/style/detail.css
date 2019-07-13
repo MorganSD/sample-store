@@ -224,15 +224,18 @@
   /* border: 1px solid red; */
   float: right;
 }
-.commnet-star>p:nth-of-type(1){
+.commnet-star>div>p:nth-of-type(1){
   float: right;
   margin-left: 3px;
 }
-.commnet-star>span:first-child{
+.commnet-star>p:nth-of-type(2){
+  /* margin-left: 3px; */
+}
+.commnet-star>div>span:first-child{
 font-size: 15px;
 color: grey;
 }
-.commnet-star > img {
+.commnet-star >div> img {
   width: 15px;
   margin-left: 2px;
 }
@@ -363,7 +366,19 @@ right: 0;
   margin-left: 2px;
 }
 
-
-
-/* @import "~slick-carousel/slick/slick.css"; */
-/* @import "~slick-carousel/slick/slick-theme.css"; */
+.pagination{
+  width: auto;
+  height: 40px;
+  /* border: 1px solid black; */
+  margin-top: 30px;
+}
+.pagination>div{
+  width: 45px;
+  font-size: 12px;
+  float: left;
+  line-height: 40px;
+  border: 1px solid rgb(175, 175, 175);
+  margin-left: 10px;
+  text-align: center;
+  color: grey
+}

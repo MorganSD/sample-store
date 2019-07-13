@@ -102,3 +102,13 @@
     color: grey;
     font-size: 12px;
 }
+a.page {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    border: 1px solid #ddd;
+    margin-right: 0.2em;
+}
+
+a.page.active {
+    border-color: blue;
+}

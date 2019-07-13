@@ -1,0 +1,63 @@
+.signInForm:nth-of-type(1){
+    text-align: center;
+    margin-top: 40px;
+    border-bottom: 1px solid rgb(173, 173, 173);
+    width: 400px;
+    margin-right: calc(50% - 200px);
+    padding-bottom: 10px
+}
+form{
+    width: 400px;
+    min-height: 200px;
+    /* border: 1px solid red; */
+    margin: 20px auto;
+  
+}
+form>label{
+    display: block;
+    width: auto;
+    font-size: 15px;
+    margin-top: 15px;
+}
+form>input{
+    width: 100%;
+    height: 35px;
+    border: 1px solid rgb(172, 169, 169);
+    border-radius: 5px;
+    padding: 0 10px;
+    outline: none;
+    font-size: 14px;
+}
+form>button{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    background: #1F2C32;
+    border-radius: 5px;
+    margin: 20px 0 10px
+}
+form>button:disabled{
+    background: rgb(59, 80, 90);
+    cursor: not-allowed;
+
+}
+form>.signUpError{
+    width: auto;
+    /* max-height: 20px; */
+    color: darkred;
+    font-size: 12px;
+ 
+}
+.signInForm:nth-of-type(2){
+    text-align: center;
+    font-size: 14px;
+    margin: 5px 0
+}
+.signInForm:nth-of-type(2)>a{
+    color: blue;
+    border-bottom: 1px solid blue;
+}
