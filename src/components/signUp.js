@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { userSignUpRequest } from '../actions/signUpActions';
 import PropTypes from 'prop-types';
 import * as EmailValidator from 'email-validator';
-
-
+import isNumeric from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmail';
+import axios from '../axios';
 class SignUp extends Component{
     constructor(){
         super();
@@ -15,7 +16,7 @@ class SignUp extends Component{
             email :'',
             phone : '',
             password : ''
-            // re_password :''
+            
         }
         this.handleChange = this.handleChange.bind(this);
         this.signUpForm = this.signUpForm.bind(this);
@@ -28,6 +29,9 @@ class SignUp extends Component{
         });
       }
     isFormValid(){
+
+       
+
         if(this.state.name != null ||  this.state.name != ''){
             console.log('name valid')
             if(this.state.email != null ||  this.state.email != ''){
@@ -36,7 +40,9 @@ class SignUp extends Component{
                 if(mailValidation){
                     console.log('mail valid')
                     if(this.state.phone != null ||  this.state.phone != ''){
-                        console.log('phone valid')
+                        if(isNumeric(this.state.phone)){
+                            console.log('phone valid')
+                        }
                         if(this.state.password != null ||  this.state.password != ''){
                             console.log('pass valid');
                             return true;
@@ -59,22 +65,35 @@ class SignUp extends Component{
             return false
         }
     }
-    signUpForm(){
-        if(!this.isFormValid){
-            return false;
-        }
-        else{
-            this.props.userSignUpRequest(this.state);
-        }
+    
+    signUpForm(e){
+       
+        e.preventDefault();
+        axios.post('/profiles/profile/' , {
+
+            password : this.state.password,
+            first_name : this.state.name,
+            email : this.state.email,
+            phone_number : this.state.phone
+
+        }).then(
+            res => {
+                const token = res.data.data.token
+                console.log('token' , token)
+                localStorage.setItem('jwtToken',JSON.stringify(res.data.data))
+                // <Redirect path="*" to="/" />
+            }
+        )
+
   
     }
     render(){
         const isFormValid = this.isFormValid();
         return(
             <React.Fragment>
-            <p className="signInForm">ثبت نام در فرمالو</p>
+            <p className="signInForm">ثبت نام در فروشگاه</p>
             <form onSubmit={e => {
-                this.addUser(e);}}>
+                this.signUpForm(e);}}>
                 <label>نام و نام خانودگی</label>
                 <input name='name' type="text" onChange={this.handleChange} value={this.state.name}/>
                 <span className='signUpError'></span>
@@ -99,17 +118,16 @@ class SignUp extends Component{
 
                 <button disabled={!isFormValid} type="submit">ثبت نام</button>
             </form>
-            <p>
+            <div className='linkForm'>
                 حساب کاربری دارید ؟
-                <Link to={'/:category/login'}> وارد شوید</Link>
-            </p>
+                <Link to={'/user/login'}> وارد شوید</Link>
+                <p><Link to={'/all'}>صفحه اصلی</Link></p>
+            </div>
             </React.Fragment>
         );
     }
 
   
 }
-SignUp.propTypes = {
-    userSignUpRequest : PropTypes.func.isRequired
-}
-export default connect((state) => {return {} } , {userSignUpRequest} )(SignUp)
+
+export default SignUp;
