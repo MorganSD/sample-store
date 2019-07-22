@@ -9,6 +9,7 @@ import Login from "../components/login";
 import axios from "../axios";
 import Card from "./card";
 import {connect}  from 'react-redux';
+import Favourite from '../components/favourite';
 class Header extends Component {
   constructor() {
     super();
@@ -63,6 +64,9 @@ login() {
     // }
     this.props.cardDisplayChange();
   }
+  favouriteDisplay = () =>{
+    this.props.favouriteState();
+  }
   render() {
       console.log('redux header',this.props.currentUser)
       console.log('display',this.props.cardDisplay)
@@ -86,18 +90,21 @@ login() {
                 </label>
               </li>
               <li>
-                <img src={like} />
+                <img src={like} onClick={this.favouriteDisplay}/>
               </li>
               <li>
-                {
-                  this.state.guest ? (
-                  <Link to={`/user/login`}>
-                    <a href="#">ثبت نام</a>/<a href="#"> ورود</a>
-                  </Link>
-                  ):
+                {/* {
+                  this.state.guest ? ( */}
+                  <Link to={`/user/sign-up`}>
+                    ثبت نام
+                    </Link>
+                    /
+                    <Link to={`/user/login`}> ورود </Link>
+                  
+                  {/* ):
              
                 <h4>logOUT</h4>
-                }
+                } */}
                
               </li>
             </ul>
@@ -114,15 +121,22 @@ login() {
             </ul>
           </div>
         </header>
-        {this.state.loginPopUp ? (
+        {/* {this.state.loginPopUp ? (
           <div className="popUps">
             <img src={close} onClick={this.closePopUp} />
             <Login />
           </div>
-        ) : null}
+        ) : null} */}
        {
          this.props.cardDisplay ? (
            <Card />
+         ):
+         null
+
+       }
+        {
+         this.props.favouriteDisplay ? (
+           <Favourite />
          ):
          null
 
@@ -135,12 +149,14 @@ login() {
 const mapStatToProps = (state) =>{
   return {
     currentUser : state.currentUser,
-    cardDisplay : state.cardDisplay
+    cardDisplay : state.cardDisplay,
+    favouriteDisplay : state.favouriteDisplay
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    cardDisplayChange : () => {dispatch({type: 'CARD_DISPLAY'})}
+    cardDisplayChange : () => {dispatch({type: 'CARD_DISPLAY'})},
+    favouriteState : () => {dispatch({type : 'FAVOURITE_DISPALY'})}
   }
 }
 export default connect(mapStatToProps , mapDispatchToProps)(Header);
