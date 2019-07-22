@@ -1,10 +1,21 @@
+@keyframes basket {
+  from{
+    transform: translateX(-500px);
+  }
+  to{
+    transform: translateX(0);
+  }
+}
+
+
+
 .card-popUp {
   width: 100%;
   /* border: 1px solid red; */
   position: fixed;
   left: 0;
-  top: 50px;
-  height: calc(100vh - 50px);
+  top: 0;
+  height: 100vh;
   background: rgba(168, 167, 167, 0.644);
   z-index: 5;
 }
@@ -23,8 +34,151 @@
   top: 0;
   left: 0;
   z-index: 7;
-  width: 350px;
+  width: 500px;
   height: 100%;
   float: left;
   background: white;
+  transform: translateX(-500px);
+  transform-origin: left;
+  animation: basket .4s linear forwards;
+}
+.card > img:first-child {
+  width: 20px;
+  float: left;
+  margin: 15px;
+  cursor: pointer;
+}
+.card-items {
+  width: 88%;
+  height: calc(100% - 50px);
+  margin-right: 2.5%;
+  margin-top: 50px;
+  overflow-y: scroll;
+
+
+}
+.card-items::-webkit-scrollbar {
+  width: 1px;
+}
+.card-items>div{
+    width: 100%;
+    height: auto;
+    padding-right: 10px;
+    /* overflow-y: scroll; */
+}
+.card-items .items {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+}
+
+.card-items .items > img {
+  width: 100px;
+  height: 80px;
+  border: 1px solid black;
+  object-fit: cover;
+  margin-top: 5px;
+}
+.card-items .item-info {
+  width: 250px;
+  height: 100%;
+  /* border: 1px solid red; */
+  padding: 10px 0;
+  float: left;
+}
+
+.card-items .item-info > p:nth-of-type(1) {
+  width: 100%;
+  float: right;
+}
+.card-items .item-info > p:nth-of-type(2) {
+  width: 50%;
+  float: right;
+  margin-top: 10px;
+}
+.card-items .item-info > span {
+  display: block;
+  width: 70px;
+  height: 20px;
+  border: 1px solid rgb(179, 179, 179);
+  float: left;
+  margin-top: 20px;
+  position: relative !important;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.card-items .item-info > span button {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  background: transparent;
+  /* border: 1px solid black */
+  outline: none;
+  cursor: pointer;
+}
+
+.card-items .item-info > span button:first-child {
+  right: 0;
+  border-left: 1px solid rgb(179, 179, 179);
+}
+.card-items .item-info > span button:last-child {
+  left: 0;
+  border-right: 1px solid rgb(179, 179, 179);
+}
+.card-items .item-info > span button > img {
+  width: 8px;
+  height: 100%;
+  object-fit: cover;
+}
+.card-items .item-info > span > span {
+  display: block;
+  width: 30px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  /* border: 1px solid red; */
+}
+
+.card-items .total-price {
+  width: 100%;
+  height: 100px;
+  border-top: 2px solid rgb(172, 172, 172);
+  margin-top: 30px;
+  line-height: 100px;
+  color: grey;
+  
+}
+.card-items .total-price>p:first-child{
+    float: right;
+}
+.card-items .total-price>p:last-child{
+    float: left;
+}
+.card-items .submit-order{
+   display: block;
+    width: 70%;
+    height: 50px;
+    background: #1f2c32;
+    border-radius: 5px;
+    margin-right: 15%;
+    margin-bottom: 30px;
+    text-align: center
+}
+.card-items .submit-order>a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    color: white;
+    font-size: 15px;
+}
+.noProduct{
+  margin: 100px auto;
+  text-align: center;
+  color: grey;
 }
