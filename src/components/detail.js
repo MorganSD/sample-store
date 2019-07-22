@@ -10,21 +10,36 @@ import Breadcrum from './details/breadcrum';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from '../axios';
+import {connect} from 'react-redux';
 
 import Addbasket from "../Icon Simplestore/Asset-white.png";
 import formaloo from "../Icon Simplestore/formaloo-01.png";
 import breadcrumbIcon from "../Icon Simplestore/apple-keyboard-control-3.png";
-
+import like from '../Icon Simplestore/like.png'
 import "../style/detail.css";
 import "../style/react-tabs.css";
 import "../style/itemList.css";
 
+const Options= (props) =>{
+  let options_result;
+  axios.post('/fields/types/choice/',{
+    choice_items : props.options.choice_items,
+    title : props.options.title,
+    choice_type :  props.options.choice_type
+
+  }).then(response => {
+    console.log('options',response)
+    return response
+  })
+  
+}
 
 class Detail extends Component {
   constructor() {
     super();
     this.state = {
-      product: []
+      product: [],
+      favourite_active : false
     };
   }
   componentWillMount() {
@@ -32,9 +47,12 @@ class Detail extends Component {
     console.log(address);
     axios.get(`/shelves/product/address/${address}`)
     .then( response => 
+    {  
       this.setState({
         product: response.data.data.product
       })
+      console.log(response.data.data.product)
+      }
     )
    
   }
@@ -43,6 +61,7 @@ componentDidUpdate(prevProps){
     let {address} = this.props.match.params
     axios.get(`/shelves/product/address/${address}`)
     .then( response => 
+      
       this.setState({
         product: response.data.data.product
       })
@@ -50,7 +69,30 @@ componentDidUpdate(prevProps){
    
   }
 }
+
+addToCard = () =>{
+  this.props.addItemToCart(this.state.product)
+}
+addToFavourite= () =>{
+  this.props.addItemToFavourite(this.state.product)
+}
+
+About = (props) => {
+  
+}
   render() {
+    var commaNumber = require('comma-number')
+
+    const options_length = () => {
+    if(this.state.options){
+      if(this.state.options.length != 0){
+        return true;
+      }else{
+        return false;
+      }
+       
+    }else return false
+  }
     // console.log(this.state.product);
     return (
       <div id="detail">
@@ -71,19 +113,30 @@ componentDidUpdate(prevProps){
        
         <div className="detailSummery">
           <div className="itemPic">
-            <SliderImg />
+            <SliderImg product={this.state.product}/>
           </div>
           <div className="detailSummeryContent">
             <h2>{this.state.product.title}</h2>
             <span className="rate">
               <Rate product={this.state.product} />
             </span>
-            <div>
-              <p>{this.state.product.price} تومان</p>
-              <button className="basket-btn">
+            <div className='add-favourite-wrapper'><img src={like} className='add-favourite' onClick={this.addToFavourite}/></div>
+           
+           <div className='product-options'>
+             { this.state.options ? (
+               this.state.options.map((option) =>
+                <Options options={option}/>
+             )): null
+             }
+           </div>
+           
+            <div className='product-price'>
+              <p>{commaNumber(this.state.product.price)} تومان</p>
+              <button className="basket-btn" onClick={this.addToCard}>
                 <img src={Addbasket} />
                 اضافه کردن به سبد خرید
               </button>
+             
               <p>{this.state.product.short_description}</p>
             </div>
           </div>
@@ -126,4 +179,12 @@ componentDidUpdate(prevProps){
   }
 }
 
-export default Detail;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItemToCart : (item) => {dispatch({type: 'ADD_TO_BASKET', item: item})},
+    addItemToFavourite: (item) => {dispatch({type: 'ADD_TO_FAVOURITE', item: item})}
+
+  }
+}
+export default connect(null , mapDispatchToProps)(Detail);

@@ -1,12 +1,91 @@
-.banner{
-    width: 100%;
-    height: 80%;
-    background: grey;
+
+.banner {
+  width: 100%;
+  height: 80%;
+  /* background: grey; */
+  /* border: 1px solid rgb(197, 197, 197); */
+}
+.banner > img {
+  width: 100% !important;
+  height: 100%;
+  object-fit: fill;
+  outline: none;
 }
 
-.slider-carousel{
-    width: 100%;
-    height: 20%;
-    
-
+.slider-carousel {
+  width: 100%;
+  height: 15%;
+  /* border: 1px solid red; */
+  position: relative;
+  margin-top: 10px;
+}
+.slider-carousel>div{
+  height: 100%;
+  width: calc(100% - 40px);
+  /* border: 1px solid black; */
+  margin-right: 20px;
+  overflow: hidden;
+}
+.slider-carousel>div>div{
+  /* min-width: 310px; */
+  /* width: auto; */
+  /* background: grey; */
+  width: 500px;
+  height: 100%;
+  overflow: hidden;
+  /* display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-flow: row nowrap; */
+  
+}
+.slider-carousel .carouselArrow{
+  width: 10px;
+  position: absolute;
+  top: calc(50% - 7px);
+  cursor: pointer;
+}
+.slider-carousel .carouselArrow:first-child{
+  right: 0;
+}
+.slider-carousel .carouselArrow:last-child{
+  left: 0;
+  transform: rotate(180deg)
+}
+.slider-carousel>div>div>figure{
+  width: 62px;
+  height: 100%;
+  float: right;
+  /* border: 1px solid black; */
+  position: relative;
+  cursor: pointer;
+  transition: .4s;
+  
+}
+.slider-carousel>div>div>figure>img{
+  width: 90%;
+  height: 100%;
+  margin-right: 5%;
+  object-fit: fill;
+  height: 100%;
+  border: 1px solid rgba(216, 216, 216, 0.658);
+  border-radius: 5px;
+}
+.slider-carousel>div>div>figure>figcaption{
+  display: block;
+  width: 90%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 5%;
+  /* margin-right: 5%; */
+  background: rgba(196, 196, 196, 0.37);
+  border-radius: 5px;
+  opacity: 0;
+  transition: .4s;
+}
+.slider-carousel>div>div>figure:hover>figcaption{
+  opacity: 1;
 }
