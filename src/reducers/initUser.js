@@ -1,86 +1,117 @@
 import axios from "../axios";
+import {
+  CARD_DISPLAY,
+  CARD_LOADING,
+  DISPLAY_CARD_PRODUCT,
+  INIT_SEARCH,
+  INIT_CARD,
+  INIT_GUEST,
+  INIT_LOGIN_USER,
+  FAVOURITE_DISPALY,
+  UPDATE_FAVOURITES,
+  INIT_USER_TOKEN,
+  INIT_LOGOUT_USER
+} from "../actions/actions";
 
 const initialState = {
+  card: {
+    cart: [],
+    errors: null,
+    isLoading: false
+    // display : false
+  },
   cardDisplay: false,
-  currentUser: [],
-  cardProduct: [],
-  totalPrice: 0,
   favouriteDisplay: false,
-  favouriteProducts: []
+  currentUser: [],
+  totalPrice: 0,
+  
+  favouriteProducts: [],
+  search_val: null,
+  userLogedIn: false,
+  userToken: null,
+  currentListOfProducts: []
 };
 
 const InitUserReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "INIT_GUEST": {
-      axios.post("/profiles/guest/").then(res => {
-        localStorage.setItem("jwtToken", JSON.stringify(res.data.data));
-      });
-      let guset = JSON.parse(localStorage.getItem("jwtToken"));
-      return {
+    case INIT_GUEST: {
+         return {
         ...state,
-        currentUser: guset
+        currentUser: action.guset,
+        // userToken: action.guset.token,
+        userLogedIn: false
       };
     }
 
-    case "INIT_LOGIN_USER": {
-      return {
-        ...state,
-        currentUser: JSON.parse(localStorage.getItem("jwtToken"))
-      };
-    }
-    case "CARD_DISPLAY": {
-      const display = !state.cardDisplay;
-      return {
-        ...state,
-        cardDisplay: display
-      };
-    }
-    case "ADD_TO_BASKET": {
-      let product = initialState.cardProduct;
-      let currentTotalPrice = 0;
-      if (!product.find(item => item.address === action.item.address)) {
-        product.push(action.item);
-        console.log("mahsolate sabade kharid", product);
-        product.map(item => (currentTotalPrice += item.price));
+    case INIT_LOGIN_USER: {
 
-        return {
-          ...state,
-          cardProduct: product,
-          totalPrice: currentTotalPrice
-        };
-      } else {
-        alert("این محصول در سبد خرید شما قبلا ثیت شده است");
-        return {
-          ...state
-        };
+      return {
+        ...state,
+        currentUser: action.user,
+        userLogedIn: true
+      };
+    }
+    case INIT_USER_TOKEN :{
+      return{
+        ...state,
+        userToken: action.token 
+
       }
     }
-    case "FAVOURITE_DISPALY": {
-      const display = !state.favouriteDisplay;
+    case CARD_DISPLAY: {
       return {
         ...state,
-        favouriteDisplay: display
+        cardDisplay: !state.cardDisplay
       };
     }
-    case "ADD_TO_FAVOURITE": {
-      let productt = state.favouriteProducts;
-
-      if (!(productt.find(item => item.address === action.item.address))) {
-        productt.push(action.item);
-        console.log("mahsolate morede alaghe", productt);
-
-        return {
-          ...state,
-          favouriteProducts: productt
-        };
-      } else {
-        let updateFavourites = productt.filter(item => item.address != action.item.address)
-        console.log('update  fav' , updateFavourites)
-        return {
-          ...state,
-          favouriteProducts : updateFavourites
-        };
-      }
+    case CARD_LOADING: {
+      return {
+        ...state,
+        card: {
+          isLoading: !state.isLoading
+        }
+      };
+    }
+    case DISPLAY_CARD_PRODUCT: {
+      return {
+        ...state,
+        card: {
+          cart: action.cart.data.cart
+        }
+      };
+    }
+    // favourites reducers
+    case FAVOURITE_DISPALY: {
+      return {
+        ...state,
+        favouriteDisplay: !state.favouriteDisplay
+      };
+    }
+    case UPDATE_FAVOURITES: {
+      return {
+        ...state,
+        favouriteProducts: action.favourites.favorites
+      };
+    }
+    case INIT_SEARCH: {
+      // let filter = action.item
+      return {
+        ...state,
+        search_val: action.item
+      };
+    }
+    case INIT_LOGOUT_USER : {
+      return {
+        ...state,
+        userLogedIn: false
+      };
+    }
+    case "UPDATE_CURRENT_LIST_OF_PRODUCTS": {
+      console.log("current", action.data);
+      return {
+        ...state,
+        currentListOfProducts: action.data
+      };
     }
     default:
       return state;
