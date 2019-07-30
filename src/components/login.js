@@ -3,36 +3,49 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "../axios";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
+import {loginUser,init_fav} from '../actions/actions';
+
+import * as EmailValidator from 'email-validator';
+
 import Home from './home';
+import Spinner from "./details/spinner";
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       username: "",
       password: "",
-      redirectState : false
+      redirectState : false,
+      error : '',
+      spinner : 'none'
 
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
-
+isValid(){
+  // if(this.state.username === null || this.state.username === '' ){
+  //   this.setState({error : ' نام کاربری یا ایمیل خود را وارد کنید'})
+  //   return false 
+  // }
+  // if(this.state.password === null || this.state.password === '' ){
+  //   this.setState({error : ' رمز عبور خود را وارد کنید'})
+  //   return false
+  // }
+}
   onSubmit(event) {
+    this.setState({spinner:'block'})
     event.preventDefault();
-    axios
-      .post("/auth/jwt/login/", {
-        username: this.state.username,
-        password: this.state.password
-      })
-      .then(res => {
-      
-        localStorage.setItem("jwtToken", JSON.stringify(res.data.data));
-      })
-      // .then(this.props.loginUser()).then(alert('login sucsess')).then(this.setState({
-      //   redirectState:true
-      // })).catch(console.error()
-      // );
+    if(this.isValid){
+    this.setState({spinner : 'none'})
+    this.props.loginUser( this.state.username , this.state.password);
+    // this.props.setFavourite();
+    this.setState({
+      redirectState : true
+    })
+    
   }
+}
 
   onChange(event) {
     this.setState({
@@ -41,6 +54,7 @@ class Login extends Component {
   }
 
   render() {
+    console.log(this.props.loginToken ,'usertoken')
     const { redirectState } = this.state;
     return (
       <div className="login-box">
@@ -53,12 +67,13 @@ class Login extends Component {
           <label>ایمیل</label>
           <input
             type="text"
-            placeholder="نام کاربری خور را وارد نمایید"
-            value={this.state.email}
+            placeholder="نام کاربری یا ایمیل خور را وارد نمایید"
+            value={this.state.username}
             onChange={this.onChange}
             name="username"
+            required
           />
-          <span className="login-error" />
+          
 
           <label>رمز عبور</label>
           <input
@@ -67,10 +82,14 @@ class Login extends Component {
             value={this.state.password}
             onChange={this.onChange}
             name="password"
+            required
           />
           <a href="#">رمز عبور خود را فراموش کرده اید ؟</a>
-          <span className="login-error" />
-
+          <span className="login-error">{this.state.error ? this.state.error.map(e => (
+            <p>{e}</p>
+          )):null
+          }</span>
+          <Spinner display={this.state.spinner} />
           <button type="submit">ورود </button>
         </form>
         <div>
@@ -83,15 +102,14 @@ class Login extends Component {
   }
 }
 const mapStateToProps = state => {
-  return { currentUser: state.currentUser };
+  return { currentUser: state.InitUserReducer.currentUser,
+  loginToken : state.InitUserReducer.userToken };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    loginUser: () => {
-      dispatch({ type: "INIT_LOGIN_USER" });
-    }
-  };
+const mapDispatchToProps =  {
+  loginUser : loginUser,
+  setFavourite : init_fav
+
 };
 export default connect(
   mapStateToProps,

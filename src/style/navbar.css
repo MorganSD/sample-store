@@ -10,20 +10,31 @@ header .userTool{
     /* border: 1px solid yellow; */
     border-bottom: 1px solid black;
 }
+
 header .userTool>li{
     width: auto;
     height: 100%;
     cursor: pointer;
     /* border: 1px solid red */
 }
+
 header .userTool>li:first-child{
     float: right;
 }
+header .userTool>li:first-child .searchForm{
+    width: auto;
+    height: 100%;
+}
 header .userTool>li img{
     height: 25px;
-    margin-top: 10px
+    margin-top: 10px;
+    cursor: pointer;
 }
-header .userTool>li:first-child>input{
+header .userTool>li:nth-of-type(2)>input{
+
+    display: none;
+}
+header .searchForm>input{
 
     height:70%;
     width: 200px;
@@ -42,10 +53,14 @@ header .userTool>li:nth-of-type(4){
     font-size: 14px;
     /* border: 1px solid red */
 }
-header .userTool>li:nth-of-type(4)>a{
+header .userTool>li:nth-of-type(4) a{
     line-height: 50px;
    margin: 0 5px;
    color: grey
+}
+header .userTool>li:nth-of-type(4)>div{
+    height: 100%;
+    line-height: 50px;
 }
 header .userTool>li:nth-of-type(2), header .userTool>li:nth-of-type(3){
     float: left;
@@ -131,6 +146,10 @@ header .userTool>li:nth-of-type(3)::after{
     height: 40px;
     padding: 5px;
     border-bottom: 1px solid rgb(99, 98, 98);
+    transition: .4s;
+}
+.searchList>li:hover{
+    background:  rgb(228, 227, 227);
 }
 .searchList>li>a{
     font-size: 14px;
@@ -193,7 +212,10 @@ padding: 0 8px
 .login-box>form>a{
     float: left;
     font-size: 12px;
-    color: #1F2C32
+    color: #1F2C32;
+    display: block;
+    width: 100%;
+    direction: ltr;
 }
 .login-box>form>button:nth-of-type(1){
     width: 80%;
@@ -203,9 +225,10 @@ padding: 0 8px
     color: white;
     text-align: center;
     border-radius: 5px;
-    margin: 20px calc(50% - 40%);
+    margin: 10px calc(50% - 40%) 20px;
     font-size: 15px;
     cursor: pointer;
+    font-family: 'iranyekan'
 }
 .login-box>form>span{
     display: block;
@@ -215,6 +238,9 @@ padding: 0 8px
     font-size: 12px;
     padding: 0 10px;
     margin-bottom: 10px;
+    margin-top: 50px;
+    text-align: center;
+
 }
 .login-box>div:nth-of-type(1){
     width: 100%;
@@ -225,5 +251,15 @@ padding: 0 8px
 }
 .login-box>div:nth-of-type(1)>a{
     color: blue;
-    border-bottom: 1px solid blue;
+    /* border-bottom: 1px solid blue; */
+}
+.login-box a:visited,.login-box a{
+    color: blue;
+}
+.login-box>div:nth-of-type(1)>p>a{
+    font-size: 14px;
+}
+.login-box .lds-spinner{
+    margin-right: calc(50% - 32px);
+    margin-bottom: 20px;
 }

@@ -15,58 +15,79 @@ class SignUp extends Component{
             name : '',
             email :'',
             phone : '',
-            password : ''
+            password : '',
+            error : null
             
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.signUpForm = this.signUpForm.bind(this);
-        
+      }
 
-    }
     handleChange = (event) => {
         this.setState({
           [event.target.name]: event.target.value
         });
       }
-    isFormValid(){
-
-       
-
-        if(this.state.name != null ||  this.state.name != ''){
-            console.log('name valid')
-            if(this.state.email != null ||  this.state.email != ''){
-                console.log('mail not null')        
-                let mailValidation = EmailValidator.validate(this.state.email); 
-                if(mailValidation){
-                    console.log('mail valid')
-                    if(this.state.phone != null ||  this.state.phone != ''){
-                        if(isNumeric(this.state.phone)){
-                            console.log('phone valid')
-                        }
-                        if(this.state.password != null ||  this.state.password != ''){
-                            console.log('pass valid');
-                            return true;
-                        }else{
-                            // document.getElementsByClassName("signUpError").innerHTML = 'رمز عبور را وارد کنید'
-                            return false ;
-                              
-                        }
-                    }else{
-                        return false
-                    }
-                }else{
-                    return false
-                }
-                
-            }else{
+    isFormValid = () => {
+        switch(this.state){
+            case this.state.name === '' : {
                 return false
             }
-        }else{
+            case this.state.name === null :{
+                console.log('validation name')
+                return false
+            }
+            case this.state.email === null|| this.state.email === '' : {
+                console.log('validation email')
+
+                return false
+            }
+            case this.state.phone === null|| this.state.phone === '' : {
+                console.log('validation phone')
+
+                return false
+            }
+            case this.state.password === null || this.state.password === '' : {
+                console.log('validation pass')
+
+                return false
+            }
+            default :
             return false
         }
+        // if(this.state.name != null ||  this.state.name != ''){
+        //     console.log('name valid')
+        //     if(this.state.email != null ||  this.state.email != ''){
+        //         console.log('mail not null')        
+        //         let mailValidation = EmailValidator.validate(this.state.email); 
+        //         if(mailValidation){
+        //             console.log('mail valid')
+        //             if(this.state.phone != null ||  this.state.phone != ''){
+        //                 if(isNumeric(this.state.phone)){
+        //                     console.log('phone valid')
+        //                 }
+        //                 if(this.state.password != null ||  this.state.password != ''){
+        //                     console.log('pass valid');
+        //                     return true;
+        //                 }else{
+        //                     // document.getElementsByClassName("signUpError").innerHTML = 'رمز عبور را وارد کنید'
+        //                     return false ;
+                              
+        //                 }
+        //             }else{
+        //                 return false
+        //             }
+        //         }else{
+        //             return false
+        //         }
+                
+        //     }else{
+        //         return false
+        //     }
+        // }else{
+        //     return false
+        // }
     }
     
-    signUpForm(e){
+    signUpForm = (e) =>{
        
         e.preventDefault();
         axios.post('/profiles/profile/' , {
@@ -92,7 +113,7 @@ class SignUp extends Component{
         return(
             <React.Fragment>
             <p className="signInForm">ثبت نام در فروشگاه</p>
-            <form onSubmit={e => {
+            <form className='signUpForm' onSubmit={e => {
                 this.signUpForm(e);}}>
                 <label>نام و نام خانودگی</label>
                 <input name='name' type="text" onChange={this.handleChange} value={this.state.name}/>

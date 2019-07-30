@@ -10,6 +10,10 @@ import axios from "../axios";
 import Card from "./card";
 import {connect}  from 'react-redux';
 import Favourite from '../components/favourite';
+import LogOut from '../components/logOut';
+import {card_dispaly,favourite_display } from '../actions/actions';
+
+
 class Header extends Component {
   constructor() {
     super();
@@ -21,7 +25,7 @@ class Header extends Component {
       guest : true
     };
     this.login = this.login.bind(this);
-    this.closePopUp = this.closePopUp.bind(this);
+    // this.closePopUp = this.closePopUp.bind(this);
   }
   
   componentDidMount() {
@@ -34,11 +38,7 @@ class Header extends Component {
     });
    
   }
-componentDidUpdate(prevProps, prevState){
-//   if(prevProps.currentUser.token != this.props.currentUser.token){
-//     console.log('userChanged' , this.props.currentUser);
-//   }
-}
+
 
 
 
@@ -47,27 +47,16 @@ login() {
       loginPopUp: !this.state.loginPopUp
     });
   }
-  closePopUp() {
-   this.cardDisplayChange();
-  }
-  cardDisplaying = (e) => {
-    
-    // if(e.target.checked){
-    //   this.setState({
-    //     cardDisplay : true
-    //   });
-
-    // }else{
-    //   this.setState({
-    //     cardDisplay : false
-    //   });
-    // }
+ 
+  cardDisplaying = () => {
     this.props.cardDisplayChange();
   }
-  favouriteDisplay = () =>{
-    this.props.favouriteState();
+
+  favouriteDisplaying = () =>{
+    this.props.favouriteDisplayChange();
   }
   render() {
+    console.log('redux login',this.props.userLogedIn)
       console.log('redux header',this.props.currentUser)
       console.log('display',this.props.cardDisplay)
     return (
@@ -90,21 +79,23 @@ login() {
                 </label>
               </li>
               <li>
-                <img src={like} onClick={this.favouriteDisplay}/>
+                <img src={like} onClick={this.favouriteDisplaying}/>
               </li>
               <li>
-                {/* {
-                  this.state.guest ? ( */}
+                {
+                  !this.props.userLogedIn ? ( 
+                    <div>
                   <Link to={`/user/sign-up`}>
                     ثبت نام
                     </Link>
                     /
                     <Link to={`/user/login`}> ورود </Link>
+                    </div>
                   
-                  {/* ):
-             
-                <h4>logOUT</h4>
-                } */}
+                ):  
+
+                 <LogOut /> 
+             } 
                
               </li>
             </ul>
@@ -121,12 +112,7 @@ login() {
             </ul>
           </div>
         </header>
-        {/* {this.state.loginPopUp ? (
-          <div className="popUps">
-            <img src={close} onClick={this.closePopUp} />
-            <Login />
-          </div>
-        ) : null} */}
+       
        {
          this.props.cardDisplay ? (
            <Card />
@@ -148,15 +134,15 @@ login() {
 }
 const mapStatToProps = (state) =>{
   return {
-    currentUser : state.currentUser,
-    cardDisplay : state.cardDisplay,
-    favouriteDisplay : state.favouriteDisplay
+    currentUser : state.InitUserReducer.currentUser,
+    cardDisplay : state.InitUserReducer.cardDisplay,
+    favouriteDisplay : state.InitUserReducer.favouriteDisplay,
+    userLogedIn : state.InitUserReducer.userLogedIn
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    cardDisplayChange : () => {dispatch({type: 'CARD_DISPLAY'})},
-    favouriteState : () => {dispatch({type : 'FAVOURITE_DISPALY'})}
-  }
+const mapDispatchToProps = {
+  
+  cardDisplayChange : card_dispaly ,
+  favouriteDisplayChange : favourite_display
 }
 export default connect(mapStatToProps , mapDispatchToProps)(Header);

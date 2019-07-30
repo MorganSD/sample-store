@@ -12,6 +12,9 @@ import Login from './components/login';
 import axios from './axios';
 import {connect} from 'react-redux';
 import UserInfo from './components/userInfo';
+import SearchResult from './components/searchResult';
+import {init_card ,guest ,init_login_user,init_fav} from './actions/actions';
+
 class App extends Component {
   constructor(){
     super();
@@ -21,17 +24,27 @@ class App extends Component {
   }
   
   componentWillMount(){
+    this.props.setCard();
+    this.props.setFavourite();
     if(!localStorage.getItem('jwtToken')){
       this.props.setGuestUser();
             this.setState({
         userLogedIn : true
       })
     }else{
-    
+    let user = JSON.parse(localStorage.getItem('jwtToken'))
+    if(user.guest){
+      this.setState({
+        userLogedIn : true
+      })
+    }else{
       this.props.setUser();
       this.setState({
         userLogedIn : true
       })
+    }
+      
+     
     }
   }
   componentWillUpdate(nextProps){
@@ -42,7 +55,9 @@ class App extends Component {
     
   
   render () {
-    // console.log('redux state',this.props.currentUser)
+    console.log('token g',this.props.userToken)
+    console.log(JSON.parse(localStorage.getItem('card')))
+
     if(this.state.userLogedIn){
     return(
     <React.Fragment>
@@ -53,6 +68,7 @@ class App extends Component {
         <Route path="/item/:address" component={Detail} />
         <Route path="/user/sign-up" component={SignUp} />
         <Route path="/user/Info" component={UserInfo} />
+        <Route path='/search/:search' component={SearchResult} />
         <Footer />
       </Router>
     </React.Fragment>
@@ -64,13 +80,20 @@ class App extends Component {
 
 }
 const mapStateToProps = (state) =>{
-  return {currentUser : state.currentUser}
+  return {currentUser : state.InitUserReducer.currentUser,
+  userToken : state.InitUserReducer.userToken}
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setGuestUser : () => {dispatch({type: 'INIT_GUEST'})},
-    setUser : () => {dispatch({type : 'INIT_LOGIN_USER'})}
-  }
+const mapDispatchToProps = {
+
+  setCard : init_card,
+  setGuestUser : guest,
+  setUser : init_login_user,
+  setFavourite : init_fav
+  // return {
+  //   setGuestUser : () => {dispatch({type: 'INIT_GUEST'})},
+  //   setUser : () => {dispatch({type : 'INIT_LOGIN_USER'})},
+  //   setCard : () => {dispatch ({type : 'INIT_CARD'})}
+  // }
 }
 export default connect(mapStateToProps , mapDispatchToProps)(App);

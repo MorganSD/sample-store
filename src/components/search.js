@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import searchIcon from '../Icon Simplestore/search.png';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from '../axios';
+import { Redirect } from "react-router";
+import {connect} from 'react-redux';
 
 class Search extends Component{
     constructor(){
@@ -9,9 +11,13 @@ class Search extends Component{
         this.state = {
             products :[],
             filteredProduct :[],
-            searchState : false
+            searchState : false,
+            filterVal : null,
+            redirectState : false
+
         }
         this.searching = this.searching.bind(this);
+        this.onSearch = this.onSearch.bind(this);
     }
 
     componentDidMount(){
@@ -27,6 +33,7 @@ class Search extends Component{
 searching(event){
     this.setState({
         filteredProduct : event.target.value.substr(0 , 20),
+        filterVal :event.target.value,
         searchState:true
     })
     if(event.target.value === ''){
@@ -34,16 +41,33 @@ searching(event){
             searchState:false
         })
     }
+    console.log(this.state.filterVal)
+
+}
+onSearch(event){
+    this.props.searchFiltering(this.state.filterVal);
+    event.preventDefault();
+    this.setState({
+        redirectState:true,
+        filteredProduct : '',
+        searchState : false
+    })
 }
     render(){
+
         let filtered = this.state.products.filter((product) => {
             return product.title.indexOf(this.state.filteredProduct) !== -1 ;
         })
+        const { redirectState } = this.state;
+
         return(
             <React.Fragment>
-
+        <form onSubmit={e => {
+            this.onSearch(e);
+          }} className='searchForm'>
                 <label><img src={searchIcon} /></label>
-                <input type="text" placeholder="جستجو" onChange={this.searching} value={this.state.filteredProduct}></input>
+                <input type="text" placeholder="جستجو" onChange={this.searching} value={this.state.filteredProduct} onSubmit={e => {this.onSearch(e)}}></input>
+        </form>  
                 <ul className='searchList'>
                     { this.state.searchState ?
                         filtered.map(item => (
@@ -57,6 +81,7 @@ searching(event){
                    (
                        <span></span>
                    )}
+                    {redirectState && <Redirect to={`/search/${this.state.filterVal}`} />}
                 </ul>
             </React.Fragment>
             
@@ -64,4 +89,16 @@ searching(event){
         )
     }
 }
-export default Search;
+
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+        searchFiltering : (item) => {dispatch({type: 'INIT_SEARCH', item: item})},
+      }
+    };
+  
+  export default connect(
+    null,
+    mapDispatchToProps
+  )(Search);
+  

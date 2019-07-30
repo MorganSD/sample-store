@@ -1,129 +1,193 @@
 import React, { Component } from "react";
-import axios from '../axios';
-import Product from './product';
-import queryString from 'query-string'
- 
+import axios from "../axios";
+import Product from "./product";
+import queryString from "query-string";
+import Spinner from './details/spinner';
 import "../style/itemList.css";
-
-
-
+import {connect} from 'react-redux';
 
 class ItemList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      pageInfo: [],
-      
+      pageInfo: {},
+      spinner:'block'
     };
 
-    this.handlePageChange = this.handlePageChange.bind(this);
-    // this.pageIncrease = this.pageIncrease.bind(this)
+    // this.handlePageChange = this.handlePageChange.bind(this);
+    this.pageIncrease = this.pageIncrease.bind(this);
+    // this.pageDecrease = this.pageDecrease.bind(this)
+  }
+  updateCurrentList = (data) =>{
+    this.props.updateCurrentListOfProducts(data);
   }
   componentWillMount() {
-    const parse = window.location.search
-    console.log('this.querySrtring' ,parse )
     if (this.props.cat === "all") {
-      axios.get(`/shelves/products/`)
-      .then(response => {
-        // console.log(response)
+      axios.get(`/shelves/products/`).then(response => {
+        console.log(response);
+        this.updateCurrentList(response.data.data);
         this.setState({
-                  items: response.data.data.products 
-        })
-      })
+          spinner:'none',
+          items: response.data.data.products,
+          pageInfo: {
+            current_page: response.data.data.current_page,
+            total_page: response.data.data.page_count
+          }
+        });
+      });
     }
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.cat != this.props.cat) {
-        if(this.props.cat === '-price' || this.props.cat === 'price' || this.props.cat ==='new' || this.props.cat === 'favorite'){
-
-
-            axios.get(`/shelves/products/?sort_by=${this.props.cat}`)
-            .then(response => {
-              // console.log(response)
-              this.setState({
-                        items: response.data.data.products 
-              })
-            })
-        }else if (this.props.cat === "all"){
-
-          axios.get(`/shelves/products/`)
+      if (
+        this.props.cat === "-price" ||
+        this.props.cat === "price" ||
+        this.props.cat === "new" ||
+        this.props.cat === "favorite"
+      ) {
+        axios
+          .get(`/shelves/products/?sort_by=${this.props.cat}`)
           .then(response => {
+            this.updateCurrentList(response.data.data);
+
             // console.log(response)
             this.setState({
-                      items: response.data.data.products 
-            })
-          })
-     
-        }else {
-            console.log("new cat", this.props.cat);
-     
-            axios.get(`/shelves/category/address/${this.props.cat}/products/`)
-            .then(response => {
-              // console.log(response)
-              this.setState({
-                        items: response.data.data.products 
-              })
-            })
-         
-        }
-     
+              spinner:'none',
+              items: response.data.data.products,
+              pageInfo: {
+                current_page: response.data.data.current_page,
+                total_page: response.data.data.page_count
+              }
+            });
+          });
+      } else if (this.props.cat === "all") {
+        axios.get(`/shelves/products/`).then(response => {
+          this.updateCurrentList(response.data.data);
+
+          // console.log(response)
+          this.setState({
+            spinner:'none',
+            items: response.data.data.products,
+            pageInfo: {
+              current_page: response.data.data.current_page,
+              total_page: response.data.data.page_count
+            }
+          });
+        });
+      } else {
+        console.log("new cat", this.props.cat);
+
+        axios
+          .get(`/shelves/category/address/${this.props.cat}/products/`)
+          .then(response => {
+            this.updateCurrentList(response.data.data);
+
+            // console.log(response)
+            this.setState({
+              spinner:'none',
+              items: response.data.data.products,
+              pageInfo: {
+                current_page: response.data.data.current_page,
+                total_page: response.data.data.page_count
+              }
+            });
+          });
+      }
     }
   }
-
-  handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`)
-
-    this.setState({activePage: pageNumber})
-  }
-  pageIncrease(){
-  if(this.state.pageInfo.current_page < this.state.pageInfo.total_page){
-    let items = fetch(
-      `http://api.projectant.aasoo.ir/shelves/products/?page=${this.state.pageInfo.current_page + 1}`,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "x-api-key": "0f855b9c2f5ee2a21e530bcaa82a645286724fba",
-          accept: "application/json",
-          "x-store-sub-address": "sib"
-        }
-      }
-    )
-      .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        this.setState({
-          items: response.data.products,
-          pageInfo: {
-            current_page : this.state.pageInfo.current_page + 1
- 
-          }
+  pageIncrease() {
+    // if (this.state.pageInfo.current_page < this.state.pageInfo.total_page) {
+      let next = this.state.pageInfo.current_page + 1;
+      console.log(this.state.pageInfo);
+      if (this.props.cat === "all") {
+        // if(this.state.pageInfo.current_page < this.state.pageInfo.total_page){
+        axios.get(`/shelves/products/?page=${next}`).then(response => {
+          this.setState({
+            items: response.data.data.products,
+            pageInfo: {
+              current_page: next
+            }
+          });
         });
-      });
-  }else{
-    return null
+        // }else{
+        //   console.log('no change')
+        //   return null
+        // }
+      } else if (
+        this.props.cat === "-price" ||
+        this.props.cat === "price" ||
+        this.props.cat === "new" ||
+        this.props.cat === "favorite"
+      ) {
+        axios
+          .get(`/shelves/products/?sort_by=${this.props.cat}/?page=${next}`)
+          .then(response => {
+            this.setState({
+              spinner:'none',
+              items: response.data.data.products,
+              pageInfo: {
+                current_page: response.data.data.current_page
+              }
+            });
+          });
+      } else {
+        axios
+          .get(
+            `/shelves/category/address/${this.props.cat}/products/?page=${next}`
+          )
+          .then(response => {
+            this.setState({
+              spinner:'none',
+              items: response.data.data.products,
+              pageInfo: {
+                current_page: next
+              }
+            });
+          });
+      }
+    // } else {
+    //   alert("no next page");
+    // }
   }
-}
 
-  
-  
   render() {
+    let items = this.state.items.filter(item => item.in_stock > 0)
+    // console.log('path', this.props.location.pathname)
+    console.log("total_page", this.state.pageInfo.total_page);
     return (
       <section className="homeList">
-        {this.state.items ? (
-          this.state.items.map(item => (
-           <Product product={item} />
-          ))
-        ) : (
-          <h1>not found</h1>
+        {/* <Spinner display={this.state.spinner} /> */}
+        {items ? (
+          items.length !== 0 ?(
+          items.map(item => <Product product={item} />)
+       ):<h3>محصولی یافت نشد</h3> ) : (
+        <h3>محصولی یافت نشد</h3>
         )}
-        <div className="pagination" >
-          {/* <div onClick={this.pageIncrease}>بعدی</div>
+        {this.state.pageInfo.total_page>1 ? (
+        <div className="pagination">
+          <div onClick={this.pageIncrease}>بعدی</div>
           <div onClick={this.pageDecrease}>قبلی</div>
-          */}
         </div>
+        ):null
+        }
       </section>
     );
   }
 }
-export default ItemList;
+const mapStateToProps = state => {
+  return { currentListOfProducts: state.currentListOfProducts
+   };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateCurrentListOfProducts: (data) => {
+      dispatch({ type: "UPDATE_CURRENT_LIST_OF_PRODUCTS" , data : data});
+    }
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ItemList);

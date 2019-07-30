@@ -61,7 +61,7 @@
   color: grey;
 }
 .breadcrumb > li:last-of-type > a {
-  color: blue;
+  color: black;
 }
 .detailSummery {
   width: 100%;
@@ -113,10 +113,10 @@
   /* border: 1px solid red; */
   margin-top: 23px;
 }
-.detailSummeryContent > div > p:first-of-type{
+.detailSummeryContent > .product-price > p:first-of-type{
   font-size: 18px;
 }
-.detailSummeryContent > div > p:last-of-type {
+.detailSummeryContent > .product-price > p:last-of-type {
   font-size: 14px;
   color: grey;
   text-align: justify;
@@ -179,7 +179,7 @@
   width: 300px;
   height: 50px;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   background: #1f2c32;
   color: white;
   font-size: 16px;
@@ -305,37 +305,46 @@ color: grey;
 .related  .carousel{
   height: calc(100% - 70px);
   /* border: 1px solid black; */
-  display: -webkit-flex;
+ 
+}
+.related  .carousel>div{
+  height: 100%;
+  /* border: 1px solid red; */
+  /* display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row nowrap; */
+
 }
-.related  .carousel>div>div{
-  width: 250px; 
+.related  .carousel>div>div>div{
+  width: 90%; 
   height: 100%;
-  border: 1px solid green;
-   margin-left: 25px;
+  margin-right: 5%;
+  /* border: 1px solid green; */
   
   
 }
 .carousel-items-wrapper{
   width: 25%;
   height: 100%;
+  float: right;
+  /* border: 1px solid red; */
+  transition: .4s;
 }
-.related  .carousel>div:nth-of-type(4n){
-  margin-left: 0;
-}
-.related  .carousel>div>div>figure{
+
+.related  .carousel>div>div>div>figure{
   width: 100%;
   height: 75%;
   /* background: grey; */
   position: relative;
   overflow: hidden;
   border-radius: 5px;
+  
+  
 }
-.related  .carousel>div>div>figure>a{
+.related  .carousel>div>div>div>figure>a{
 display: block;
   width: 100%;
 height: 100%;
@@ -343,12 +352,12 @@ position: absolute;
 top: 0;
 right: 0;
 }
-.related  .carousel>div>div>figure>a>img{
+.related  .carousel>div>div>div>figure>a>img{
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.related  .carousel>div>div>figure>figcaption{
+.related  .carousel>div>div>div>figure>figcaption{
   width: 100%;
   height: 40px;
   position: absolute;
@@ -362,21 +371,22 @@ right: 0;
   transform: translateY(40px);
   transition: .4s;
 }
-.related  .carousel>div>div>figure:hover>figcaption{
+.related  .carousel>div>div>div>figure:hover>figcaption{
   transform: translateY(0);
 }
-.related  .carouselArrow{
+
+.carousel  .carouselArrow{
   position: absolute;
   width: 15px;
   top: 50%;
+  cursor: pointer;
 }
-.related  .carouselArrow:nth-of-type(1){
+.carousel  .carouselArrow:first-child{
   right: -40px;
 }
-.related .carouselArrow:nth-of-type(2){
+.carousel .carouselArrow:last-child{
   left: -40px;
   transform: rotate(180deg);
-  min-width: 100%;
 }
 .related-Rate>img{
   width: 15px;
@@ -385,9 +395,12 @@ right: 0;
 
 .pagination{
   width: auto;
+  position: absolute;
   height: 40px;
   /* border: 1px solid black; */
   margin-top: 30px;
+  float: right;
+  bottom: -70px;
 }
 .pagination>div{
   width: 45px;
@@ -412,8 +425,45 @@ right: 0;
 }
 
 .product-options{
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
-  height: 100px;
+  height: auto;
   margin-top: 40px;
+  margin-bottom: 30px;
+}
+.choice_input{
+  display: none;
+}
+.choice_input:checked + label{
+  border: 1px solid blue
+}
+.choice_label{
+  display: block;
+  width: 82px;
+  height: 27px;
+  border: 1px solid rgb(180, 180, 180);
+  border-radius: 3px;
+  float: right;
+  margin: 0 10px 10px;
+  font-size: 12px;
+  padding: 0 3px;
+  line-height: 27px;
+  display: flex;
+  flex-flow: row nowrap;
+  /* justify-content: space-between; */
+  cursor: pointer;
+  transition: .4s;
+}
+.choice_label>span{
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  /* border: 1px solid black; */
+  margin:1.5px 4px 0 8px 
+}
+.product-options>p{
+  font-size: 14px;
+  float: right;
+  margin-left: 10px;
 }

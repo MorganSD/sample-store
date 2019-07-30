@@ -2,6 +2,10 @@
     .itemBox{
         margin-left: 54px;
     } 
+    .related .carousel>div>div>div{
+        width: 65%;
+        margin-right: 17%;
+    }
     
 }
 
@@ -10,4 +14,8 @@
         width: 190px;
         margin-left: 14px;
     } 
+    .related .carousel>div>div>div{
+        width: 80%;
+        margin-right: 10%;
+    }
 }

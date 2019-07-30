@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import "../style/favourite.css";
 import { connect } from "react-redux";
+import {favourite_display } from '../actions/actions';
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
+
 import close from "../Icon Simplestore/close.png";
+import "../style/favourite.css";
 
 class Favourite extends Component {
   constructor() {
@@ -11,9 +15,9 @@ class Favourite extends Component {
       currentUser: JSON.parse(localStorage.getItem("jwtToken"))
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.favouriteProduct) {
-      if (this.props.favouriteProduct.length != 0) {
+      if (this.props.favouriteProduct.length > 0) {
         this.setState({
           favourite_ptoduct: true
         });
@@ -25,24 +29,25 @@ class Favourite extends Component {
     }
   }
   notDispaly = () => {
-    if (this.props.favouriteDisplay === true) {
-      this.props.favouriteState();
-    }
+    this.props.favouriteDisplayChange();
   };
+
   render() {
+    var commaNumber = require("comma-number");
+    console.log(this.state.favourite_ptoduct,'fav dis')
     return (
       <div className="favourite">
         <div>
           <img src={close} onClick={this.notDispaly} />
           {!this.state.currentUser.guest ? (
             <div>
-              {this.state.favourite_ptoduct ? (
+              {this.props.favouriteProducts ? (
                 this.props.favouriteProducts.map(product => (
                   <div className="items">
-                    <img src={product.thumbnail} />
+                    <Link to={`/item/${product.address}`} onClick={this.notDispaly}><img src={product.thumbnail} /></Link>
                     <div className="item-info">
-                      <p>{product.title}</p>
-                      <p>{product.price} تومان</p>
+                    <p><Link to={`/item/${product.address}`} onClick={this.notDispaly}>{product.title} </Link></p>
+                      <p>{commaNumber(product.price)} تومان</p>
                     </div>
                   </div>
                 ))
@@ -67,17 +72,13 @@ class Favourite extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    favouriteDisplay: state.favouriteDisplay,
-    favouriteProducts: state.favouriteProducts
+    favouriteDisplay : state.InitUserReducer.favouriteDisplay,
+    favouriteProducts: state.InitUserReducer.favouriteProducts
   };
 };
-const mapDispatchToProps = (dispatch) => {
-  return {
-    favouriteState: () => {
-      dispatch({ type: "FAVOURITE_DISPALY" });
-    }
-  };
-};
+const mapDispatchToProps = {
+    favouriteDisplayChange : favourite_display
+}
 export default connect(
   mapStateToProps,
   mapDispatchToProps

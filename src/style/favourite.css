@@ -27,7 +27,7 @@
     left: 0; */
     float: left;
     animation: favourite .4s linear forwards;
-    overflow-y: scroll; 
+    /* overflow-y: scroll;  */
 
 }
 .favourite>div > img:first-child {
@@ -40,33 +40,37 @@
       width: 100%;
       height: 100%;
       padding: 50px;
+      overflow-y: scroll;
   }
-  .card-items {
-    width: 88%;
-    height: calc(100% - 50px);
-    margin-right: 2.5%;
-    margin-top: 50px;
-  
+  .favourite>div>div::-webkit-scrollbar {
+    width: 1px;
   }
-  .card-items>div{
-      width: 100%;
-      height: auto;
-      padding-right: 10px;
-  }
-  .card-items .items {
+  .favourite .items {
     width: 100%;
     height: 100px;
     margin-bottom: 20px;
   }
-  
-  .card-items .items > img {
+  .favourite .items >a {
+    display: block;
     width: 100px;
     height: 80px;
     border: 1px solid black;
-    object-fit: cover;
+    /* object-fit: cover; */
     margin-top: 5px;
+    float: right;
+    color: black
   }
-  .card-items .item-info {
+  .favourite .items a:visited,.favourite .items a{
+    color: black
+  }
+  .favourite .items >a> img {
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid black; */
+    object-fit: cover;
+    /* margin-top: 5px; */
+  }
+  .favourite  .item-info {
     width: 250px;
     height: 100%;
     /* border: 1px solid red; */
@@ -74,62 +78,16 @@
     float: left;
   }
   
-  .card-items .item-info > p:nth-of-type(1) {
+  .favourite  .item-info > p:nth-of-type(1) {
     width: 100%;
     float: right;
   }
-  .card-items .item-info > p:nth-of-type(2) {
+  .favourite  .item-info > p:nth-of-type(2) {
     width: 50%;
     float: right;
     margin-top: 10px;
   }
-  .card-items .item-info > span {
-    display: block;
-    width: 70px;
-    height: 20px;
-    border: 1px solid rgb(179, 179, 179);
-    float: left;
-    margin-top: 20px;
-    position: relative !important;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  .card-items .item-info > span button {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 0;
-    background: transparent;
-    /* border: 1px solid black */
-    outline: none;
-    cursor: pointer;
-  }
-  
-  .card-items .item-info > span button:first-child {
-    right: 0;
-    border-left: 1px solid rgb(179, 179, 179);
-  }
-  .card-items .item-info > span button:last-child {
-    left: 0;
-    border-right: 1px solid rgb(179, 179, 179);
-  }
-  .card-items .item-info > span button > img {
-    width: 8px;
-    height: 100%;
-    object-fit: cover;
-  }
-  .card-items .item-info > span > span {
-    display: block;
-    width: 30px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 20px;
-    text-align: center;
-    line-height: 20px;
-    font-size: 12px;
-    /* border: 1px solid red; */
-  }
+ 
   .noProduct{
     margin: 100px auto;
     text-align: center;

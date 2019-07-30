@@ -1,99 +1,152 @@
 import React, { Component } from "react";
 import SliderImg from "./itemImgSlider";
 import Rate from "./rate";
-import Technical from '../components/details/technical-features';
-import About from './details/about';
-import CommentRate from './details/comment rates';
-import Related from './details/related products';
-import Comments from './details/comment';
-import Breadcrum from './details/breadcrum';
+import Technical from "../components/details/technical-features";
+import About from "./details/about";
+import CommentRate from "./details/comment rates";
+import Related from "./details/related products";
+import Comments from "./details/comment";
+import Breadcrumb from "./details/breadcrumb";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import axios from '../axios';
-import {connect} from 'react-redux';
+import axios from "../axios";
+import { connect } from "react-redux";
+import Choice from "../components/details/choice";
 
 import Addbasket from "../Icon Simplestore/Asset-white.png";
 import formaloo from "../Icon Simplestore/formaloo-01.png";
 import breadcrumbIcon from "../Icon Simplestore/apple-keyboard-control-3.png";
-import like from '../Icon Simplestore/like.png'
+import notFav from "../Icon Simplestore/like.png";
+import isFav from "../Icon Simplestore/like2.png";
+
 import "../style/detail.css";
 import "../style/react-tabs.css";
 import "../style/itemList.css";
 
-const Options= (props) =>{
-  let options_result;
-  axios.post('/fields/types/choice/',{
-    choice_items : props.options.choice_items,
-    title : props.options.title,
-    choice_type :  props.options.choice_type
+import {
+  add_to_card,
+  delete_favourite,
+  add_favourite,
+  favourite_display
+} from "../actions/actions";
 
-  }).then(response => {
-    console.log('options',response)
-    return response
-  })
-  
-}
+const FavImg = props => {
+  if (props.favStatus) {
+    return <img src={isFav} className="add-favourite" />;
+  } else {
+    return <img src={notFav} className="add-favourite" />;
+  }
+};
+
+const Options = props => {
+  if (props.options.type === "choice") {
+    return <Choice options={props.options} />;
+  } else {
+    return <h4>selection</h4>;
+  }
+};
 
 class Detail extends Component {
   constructor() {
     super();
     this.state = {
       product: [],
-      favourite_active : false
+      isFavourite: false
     };
   }
   componentWillMount() {
     const { address } = this.props.match.params;
     console.log(address);
-    axios.get(`/shelves/product/address/${address}`)
-    .then( response => 
-    {  
-      this.setState({
-        product: response.data.data.product
-      })
-      console.log(response.data.data.product)
+    axios.get(`/shelves/product/address/${address}`).then(response => {
+      if (response.data.data.product.favorite === true) {
+        this.setState({
+          isFavourite: true
+        });
+      } else {
+        this.setState({
+          isFavourite: false
+        });
       }
-    )
-   
-  }
-componentDidUpdate(prevProps){
-  if(prevProps.match.params != this.props.match.params){
-    let {address} = this.props.match.params
-    axios.get(`/shelves/product/address/${address}`)
-    .then( response => 
-      
       this.setState({
         product: response.data.data.product
-      })
-    )
-   
+      });
+      console.log(response.data.data.product);
+    });
   }
-}
 
-addToCard = () =>{
-  this.props.addItemToCart(this.state.product)
-}
-addToFavourite= () =>{
-  this.props.addItemToFavourite(this.state.product)
-}
+  componentDidUpdate(prevProps) {
+    let { address } = this.props.match.params;
+    if (prevProps.match.params != this.props.match.params) {
+      axios.get(`/shelves/product/address/${address}`).then(response =>
+        this.setState({
+          product: response.data.data.product
+        })
+      );
+    }
+  }
+  updateCard = () => {
+    axios.get("/orders/cart/show/").then(res => {
+      console.log("updated card", res.data.data.cart);
+      if (res.status < 400) {
+        localStorage.setItem("card", JSON.stringify(res.data.data.cart));
+        this.props.addProductToCart(res.data.data.cart);
+      } else {
+        console.log("update cart error", res.errors);
+      }
+    });
+  };
 
-About = (props) => {
-  
-}
-  render() {
-    var commaNumber = require('comma-number')
+  addToCard = (max_order, slug) => {
+    let cardStorage = JSON.parse(localStorage.getItem("card"));
+    let item = cardStorage.cart_products.find(
+      item => item.product.slug === slug
+    );
+    if (max_order === null) {
+      max_order = 999;
+    }
+    if (item) {
+      if (item.count < max_order) {
+        this.props.addProductToCart(slug);
+      } else {
+        alert(`سقف سفارش ${max_order}`);
+      }
+    } else {
+      this.props.addProductToCart(slug);
+    }
+    console.log("add", item, slug, max_order);
+  };
 
-    const options_length = () => {
-    if(this.state.options){
-      if(this.state.options.length != 0){
-        return true;
+  handleFavourite = slug => {
+    if (this.state.isFavourite) {
+      if (window.confirm("محصول از لیست مورد علاقه های شما حذف شود ؟")) {
+        this.props.deleteFavorite(slug);
+        this.setState({
+          isFavourite: false
+        });
+      }
+    } else {
+      let currnet_user = JSON.parse(localStorage.getItem('jwtToken'))
+      if(currnet_user.guest){
+        this.favDispaly();
       }else{
-        return false;
+        this.favDispaly();
+        this.props.addFavourite(slug);
+        this.setState({
+          isFavourite: true
+        });
       }
-       
-    }else return false
-  }
-    // console.log(this.state.product);
+     
+    }
+  };
+  favDispaly = () => {
+    if (!this.props.favouriteDisplay) {
+      this.props.favouriteDisplayChange();
+    }
+  };
+
+  render() {
+    var commaNumber = require("comma-number");
+
     return (
       <div id="detail">
         <div className="logo">
@@ -102,41 +155,56 @@ About = (props) => {
             <p>فرم ساز آنلاین فرمالو</p>
           </Link>
         </div>
-        
-          <ol className="breadcrumb">
-            {/* <Breadcrum product={this.state.product} /> */}
-            <li>
-              <img src={breadcrumbIcon} />
-              <a src="#">{this.state.product.title}</a>
-            </li>
-          </ol>
-       
+
+        <ol className="breadcrumb">
+          <Breadcrumb product={this.state.product} />
+          <li>
+            <img src={breadcrumbIcon} />
+            <a src="#">{this.state.product.title}</a>
+          </li>
+        </ol>
+
         <div className="detailSummery">
           <div className="itemPic">
-            <SliderImg product={this.state.product}/>
+            <SliderImg product={this.state.product} />
           </div>
           <div className="detailSummeryContent">
             <h2>{this.state.product.title}</h2>
             <span className="rate">
               <Rate product={this.state.product} />
             </span>
-            <div className='add-favourite-wrapper'><img src={like} className='add-favourite' onClick={this.addToFavourite}/></div>
-           
-           <div className='product-options'>
-             { this.state.options ? (
-               this.state.options.map((option) =>
-                <Options options={option}/>
-             )): null
-             }
-           </div>
-           
-            <div className='product-price'>
+            <div
+              className="add-favourite-wrapper"
+              onClick={() => {
+                this.handleFavourite(this.state.product.slug);
+              }}
+            >
+              <FavImg favStatus={this.state.isFavourite} />
+            </div>
+
+            <div className="product-options">
+              {this.state.product.options
+                ? this.state.product.options.map(option => (
+                    <Options options={option} />
+                  ))
+                : null}
+            </div>
+
+            <div className="product-price">
               <p>{commaNumber(this.state.product.price)} تومان</p>
-              <button className="basket-btn" onClick={this.addToCard}>
+              <button
+                className="basket-btn"
+                onClick={() => {
+                  this.addToCard(
+                    this.state.product.max_order_count,
+                    this.state.product.slug
+                  );
+                }}
+              >
                 <img src={Addbasket} />
                 اضافه کردن به سبد خرید
               </button>
-             
+
               <p>{this.state.product.short_description}</p>
             </div>
           </div>
@@ -162,8 +230,8 @@ About = (props) => {
                 <div className="commnet-star">
                   <div>
                     <CommentRate product={this.state.product} />
-                    </div>
-                  
+                  </div>
+
                   <p>{this.state.product.ratings_count} مشارکت کننده</p>
                 </div>
               </div>
@@ -178,13 +246,19 @@ About = (props) => {
     );
   }
 }
-
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = state => {
   return {
-    addItemToCart : (item) => {dispatch({type: 'ADD_TO_BASKET', item: item})},
-    addItemToFavourite: (item) => {dispatch({type: 'ADD_TO_FAVOURITE', item: item})}
+    favouriteDisplay: state.InitUserReducer.favouriteDisplay
+  };
+};
 
-  }
-}
-export default connect(null , mapDispatchToProps)(Detail);
+const mapDispatchToProps = {
+  addProductToCart: add_to_card,
+  deleteFavorite: delete_favourite,
+  addFavourite: add_favourite,
+  favouriteDisplayChange: favourite_display
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Detail);

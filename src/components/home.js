@@ -1,15 +1,26 @@
 import React, { Component } from "react";
 import SidebarMain from "./sidebar";
 import ItemList from "./itemList";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import SearchResult from './searchResult';
+import Select from 'react-select';
+
 import "../style/style.css";
+
+const options = [
+  { value: '-price', label: 'گران ترین' },
+  { value: 'price', label: 'ارزان ترین' },
+  { value: 'favorite', label: 'محبوب ترین' },
+  { value: 'new', label: 'جدید ترین' }
+];
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
-      category: "all"
+      category: "all",
+      selectedOption : null
     };
-    this.sorting = this.sorting.bind(this);
   }
 
   componentDidMount() {
@@ -31,24 +42,33 @@ class Home extends Component {
     }
     //  console.log('didUpdate',this.state.category)
   }
-  sorting(event) {
-    this.setState({
-      category: event.target.value
-    });
-  }
+  handleChange = selectedOption => {
+    this.setState({ category : selectedOption.value,
+    selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  };
+  
   render() {
+    const { selectedOption } = this.state;
+
     console.log("w cat", this.state.category);
     return (
+
       <div id="home">
         <SidebarMain />
-        <select className="sort" onChange={this.sorting}>
+        <Select
+        value={selectedOption}
+        onChange={this.handleChange}
+        options={options}
+        placeholder={'مرتب سازی براساس '}
+/>
+        {/* <select className="sort" onChange={this.sorting}>
           <option value="all">همه</option>
-
           <option value="-price">گران ترین</option>
           <option value="price">ارزان ترین</option>
           <option value="favorite">محبوب ترین </option>
           <option value="new">جدید ترین</option>
-        </select>
+        </select> */}
         <ItemList cat={this.state.category} location={this.props.location}/>
       </div>
     );

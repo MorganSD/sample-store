@@ -1,0 +1,31 @@
+.userInfo{
+    width: 300px;
+    height: auto;
+    margin: 100px auto;
+    /* border: 1px solid grey; */
+    text-align:  center;
+}
+.userInfo>h3{
+    border-bottom: 2px solid rgb(185, 185, 185);
+}
+.userInfo>div{
+    width: 100%;
+    height: auto;
+    padding: 30px 0 20px
+}
+.userInfo>div>p{
+    border-bottom: 1px solid rgb(199, 199, 199);
+    margin-bottom: 20px;
+    padding-bottom:10px 
+}
+.userInfo>div>p:last-child{
+    border-bottom:  none
+}
+.userInfo>a{
+    display: block;
+    color: blue;
+    /* border-bottom: 1px solid blue; */
+    cursor: pointer;
+    margin-bottom: 10px;
+    
+}
