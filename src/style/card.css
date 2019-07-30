@@ -72,12 +72,21 @@
   margin-bottom: 20px;
 }
 
-.card-items .items > img {
+.card-items .items >a {
+  display: block;
   width: 100px;
   height: 80px;
   border: 1px solid black;
-  object-fit: cover;
+  /* object-fit: cover; */
   margin-top: 5px;
+  float: right;
+}
+.card-items .items >a >img {
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid black; */
+  object-fit: cover;
+  /* margin-top: 5px; */
 }
 .card-items .item-info {
   width: 250px;
@@ -91,12 +100,34 @@
   width: 100%;
   float: right;
 }
+.card-items .item-info > p:nth-of-type(1)>a , .card-items .item-info > p:nth-of-type(1)>a:visited{
+  color: black;
+}
 .card-items .item-info > p:nth-of-type(2) {
   width: 50%;
   float: right;
   margin-top: 10px;
 }
-.card-items .item-info > span {
+/* .card-items .item-info >span:first-child{
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  float: left;
+} */
+/* .card-items .item-info >span:first-child .lds-spinner{
+  margin-right: none !important;
+}
+.card-items .item-info >span:first-child .lds-spinner div{
+  transform-origin: 30px 13px !important;
+}
+.card-items .item-info >span:first-child .lds-spinner div:after{
+  
+    width: 2px !important;
+    height: 4px !important;
+   
+} */
+.card-items .item-info > span:last-child {
   display: block;
   width: 70px;
   height: 20px;
@@ -107,31 +138,31 @@
   border-radius: 5px;
   overflow: hidden;
 }
-.card-items .item-info > span button {
+.card-items .item-info > span:last-child button {
   width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 0;
-  background: transparent;
-  /* border: 1px solid black */
-  outline: none;
-  cursor: pointer;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    background: transparent;
+    /* border: 1px solid black */
+    outline: none;
+    cursor: pointer;
 }
 
-.card-items .item-info > span button:first-child {
+.card-items .item-info > span:last-child button:first-child {
   right: 0;
-  border-left: 1px solid rgb(179, 179, 179);
+    border-left: 1px solid rgb(179, 179, 179);
 }
-.card-items .item-info > span button:last-child {
+.card-items .item-info > span:last-child button:last-child {
   left: 0;
   border-right: 1px solid rgb(179, 179, 179);
 }
-.card-items .item-info > span button > img {
+.card-items .item-info > span:last-child button > img {
   width: 8px;
-  height: 100%;
-  object-fit: cover;
+    height: 100%;
+    object-fit: cover;
 }
-.card-items .item-info > span > span {
+.card-items .item-info > span:last-child > span {
   display: block;
   width: 30px;
   height: 100%;
