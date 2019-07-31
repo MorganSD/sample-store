@@ -1,0 +1,179 @@
+/*start wrapper order */
+#order{
+    width: 100%;
+    min-height: 100vh;  
+}
+
+
+/*end wrapper order */
+/*start card */
+
+  #order  .card {
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 7; */
+
+    width: 450px;
+    height: 100%;
+    float: left;
+    background: white;
+    /* transform: translateX(-500px); */
+    transform-origin: left;
+    /* animation: basket .4s linear forwards; */
+  }
+  #order .card > img:first-child {
+    width: 20px;
+    float: left;
+    margin: 15px;
+    cursor: pointer;
+  }
+  #order  .card-items {
+    width: 88%;
+    height: calc(100% - 50px);
+    margin-right: 2.5%;
+    margin-top: 50px;
+    overflow-y: scroll;
+  
+  
+  }
+  #order  .card-items::-webkit-scrollbar {
+    width: 1px;
+  }
+  #order  .card-items>div{
+      width: 100%;
+      height: auto;
+      padding-right: 10px;
+      /* overflow-y: scroll; */
+  }
+  #order  .card-items .items {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 20px;
+  }
+  
+  #order .card-items .items >a {
+    display: block;
+    width: 100px;
+    height: 80px;
+    border: 1px solid black;
+    /* object-fit: cover; */
+    margin-top: 5px;
+    float: right;
+  }
+  #order .card-items .items >a >img {
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid black; */
+    object-fit: cover;
+    /* margin-top: 5px; */
+  }
+  #order .card-items .item-info {
+    width: 250px;
+    height: 100%;
+    /* border: 1px solid red; */
+    padding: 10px 0;
+    float: left;
+  }
+  
+  #order .card-items .item-info > p:nth-of-type(1) {
+    width: 100%;
+    float: right;
+  }
+  #order .card-items .item-info > p:nth-of-type(1)>a , .card-items .item-info > p:nth-of-type(1)>a:visited{
+    color: black;
+  }
+  #order  .card-items .item-info > p:nth-of-type(2) {
+    width: 50%;
+    float: right;
+    margin-top: 10px;
+  }
+
+  #order .card-items .item-info > span:last-child {
+    display: block;
+    width: 70px;
+    height: 20px;
+    border: 1px solid rgb(179, 179, 179);
+    float: left;
+    margin-top: 20px;
+    position: relative !important;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  #order .card-items .item-info > span:last-child button {
+    width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 0;
+      background: transparent;
+      /* border: 1px solid black */
+      outline: none;
+      cursor: pointer;
+  }
+  
+  #order .card-items .item-info > span:last-child button:first-child {
+    right: 0;
+      border-left: 1px solid rgb(179, 179, 179);
+  }
+  #order .card-items .item-info > span:last-child button:last-child {
+    left: 0;
+    border-right: 1px solid rgb(179, 179, 179);
+  }
+  #order  .card-items .item-info > span:last-child button > img {
+    width: 8px;
+      height: 100%;
+      object-fit: cover;
+  }
+  #order .card-items .item-info > span:last-child > span {
+    display: block;
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    /* border: 1px solid red; */
+  }
+  
+  #order  .card-items .total-price {
+    width: 100%;
+    height: 100px;
+    border-top: 2px solid rgb(172, 172, 172);
+    margin-top: 30px;
+    line-height: 100px;
+    color: grey;
+    
+  }
+  #order .card-items .total-price>p:first-child{
+      float: right;
+  }
+  #order  .card-items .total-price>p:last-child{
+      float: left;
+  }
+  #order .card-items .submit-order{
+     display: block;
+      width: 70%;
+      height: 50px;
+      background: #1f2c32;
+      border-radius: 5px;
+      margin-right: 15%;
+      margin-bottom: 30px;
+      text-align: center
+  }
+  #order  .card-items .submit-order>a{
+      display: block;
+      width: 100%;
+      height: 100%;
+      line-height: 50px;
+      color: white;
+      font-size: 15px;
+  }
+  .noProduct{
+    margin: 100px auto;
+    text-align: center;
+    color: grey;
+  }
+
+/* end card */
