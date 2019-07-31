@@ -13,7 +13,8 @@ import axios from './axios';
 import {connect} from 'react-redux';
 import UserInfo from './components/userInfo';
 import SearchResult from './components/searchResult';
-import {init_card ,guest ,init_login_user,init_fav} from './actions/actions';
+import {init_card ,guest ,init_login_user,init_fav,all_list} from './actions/actions';
+import Order from './components/submitOrder';
 
 class App extends Component {
   constructor(){
@@ -24,6 +25,7 @@ class App extends Component {
   }
   
   componentWillMount(){
+    this.props.init_list();
     this.props.setCard();
     this.props.setFavourite();
     if(!localStorage.getItem('jwtToken')){
@@ -69,6 +71,7 @@ class App extends Component {
         <Route path="/user/sign-up" component={SignUp} />
         <Route path="/user/Info" component={UserInfo} />
         <Route path='/search/:search' component={SearchResult} />
+        <Route path='/order/submit' component={Order} />
         <Footer />
       </Router>
     </React.Fragment>
@@ -89,7 +92,8 @@ const mapDispatchToProps = {
   setCard : init_card,
   setGuestUser : guest,
   setUser : init_login_user,
-  setFavourite : init_fav
+  setFavourite : init_fav,
+  init_list : all_list
   // return {
   //   setGuestUser : () => {dispatch({type: 'INIT_GUEST'})},
   //   setUser : () => {dispatch({type : 'INIT_LOGIN_USER'})},
