@@ -11,7 +11,7 @@ import Card from "./card";
 import {connect}  from 'react-redux';
 import Favourite from '../components/favourite';
 import LogOut from '../components/logOut';
-import {card_dispaly,favourite_display } from '../actions/actions';
+import {card_dispaly,favourite_display ,list_by_cat} from '../actions/actions';
 
 
 class Header extends Component {
@@ -54,6 +54,9 @@ login() {
 
   favouriteDisplaying = () =>{
     this.props.favouriteDisplayChange();
+  }
+  getList = (address) =>{
+    this.props.get_list_cat(address);
   }
   render() {
     console.log('redux login',this.props.userLogedIn)
@@ -103,7 +106,7 @@ login() {
               {this.state.categories ? (
                 this.state.categories.map(category => (
                   <li key={category.title}>
-                    <Link to={`/${category.address}`}>{category.title}</Link>
+                    <Link to={`/${category.address}`} onClick={()=>{this.getList(category.address)}}>{category.title}</Link>
                   </li>
                 ))
               ) : (
@@ -143,6 +146,7 @@ const mapStatToProps = (state) =>{
 const mapDispatchToProps = {
   
   cardDisplayChange : card_dispaly ,
-  favouriteDisplayChange : favourite_display
+  favouriteDisplayChange : favourite_display,
+  get_list_cat : list_by_cat
 }
 export default connect(mapStatToProps , mapDispatchToProps)(Header);

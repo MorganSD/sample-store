@@ -4,7 +4,7 @@ import ItemList from "./itemList";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import SearchResult from './searchResult';
 import Select from 'react-select';
-
+import Order from '../components/submitOrder';
 import "../style/style.css";
 
 const options = [
@@ -70,6 +70,7 @@ class Home extends Component {
           <option value="new">جدید ترین</option>
         </select> */}
         <ItemList cat={this.state.category} location={this.props.location}/>
+        {/* <Order /> */}
       </div>
     );
   }
