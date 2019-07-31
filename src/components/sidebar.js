@@ -5,6 +5,7 @@ import formaloo from '../Icon Simplestore/formaloo-01.png';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from '../axios';
 import {connect} from 'react-redux';
+import {filter_list} from '../actions/actions';
 
 class SidebarMain extends Component {
   constructor(props) {
@@ -13,7 +14,10 @@ class SidebarMain extends Component {
       brands: []
     }
   }
-  
+  filterList = (category , field_slug , choice_slug) => { 
+    this.props.filter_list(category, field_slug, choice_slug);
+    alert('hi')
+  }
   render() {
    
     return (
@@ -24,10 +28,10 @@ class SidebarMain extends Component {
         <p>فرم ساز آنلاین فرمالو</p>
         </Link>
       </div>
-      {this.props.currentListOfProducts ? 
-      this.props.currentListOfProducts.category ? (
-        this.props.currentListOfProducts.category.filters ?(
-     <Accordion filters={this.props.currentListOfProducts.category.filters}/>
+      {this.props.product_list ? 
+      this.props.product_list.category ? (
+        this.props.product_list.category.filters ?(
+     <Accordion list={this.props.product_list} func={this.filterList} />
      ):null
       ):null
       :null
@@ -38,13 +42,21 @@ class SidebarMain extends Component {
   }
 }
 const mapStateToProps = state => {
-  return { currentListOfProducts: state.InitUserReducer.currentListOfProducts
+  return { currentListOfProducts: state.InitUserReducer.currentListOfProducts,
+    product_list : state.InitUserReducer.product_list
    };
 };
+const mapDispatchToProps = {
+  
+  filter_list : filter_list
+
+}
+
 
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(SidebarMain);
 
 
@@ -53,10 +65,10 @@ class Accordion extends React.Component {
   render () {
     return (
         <ul {...{ className: 'accordion-list' }}>
-          {this.props.filters.map((filter, key) => 
+          {this.props.list.category.filters.map((filter, key) => 
              (
               <li {...{ className: 'accordion-list__item', key }}>
-                <AccordionItem filter={filter} />
+                <AccordionItem filter={filter} category={this.props.list.category} filterFunc={this.props.func}/>
               </li>
             )
           )}
@@ -69,7 +81,7 @@ class AccordionItem extends React.Component {
   state = {
     opened: false
   }
-  
+ 
   render () {
     const {opened} = this.state
     
@@ -77,7 +89,7 @@ class AccordionItem extends React.Component {
       <div
         {...{
           className: `accordion-item, ${opened && 'accordion-item--opened'}`,
-          onClick: () => { this.setState({ opened: !opened }) }
+          onClick: () => { this.setState({ opened: true }) }
         }}
       >
         <div {...{ className: 'accordion-item__line' ,
@@ -90,7 +102,8 @@ class AccordionItem extends React.Component {
         </div>
           <div {...{ className: 'accordion-item__inner' }}>
             {this.props.filter.choice_items.map(choice => (
-            <div {...{ className: 'accordion-item__content' }}>
+            <div {...{ className: 'accordion-item__content' ,
+             onClick: () =>{this.props.filterFunc(this.props.category.slug , this.props.filter.slug ,choice.slug)}} }>
               <p {...{ className: 'accordion-item__paragraph' }}>
                 {choice.title}
               </p>
