@@ -10,7 +10,8 @@ import {
   FAVOURITE_DISPALY,
   UPDATE_FAVOURITES,
   INIT_USER_TOKEN,
-  INIT_LOGOUT_USER
+  INIT_LOGOUT_USER,
+  INIT_LIST
 } from "../actions/actions";
 
 const initialState = {
@@ -29,7 +30,8 @@ const initialState = {
   search_val: null,
   userLogedIn: false,
   userToken: null,
-  currentListOfProducts: []
+  currentListOfProducts: [],
+  product_list : []
 };
 
 const InitUserReducer = (state = initialState, action) => {
@@ -112,6 +114,12 @@ const InitUserReducer = (state = initialState, action) => {
         ...state,
         currentListOfProducts: action.data
       };
+    }
+    case INIT_LIST :{
+      return{
+        ...state,
+        product_list : action.list
+      }
     }
     default:
       return state;

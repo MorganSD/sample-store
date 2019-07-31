@@ -20,7 +20,7 @@ class ItemList extends Component {
     // this.pageDecrease = this.pageDecrease.bind(this)
   }
   updateCurrentList = (data) =>{
-    this.props.updateCurrentListOfProducts(data);
+    // this.props.updateCurrentListOfProducts(data);
   }
   componentWillMount() {
     if (this.props.cat === "all") {
@@ -152,8 +152,11 @@ class ItemList extends Component {
   }
 
   render() {
-    let items = this.state.items.filter(item => item.in_stock > 0)
+    // let items = this.state.items.filter(item => item.in_stock > 0)
     // console.log('path', this.props.location.pathname)
+    let items = this.props.product_list.products
+    // let items = list.filter(item => item.in_stock > 0)
+    // let items = this.props.product_list.products.filter(item => item.in_in_stock >0)
     console.log("total_page", this.state.pageInfo.total_page);
     return (
       <section className="homeList">
@@ -175,19 +178,20 @@ class ItemList extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-  return { currentListOfProducts: state.currentListOfProducts
-   };
-};
-
-const mapDispatchToProps = dispatch => {
+const mapStatToProps = (state) =>{
   return {
-    updateCurrentListOfProducts: (data) => {
-      dispatch({ type: "UPDATE_CURRENT_LIST_OF_PRODUCTS" , data : data});
-    }
-  };
+    product_list : state.InitUserReducer.product_list,
+  }
+}
+
+const mapDispatchToProps = {
+  // return {
+  //   updateCurrentListOfProducts: (data) => {
+  //     dispatch({ type: "UPDATE_CURRENT_LIST_OF_PRODUCTS" , data : data});
+  //   }
+  // };
 };
 export default connect(
-  mapStateToProps,
+  mapStatToProps,
   mapDispatchToProps
 )(ItemList);
