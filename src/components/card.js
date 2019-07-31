@@ -4,6 +4,7 @@ import { inc_count, card_dispaly, dec_count ,delete_product} from "../actions/ac
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "../axios";
 import Spinner from "../components/details/spinner";
+import noPhoto from "../Icon Simplestore/noPhoto.png";
 
 import close from "../Icon Simplestore/close.png";
 import plus from "../Icon Simplestore/+.png";
@@ -57,7 +58,7 @@ class Card extends Component {
     var commaNumber = require("comma-number");
 
     return (
-      <section className="card-popUp">
+      <section className="card-popUp" id='pre_order'>
         <div onClick={this.closeCard} />
         <div className="card">
           <img src={close} onClick={this.notDispaly} />
@@ -69,8 +70,13 @@ class Card extends Component {
                   this.props.cardProduct.cart_products.map(product => (
                     <div className="items">
                       <Link to={`/item/${product.product.address}`} onClick={this.notDispaly}>
-                      <img src={product.product.thumbnail} />
-                      </Link>
+                      <img
+                        src={
+                          product.product.thumbnail === null
+                            ? noPhoto
+                            : product.product.thumbnail
+                        }
+                      />                      </Link>
                       <div className="item-info">
                         <p><Link to={`/item/${product.product.address}`} onClick={this.notDispaly}>{product.product.title} </Link></p>
                         <p>{commaNumber(product.product.price)} تومان</p>

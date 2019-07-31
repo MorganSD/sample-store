@@ -46,7 +46,7 @@
 }
 .itemBox>figure>a>img{
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     top: 0;
 
 

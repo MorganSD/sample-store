@@ -113,6 +113,10 @@
   /* border: 1px solid red; */
   margin-top: 23px;
 }
+.detailSummeryContent > .product-price> h4{
+  color: rgba(255, 0, 0, 0.651);
+  margin: 20px 10px 30px;
+}
 .detailSummeryContent > .product-price > p:first-of-type{
   font-size: 18px;
 }
@@ -340,7 +344,7 @@ color: grey;
   /* background: grey; */
   position: relative;
   overflow: hidden;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   
   
 }
@@ -355,7 +359,7 @@ right: 0;
 .related  .carousel>div>div>div>figure>a>img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .related  .carousel>div>div>div>figure>figcaption{
   width: 100%;

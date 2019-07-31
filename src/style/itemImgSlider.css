@@ -14,13 +14,13 @@
 .banner > img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: fill;
+  object-fit: contain;
   outline: none;
 }
 .banner >div:first-child> img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: fill;
+  object-fit: contain;
   outline: none;
 }
 

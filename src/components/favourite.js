@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {favourite_display } from '../actions/actions';
+import { favourite_display, delete_favourite } from "../actions/actions";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
-
+import noPhoto from "../Icon Simplestore/noPhoto.png";
 import close from "../Icon Simplestore/close.png";
 import "../style/favourite.css";
 
@@ -31,10 +31,14 @@ class Favourite extends Component {
   notDispaly = () => {
     this.props.favouriteDisplayChange();
   };
-
+  removeFav = slug => {
+    if (window.confirm("محصول از لیست مورد علاقه های شما حذف شود ؟")) {
+      this.props.delete_favourite(slug);
+    }
+  };
   render() {
     var commaNumber = require("comma-number");
-    console.log(this.state.favourite_ptoduct,'fav dis')
+    console.log(this.state.favourite_ptoduct, "fav dis");
     return (
       <div className="favourite">
         <div>
@@ -44,10 +48,35 @@ class Favourite extends Component {
               {this.props.favouriteProducts ? (
                 this.props.favouriteProducts.map(product => (
                   <div className="items">
-                    <Link to={`/item/${product.address}`} onClick={this.notDispaly}><img src={product.thumbnail} /></Link>
+                    <Link
+                      to={`/item/${product.address}`}
+                      onClick={this.notDispaly}
+                    >
+                      <img
+                        src={
+                          product.thumbnail === null
+                            ? noPhoto
+                            : product.thumbnail
+                        }
+                      />
+                    </Link>
                     <div className="item-info">
-                    <p><Link to={`/item/${product.address}`} onClick={this.notDispaly}>{product.title} </Link></p>
+                      <p>
+                        <Link
+                          to={`/item/${product.address}`}
+                          onClick={this.notDispaly}
+                        >
+                          {product.title}{" "}
+                        </Link>
+                      </p>
                       <p>{commaNumber(product.price)} تومان</p>
+                      <span
+                        onClick={() => {
+                          this.removeFav(product.slug);
+                        }}
+                      >
+                        <img src={close} />
+                      </span>
                     </div>
                   </div>
                 ))
@@ -70,15 +99,16 @@ class Favourite extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    favouriteDisplay : state.InitUserReducer.favouriteDisplay,
+    favouriteDisplay: state.InitUserReducer.favouriteDisplay,
     favouriteProducts: state.InitUserReducer.favouriteProducts
   };
 };
 const mapDispatchToProps = {
-    favouriteDisplayChange : favourite_display
-}
+  favouriteDisplayChange: favourite_display,
+  delete_favourite: delete_favourite
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

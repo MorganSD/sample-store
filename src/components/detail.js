@@ -191,19 +191,26 @@ class Detail extends Component {
             </div>
 
             <div className="product-price">
-              <p>{commaNumber(this.state.product.price)} تومان</p>
-              <button
-                className="basket-btn"
-                onClick={() => {
-                  this.addToCard(
-                    this.state.product.max_order_count,
-                    this.state.product.slug
-                  );
-                }}
-              >
-                <img src={Addbasket} />
-                اضافه کردن به سبد خرید
-              </button>
+              {this.state.product.in_stock ? (
+                <>
+                              <p>{commaNumber(this.state.product.price)} تومان</p>
+
+                 <button
+                 className="basket-btn"
+                 onClick={() => {
+                   this.addToCard(
+                     this.state.product.max_order_count,
+                     this.state.product.slug
+                   );
+                 }}
+               >
+                 <img src={Addbasket} />
+                 اضافه کردن به سبد خرید
+               </button>
+               </>
+              ): <h4>موجود نمی باشد</h4>
+              }
+             
 
               <p>{this.state.product.short_description}</p>
             </div>
