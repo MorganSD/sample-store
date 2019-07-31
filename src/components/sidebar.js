@@ -5,7 +5,7 @@ import formaloo from '../Icon Simplestore/formaloo-01.png';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from '../axios';
 import {connect} from 'react-redux';
-import {filter_list} from '../actions/actions';
+import {filter_list,all_list} from '../actions/actions';
 
 class SidebarMain extends Component {
   constructor(props) {
@@ -18,12 +18,15 @@ class SidebarMain extends Component {
     this.props.filter_list(category, field_slug, choice_slug);
     alert('hi')
   }
+  getlist = () =>{
+    this.props.init_list();
+  }
   render() {
    
     return (
       <section className="sidebar">
       <div className="logo">
-        <Link to='/all'>
+        <Link to='/all' onClick={this.getlist}>
         <img src={formaloo} />
         <p>فرم ساز آنلاین فرمالو</p>
         </Link>
@@ -48,7 +51,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = {
   
-  filter_list : filter_list
+  filter_list : filter_list,
+  init_list : all_list
 
 }
 

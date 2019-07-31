@@ -27,7 +27,8 @@ import {
   add_to_card,
   delete_favourite,
   add_favourite,
-  favourite_display
+  favourite_display,
+  all_list
 } from "../actions/actions";
 
 const FavImg = props => {
@@ -143,14 +144,16 @@ class Detail extends Component {
       this.props.favouriteDisplayChange();
     }
   };
-
+getList = () =>{
+  this.props.init_list();
+}
   render() {
     var commaNumber = require("comma-number");
 
     return (
       <div id="detail">
         <div className="logo">
-          <Link to="/all">
+          <Link to="/all" onClick={this.getList}>
             <img src={formaloo} />
             <p>فرم ساز آنلاین فرمالو</p>
           </Link>
@@ -263,7 +266,9 @@ const mapDispatchToProps = {
   addProductToCart: add_to_card,
   deleteFavorite: delete_favourite,
   addFavourite: add_favourite,
-  favouriteDisplayChange: favourite_display
+  favouriteDisplayChange: favourite_display,
+  init_list : all_list
+
 };
 export default connect(
   mapStateToProps,
