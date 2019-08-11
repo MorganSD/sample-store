@@ -1,5 +1,7 @@
 import axios from "../axios";
-
+import {existing_address , clear_address} from './costumerInfo';
+import {card_requset,card_requset_success,} from './card'
+import {post_req,post_load_success,post_load_failed} from './post'
 export const CARD_DISPLAY = "CARD_DISPLAY";
 export const INIT_SEARCH = "INIT_SEARCH";
 export const INIT_GUEST = "INIT_GUEST";
@@ -12,6 +14,7 @@ export const FAVOURITE_DISPALY = "FAVOURITE_DISPALY";
 export const INIT_USER_TOKEN = "INIT_USER_TOKEN";
 export const INIT_LOGOUT_USER = "INIT_LOGOUT_USER";
 export const INIT_LIST = "INIT_LIST";
+
 //start card actions
 
 export const card_dispaly = () => {
@@ -19,6 +22,14 @@ export const card_dispaly = () => {
     type: CARD_DISPLAY
   };
 };
+export function card_call(){
+  return function(dispatch){
+    
+      dispatch(card_dispaly());
+      dispatch(card_requset());
+    
+  }
+}
 export const card_loading = () => {
   return {
     type: CARD_LOADING
@@ -33,29 +44,34 @@ export const display_card_product = cart => {
 export function add_to_card(slug) {
   return function(dispatch) {
     dispatch(card_dispaly());
-    dispatch(card_loading());
+    dispatch(card_requset())
+    // dispatch(card_loading());
     return axios
       .post("/orders/cart/add/", {
         product: slug
       })
       .then(res => {
-        if (res.data.status < 400) {
+        if (res.status < 400) {
           axios
             .get("orders/cart/show/")
             .then(response => {
-              dispatch(display_card_product(response.data));
+              if(response.status < 400 ){
+dispatch(display_card_product(response.data));
+dispatch(card_requset_success());
               localStorage.setItem(
                 "card",
                 JSON.stringify(response.data.data.cart)
               );
+              }
+              
             })
             .catch(error => {
-              console.log(error.response, "add cart error with catch");
+              console.log(error , "add cart error with catch");
             });
           // dispatch (display_card_product(res.data))
           // localStorage.setItem('card' , JSON.stringify(res.data.data))
         } else {
-          console.log("add to cart errors :", res.data.errors.general_errors);
+          alert("add to cart errors :", res.data.errors.general_errors);
         }
       });
   };
@@ -63,13 +79,18 @@ export function add_to_card(slug) {
 
 export function init_card() {
   return function(dispatch) {
+    dispatch(post_req());
     return axios
       .get("orders/cart/show/")
       .then(response => {
-        dispatch(display_card_product(response.data));
+        dispatch(post_load_success())
+        if(response.status < 400){
+          dispatch(display_card_product(response.data));
         localStorage.setItem("card", JSON.stringify(response.data.data.cart));
+        }
       })
       .catch(error => {
+        dispatch(post_load_failed())
         console.log(error.response, "init cart error with catch");
       });
   };
@@ -296,6 +317,7 @@ export function guest() {
     return axios.post("/profiles/guest/").then(res => {
       localStorage.setItem("jwtToken", JSON.stringify(res.data.data));
       dispatch(init_guest(res.data.data));
+      dispatch(init_card());
       dispatch(init_user_token(res.data.data.token));
     });
   };
@@ -314,6 +336,8 @@ export function loginUser(username, password) {
           dispatch(init_login_user(res.data.data));
           dispatch(init_user_token(res.data.data.token));
           dispatch(init_fav());
+          dispatch(existing_address());
+          // dispatch(init_card());
           alert("خوش آمدید");
         } else {
           alert("اطلاعات وارد شده صحیح نمی باشد");
@@ -331,8 +355,10 @@ export function logout() {
       .then(res => {
         if (res.data.status < 400) {
           dispatch(guest());
-          alert("با موفقیت از حساب کاربری خود خارج شدید");
           dispatch(logout_user());
+          dispatch(clear_address());
+          alert("با موفقیت از حساب کاربری خود خارج شدید");
+
         }
       })
       .catch(error => {
@@ -368,10 +394,58 @@ export function all_list () {
 }
 export function filter_list (category , field , filter){
     return function(dispatch){
-        return axios.get(`/shelves/category/${category}/products/?field_${field}=${filter}`).then(res =>{
-            console.log('feilds',category,field,filter)
-            dispatch(init_list(res.data.data))
-        }).catch(error => console.log(error, "list by cat error with catch"))
+      if(category !=null){
+        return axios.get(`/shelves/category/${category.slug}/products/?${field}=${filter}`).then(res =>{
+          // console.log('feilds',category,field,filter)
+          dispatch(init_list(res.data.data))
+      }).catch(error => console.log(error, "list by cat error with catch"))
+      }else{
+        return axios.get(`/shelves/products/?${field}=${filter}`).then(res =>{
+          // console.log('feilds',category,field,filter)
+          dispatch(init_list(res.data.data))
+      }).catch(error => console.log(error, "list by cat error with catch"))
+      }
+      
     }
 }
+export function sort_list(cat , sort){
+    return function(dispatch){
+      if( cat === '' || cat=== null){
+        return axios.get(`/shelves/products/?sort_by=${sort}`).then(res =>{
+          dispatch(init_list(res.data.data))
+      }).catch(error => console.log(error, "all list error with catch"))
+      }else{
+         return axios.get(`/shelves/category/${cat}/products/?sort_by=${sort}`).then(res => {
+            dispatch(init_list(res.data.data))
+        }).catch(error => console.log(error, "list by sort error with catch"))
+      }
+       
+    }
+}
+export function nextPaginate (next){
+  return function(dispatch){
+    return axios.get(next).then(res => {
+      dispatch(init_list(res.data.data))
+    }).catch(error => console.log(error, "next paginate list error with catch"))
+  }
+}
+export function prevPaginate(prev){
+  return function(dispatch){
+    return axios.get(prev).then(res => {
+      dispatch(init_list(res.data.data))
+    }).catch(error => console.log(error, "prev paginate list error with catch"))
+  }
+}
+export function search_filter(search){
+  return function(dispatch){
+    return axios.get(`/shelves/products/?search=${search}`).then(res => {
+      dispatch(init_list(search))
+      dispatch(init_list(res.data.data))
+    }).catch(error => console.log(error, "search list error with catch"))
+  }
+}
+
+
+
+
 // end get list items actions

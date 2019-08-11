@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 // const token = JSON.parse(localStorage.getItem("jwtToken")).token;
 
 const instance = axios.create({
-    baseURL : 'http://api.projectant.aasoo.ir',
+    baseURL : 'http://api.projectant.aasoo.ir:8002/',
     // headers : { Authorization: `Token e4eb7493f0814fb9fc724b02c9284c1f848a188b`}
 })
 
@@ -21,7 +21,7 @@ instance.interceptors.request.use(request => {
     
     if (!request.headers.Authorization) {
         const token = JSON.parse(localStorage.getItem("jwtToken")).token;
-        console.log('token',token)
+        // console.log('token',token)
         if (token) {
           request.headers.Authorization = `Token ${token}`;
 

@@ -414,7 +414,14 @@ right: 0;
   border: 1px solid rgb(175, 175, 175);
   margin-left: 10px;
   text-align: center;
-  color: grey
+  color: grey;
+  cursor: pointer;
+  transition: .4s
+}
+.pagination>div:hover{
+  color: #000;
+  border: 1px solid black;
+
 }
 .add-favourite{
   width: 25px;

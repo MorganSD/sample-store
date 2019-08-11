@@ -12,6 +12,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "../axios";
 import { connect } from "react-redux";
 import Choice from "../components/details/choice";
+import SelectOption from '../components/details/select';
 
 import Addbasket from "../Icon Simplestore/Asset-white.png";
 import formaloo from "../Icon Simplestore/formaloo-01.png";
@@ -40,10 +41,12 @@ const FavImg = props => {
 };
 
 const Options = props => {
-  if (props.options.type === "choice") {
+  if (props.options.choice_type === "color") {
     return <Choice options={props.options} />;
   } else {
-    return <h4>selection</h4>;
+    // console.log(props.options,'options')
+    return <SelectOption options={props.options}/>;
+    // return <h3>selection</h3>
   }
 };
 

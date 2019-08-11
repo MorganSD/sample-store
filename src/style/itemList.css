@@ -39,6 +39,13 @@
 .itemBox>figure:hover >figcaption{
     transform: translateY(0);
 }
+.itemBox>figure >figcaption p{
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 0, 0, 0.548);
+    line-height: 40px;
+    
+}
 .itemBox>figure>a>img, .itemBox>figure>figcaption{
     width: 100%;
     position: absolute;

@@ -6,6 +6,9 @@ import SearchResult from './searchResult';
 import Select from 'react-select';
 import Order from '../components/submitOrder';
 import "../style/style.css";
+import {connect} from 'react-redux';
+import {sort_list} from '../actions/actions';
+import ProgressBar from './details/progressBar'
 
 const options = [
   { value: '-price', label: 'گران ترین' },
@@ -23,29 +26,14 @@ class Home extends Component {
     };
   }
 
-  componentDidMount() {
-    if (this.props.match.params.category != "all") {
-      this.setState({
-        category: this.props.match.params.category
-      });
-    }
-
-    // console.log('param is ' + this.props.match.params.category)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.match.params.category !== this.props.match.params.category) {
-      // console.log('nextprop',this.props.match.params.category)
-      this.setState({
-        category: this.props.match.params.category
-      });
-    }
-    //  console.log('didUpdate',this.state.category)
-  }
   handleChange = selectedOption => {
+    let cat = this.props.product_list.category.slug
     this.setState({ category : selectedOption.value,
     selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    // console.log('url',this.props.product_list.category.slug)
+    this.props.sort(cat , selectedOption.value);
+    // console.log(`Option selected:`, selectedOption);
+    // console.log(this.props.match.params , 'param')
   };
   
   render() {
@@ -55,6 +43,8 @@ class Home extends Component {
     return (
 
       <div id="home">
+        {/* {this.props.post_req ? : null} */}
+
         <SidebarMain />
         <Select
         value={selectedOption}
@@ -62,18 +52,20 @@ class Home extends Component {
         options={options}
         placeholder={'مرتب سازی براساس '}
 />
-        {/* <select className="sort" onChange={this.sorting}>
-          <option value="all">همه</option>
-          <option value="-price">گران ترین</option>
-          <option value="price">ارزان ترین</option>
-          <option value="favorite">محبوب ترین </option>
-          <option value="new">جدید ترین</option>
-        </select> */}
-        <ItemList cat={this.state.category} location={this.props.location}/>
+        
+        <ItemList  location={this.props.location}/>
         {/* <Order /> */}
       </div>
     );
   }
 }
+const mapStatToProps = (state) =>{
+  return {
+    product_list : state.InitUserReducer.product_list,
 
-export default Home;
+  }
+}
+const mapDispatchToProps ={
+  sort : sort_list
+}
+export default connect(mapStatToProps , mapDispatchToProps)(Home);

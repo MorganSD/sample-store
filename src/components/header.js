@@ -11,8 +11,8 @@ import Card from "./card";
 import {connect}  from 'react-redux';
 import Favourite from '../components/favourite';
 import LogOut from '../components/logOut';
-import {card_dispaly,favourite_display ,list_by_cat} from '../actions/actions';
-
+import {card_dispaly,card_call,favourite_display ,list_by_cat} from '../actions/actions';
+import {post_req , post_load_success , post_load_failed} from '../actions/post';
 
 class Header extends Component {
   constructor() {
@@ -30,12 +30,19 @@ class Header extends Component {
   
   componentDidMount() {
     // console.log('redux' , this.props)
+    this.props.post_req();
     axios.get("/shelves/categories/menu/list").then(response => {
-      // console.log(response.data.data)
-      this.setState({
-        categories: response.data.data.categories
-      });
-    });
+      if(response.status < 400){
+        this.props.post_load_success();
+        this.setState({
+          categories: response.data.data.categories
+        });
+      }
+      
+    }).catch(error =>{
+      this.props.post_load_failed(error)
+      console.log('categories',error)
+    })
    
   }
 
@@ -105,8 +112,8 @@ login() {
             <ul className="categoryList">
               {this.state.categories ? (
                 this.state.categories.map(category => (
-                  <li key={category.title}>
-                    <Link to={`/${category.address}`} onClick={()=>{this.getList(category.address)}}>{category.title}</Link>
+                  <li key={category.title}
+                    onClick={()=>{this.getList(category.address)}}>{category.title}
                   </li>
                 ))
               ) : (
@@ -145,8 +152,11 @@ const mapStatToProps = (state) =>{
 }
 const mapDispatchToProps = {
   
-  cardDisplayChange : card_dispaly ,
+  cardDisplayChange : card_call ,
   favouriteDisplayChange : favourite_display,
-  get_list_cat : list_by_cat
+  get_list_cat : list_by_cat,
+  post_req : post_req,
+  post_load_success : post_load_success,
+  post_load_failed : post_load_failed
 }
 export default connect(mapStatToProps , mapDispatchToProps)(Header);

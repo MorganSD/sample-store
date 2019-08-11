@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from '../axios';
 import { Redirect } from "react-router";
 import {connect} from 'react-redux';
+import { search_filter } from '../actions/actions';
 
 class Search extends Component{
     constructor(){
@@ -91,10 +92,10 @@ onSearch(event){
 }
 
   
-  const mapDispatchToProps = dispatch => {
-    return {
-        searchFiltering : (item) => {dispatch({type: 'INIT_SEARCH', item: item})},
-      }
+  const mapDispatchToProps = {
+  
+        searchFiltering : search_filter
+      
     };
   
   export default connect(

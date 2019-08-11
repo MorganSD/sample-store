@@ -41,6 +41,7 @@ class Favourite extends Component {
     console.log(this.state.favourite_ptoduct, "fav dis");
     return (
       <div className="favourite">
+        <div className='closer' onClick={() =>{this.notDispaly()}}></div>
         <div>
           <img src={close} onClick={this.notDispaly} />
           {!this.state.currentUser.guest ? (

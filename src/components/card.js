@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { inc_count, card_dispaly, dec_count ,delete_product} from "../actions/actions";
+import {
+  inc_count,
+  card_call,
+  dec_count,
+  delete_product
+} from "../actions/actions";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "../axios";
 import Spinner from "../components/details/spinner";
@@ -9,9 +14,8 @@ import noPhoto from "../Icon Simplestore/noPhoto.png";
 import close from "../Icon Simplestore/close.png";
 import plus from "../Icon Simplestore/+.png";
 import mines from "../Icon Simplestore/-.png";
-
+import ProgressBar from "../components/details/progressBar";
 import "../style/card.css";
-
 
 class Card extends Component {
   constructor() {
@@ -51,71 +55,86 @@ class Card extends Component {
       alert(`حداقل سفارش ${min_order}`);
     }
   };
-  deleteProduct = (slug) =>{
+  deleteProduct = slug => {
     this.props.delete_product(slug);
-  }
+  };
+  closeCard = () => {
+    this.props.cardDisplayChange();
+  };
   render() {
     var commaNumber = require("comma-number");
 
     return (
-      <section className="card-popUp" id='pre_order'>
+      <section className="card-popUp" id="pre_order">
         <div onClick={this.closeCard} />
         <div className="card">
           <img src={close} onClick={this.notDispaly} />
           <div className="card-items">
             <div>
-              {this.props.isLoading ? <Spinner /> : null}
+              {/* {this.props.isLoading ? <Spinner /> : null} */}
+              {this.props.card_req ? <ProgressBar /> : null}
               {this.props.cardProduct ? (
                 this.props.cardProduct.cart_products ? (
-                  this.props.cardProduct.cart_products.map(product => (
-                    <div className="items">
-                      <Link to={`/item/${product.product.address}`} onClick={this.notDispaly}>
-                      <img
-                        src={
-                          product.product.thumbnail === null
-                            ? noPhoto
-                            : product.product.thumbnail
-                        }
-                      />                      </Link>
-                      <div className="item-info">
-                        <p><Link to={`/item/${product.product.address}`} onClick={this.notDispaly}>{product.product.title} </Link></p>
-                        <p>{commaNumber(product.product.price)} تومان</p>
-                        
-                        <span>
-                          <button
-                            onClick={() => {
-                              this.incCount(
-                                product.product.slug,
-                                product.product.max_order_count,
-                                product.count
-                              );
-                            }}
-                          >
-                            <img src={plus} />
-                          </button>
-                          <span>{product.count}</span>
-                          <button
-                            onClick={() => {
-                              this.decCount(
-                                product.product.slug,
-                                product.product.step_count,
-                                product.product.min_order_count,
-                                product.count
-                              );
-                            }}
-                          >
-                            <img src={mines} />
-                          </button>
-                        </span>
+                  this.props.cardProduct.cart_products.length > 0 ? (
+                    this.props.cardProduct.cart_products.map(product => (
+                      <div className="items">
+                        <Link
+                          to={`/item/${product.product.address}`}
+                          onClick={this.notDispaly}
+                        >
+                          <img
+                            src={
+                              product.product.thumbnail === null
+                                ? noPhoto
+                                : product.product.thumbnail
+                            }
+                          />{" "}
+                        </Link>
+                        <div className="item-info">
+                          <p>
+                            <Link
+                              to={`/item/${product.product.address}`}
+                              onClick={this.notDispaly}
+                            >
+                              {product.product.title}{" "}
+                            </Link>
+                          </p>
+                          <p>{commaNumber(product.product.price)} تومان</p>
+
+                          <span>
+                            <button
+                              onClick={() => {
+                                this.incCount(
+                                  product.product.slug,
+                                  product.product.max_order_count,
+                                  product.count
+                                );
+                              }}
+                            >
+                              <img src={plus} />
+                            </button>
+                            <span>{product.count}</span>
+                            <button
+                              onClick={() => {
+                                this.decCount(
+                                  product.product.slug,
+                                  product.product.step_count,
+                                  product.product.min_order_count,
+                                  product.count
+                                );
+                              }}
+                            >
+                              <img src={mines} />
+                            </button>
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))
-                ) : (
-                  <h3>سبد خرید شما خالی است</h3>
-                )
-              ) : (
-                <h3>سبد خرید شما خالی است</h3>
-              )}
+                    ))
+                  ) : (
+                    <h3>سبد خرید شما خالی است</h3>
+                  )
+                ) : null
+              ) : null}
 
               {this.props.cardProduct ? (
                 this.props.cardProduct.cart_products ? (
@@ -129,13 +148,12 @@ class Card extends Component {
                         </p>
                       </div>
                       <span className="submit-order">
-                        <a href="#">تکمیل سفارش خرید</a>
+                        <a href={"/order/submit/"}>تکمیل سفارش خرید</a>
                       </span>
                     </>
                   ) : null
                 ) : null
-              ) : null
-              }
+              ) : null}
             </div>
           </div>
         </div>
@@ -147,14 +165,15 @@ const mapStateToProps = state => {
   return {
     cardDisplay: state.InitUserReducer.cardDisplay,
     cardProduct: state.InitUserReducer.card.cart,
-    isLoading: state.InitUserReducer.card.isLoading
+    isLoading: state.InitUserReducer.card.isLoading,
+    card_req: state.CardReducer.card_req
   };
 };
 const mapDispatchToProps = {
   inc_count: inc_count,
   dec_count: dec_count,
-  delete_product :delete_product ,
-  cardDisplayChange: card_dispaly
+  delete_product: delete_product,
+  cardDisplayChange: card_call
 };
 export default connect(
   mapStateToProps,

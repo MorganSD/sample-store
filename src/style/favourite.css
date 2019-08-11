@@ -15,9 +15,9 @@
     top: 0;
     left: 0;
     z-index: 5;
-    background: rgba(168, 167, 167, 0.644);
     
 }
+
 .favourite>div{
     width: 500px;
     height: 100%;
@@ -28,6 +28,16 @@
     float: left;
     animation: favourite .4s linear forwards;
     /* overflow-y: scroll;  */
+
+}
+.favourite .closer{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(168, 167, 167, 0.644);
+  animation: none;
 
 }
 .favourite>div > img:first-child {

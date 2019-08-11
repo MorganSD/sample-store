@@ -13,52 +13,67 @@ import {
   INIT_LOGOUT_USER,
   INIT_LIST
 } from "../actions/actions";
+import {
+  INIT_ADDRESS,
+  CLEAR_ADDRESS,
+  INIT_SELECTED_ADD,
+  INIT_SELECTED_SHIPPING,
+  INIT_SELECTED_PAYMENT,
+  INIT_SELECTED_SHIPPING_DATE
+} from "../actions/costumerInfo";
 
 const initialState = {
   card: {
-    cart: [],
-    errors: null,
-    isLoading: false
-    // display : false
+    cart: []
   },
   cardDisplay: false,
   favouriteDisplay: false,
-  currentUser: [],
-  totalPrice: 0,
-  
+  currentUser: {
+    user: [],
+    selected_ad: "",
+    selected_shipping: "",
+    selected_payment: "",
+    selected_shipping_date: "",
+    address: {
+      addresss: []
+    }
+  },
   favouriteProducts: [],
   search_val: null,
   userLogedIn: false,
   userToken: null,
-  currentListOfProducts: [],
-  product_list : []
+  product_list: []
 };
 
 const InitUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case INIT_GUEST: {
-         return {
+      return {
         ...state,
-        currentUser: action.guset,
-        // userToken: action.guset.token,
+        currentUser: {
+          ...state.currentUser.address,
+
+          user: action.guest
+        },
         userLogedIn: false
       };
     }
 
     case INIT_LOGIN_USER: {
-
       return {
         ...state,
-        currentUser: action.user,
+        currentUser: {
+          ...state.currentUser.address,
+          user: action.user
+        },
         userLogedIn: true
       };
     }
-    case INIT_USER_TOKEN :{
-      return{
+    case INIT_USER_TOKEN: {
+      return {
         ...state,
-        userToken: action.token 
-
-      }
+        userToken: action.token
+      };
     }
     case CARD_DISPLAY: {
       return {
@@ -102,24 +117,75 @@ const InitUserReducer = (state = initialState, action) => {
         search_val: action.item
       };
     }
-    case INIT_LOGOUT_USER : {
+    case INIT_LOGOUT_USER: {
       return {
         ...state,
         userLogedIn: false
       };
     }
-    case "UPDATE_CURRENT_LIST_OF_PRODUCTS": {
-      console.log("current", action.data);
+
+    case INIT_LIST: {
       return {
         ...state,
-        currentListOfProducts: action.data
+        product_list: action.list
       };
     }
-    case INIT_LIST :{
-      return{
+    case INIT_ADDRESS: {
+      return {
         ...state,
-        product_list : action.list
-      }
+        currentUser: {
+          ...state.currentUser.user,
+          address: action.address
+        }
+      };
+    }
+    case CLEAR_ADDRESS: {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          address: {}
+        }
+      };
+    }
+    case INIT_SELECTED_ADD: {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          selected_ad: action.address
+        }
+      };
+    }
+    case INIT_SELECTED_SHIPPING: {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          selected_shipping: action.method
+        }
+      };
+    }
+    case INIT_SELECTED_PAYMENT: {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          selected_payment: action.method
+        }
+      };
+    }
+    case INIT_SELECTED_SHIPPING_DATE: {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          selected_shipping_date: {
+            date: action.date,
+            hour: action.hour
+          }
+        }
+      };
     }
     default:
       return state;
