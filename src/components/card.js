@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   inc_count,
-  card_call,
+  card_dispaly,
   dec_count,
   delete_product
 } from "../actions/actions";
@@ -173,7 +173,7 @@ const mapDispatchToProps = {
   inc_count: inc_count,
   dec_count: dec_count,
   delete_product: delete_product,
-  cardDisplayChange: card_call
+  cardDisplayChange: card_dispaly
 };
 export default connect(
   mapStateToProps,

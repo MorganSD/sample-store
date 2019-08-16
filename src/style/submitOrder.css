@@ -1,6 +1,6 @@
 /*start wrapper order */
 #order{
-    width: 100%;
+    width: 50%;
     min-height: 100vh;  
 }
 
@@ -8,27 +8,31 @@
 /*end wrapper order */
 /*start card */
 
-  #order  .card {
-    /* position: absolute;
+  #main_order_page  .card {
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: 7; */
-
-    width: 450px;
-    height: 100%;
+    z-index: 7;
+    width: 40%;
+    height: 100vh;
     float: left;
     background: white;
     /* transform: translateX(-500px); */
     transform-origin: left;
     /* animation: basket .4s linear forwards; */
+    overflow-y: scroll;
+    border-right: 1px solid rgb(179, 179, 179)
   }
-  #order .card > img:first-child {
+  #main_order_page  .card::-webkit-scrollbar{
+    width: 1px;
+  }
+  #main_order_page .card > img:first-child {
     width: 20px;
     float: left;
     margin: 15px;
     cursor: pointer;
   }
-  #order  .card-items {
+  #main_order_page  .card-items {
     width: 88%;
     height: calc(100% - 50px);
     margin-right: 2.5%;
@@ -37,38 +41,63 @@
   
   
   }
-  #order  .card-items::-webkit-scrollbar {
+  #main_order_page  .card-items::-webkit-scrollbar {
     width: 1px;
   }
-  #order  .card-items>div{
+  #main_order_page  .card-items>div{
       width: 100%;
       height: auto;
       padding-right: 10px;
+      /* display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-flow: row nowrap; */
       /* overflow-y: scroll; */
   }
-  #order  .card-items .items {
+  #main_order_page  .card-items .items {
     width: 100%;
     height: 100px;
     margin-bottom: 20px;
+      display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between
   }
-  
-  #order .card-items .items >a {
+  #main_order_page .card-items .items:last-of-type{
+    margin-bottom: 40px;
+  }
+  #main_order_page .card-items .items >a {
     display: block;
     width: 100px;
     height: 80px;
-    border: 1px solid black;
+    border: 1px solid rgb(177, 175, 175);
     /* object-fit: cover; */
     margin-top: 5px;
+    border-radius: 5px;
     float: right;
+    margin-left: 10px;
   }
-  #order .card-items .items >a >img {
+  #main_order_page .card-items .items >a >img {
     width: 100%;
     height: 100%;
     /* border: 1px solid black; */
     object-fit: cover;
     /* margin-top: 5px; */
   }
-  #order .card-items .item-info {
+  #main_order_page .card-items .items .delete-item{
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin: 41px 0 40px 10px;
+    cursor: pointer;
+  }
+  #main_order_page .card-items .item-info {
     width: 250px;
     height: 100%;
     /* border: 1px solid red; */
@@ -76,20 +105,20 @@
     float: left;
   }
   
-  #order .card-items .item-info > p:nth-of-type(1) {
+  #main_order_page .card-items .item-info > p:nth-of-type(1) {
     width: 100%;
     float: right;
   }
-  #order .card-items .item-info > p:nth-of-type(1)>a , .card-items .item-info > p:nth-of-type(1)>a:visited{
+  #main_order_page .card-items .item-info > p:nth-of-type(1)>a , .card-items .item-info > p:nth-of-type(1)>a:visited{
     color: black;
   }
-  #order  .card-items .item-info > p:nth-of-type(2) {
+  #main_order_page  .card-items .item-info > p:nth-of-type(2) {
     width: 50%;
     float: right;
     margin-top: 10px;
   }
 
-  #order .card-items .item-info > span:last-child {
+  #main_order_page .card-items .item-info > span:last-child {
     display: block;
     width: 70px;
     height: 20px;
@@ -100,7 +129,7 @@
     border-radius: 5px;
     overflow: hidden;
   }
-  #order .card-items .item-info > span:last-child button {
+  #main_order_page .card-items .item-info > span:last-child button {
     width: 20px;
       height: 20px;
       position: absolute;
@@ -111,20 +140,20 @@
       cursor: pointer;
   }
   
-  #order .card-items .item-info > span:last-child button:first-child {
+  #main_order_page .card-items .item-info > span:last-child button:first-child {
     right: 0;
       border-left: 1px solid rgb(179, 179, 179);
   }
-  #order .card-items .item-info > span:last-child button:last-child {
+  #main_order_page .card-items .item-info > span:last-child button:last-child {
     left: 0;
     border-right: 1px solid rgb(179, 179, 179);
   }
-  #order  .card-items .item-info > span:last-child button > img {
+  #main_order_page .card-items .item-info > span:last-child button > img {
     width: 8px;
       height: 100%;
       object-fit: cover;
   }
-  #order .card-items .item-info > span:last-child > span {
+  #main_order_page .card-items .item-info > span:last-child > span {
     display: block;
     width: 30px;
     height: 100%;
@@ -137,22 +166,68 @@
     /* border: 1px solid red; */
   }
   
-  #order  .card-items .total-price {
+  
+  
+  #main_order_page  .card-items .coupon{
     width: 100%;
-    height: 100px;
-    border-top: 2px solid rgb(172, 172, 172);
+    height: 90px;
+    border-top: 1px solid rgb(172, 172, 172);
+    border-bottom: 1px solid rgb(172, 172, 172);
+    margin-top: 20px;
+  }
+  #main_order_page  .card-items .coupon>form input {
+    width: 60%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid rgb(172, 172, 172);
+    float: right;
+    margin-top: 25px;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  #main_order_page  .card-items .coupon>form button{
+
+    width: 30%;
+    height: 40px;
+    float: left;
+    border-radius: 5px;
+    background: #1f2c32;
+    font-size: 14px;
+    margin-top: 25px;
+    color: white
+  }
+  #main_order_page  .card-items .total-price {
+    width: 100%;
+    min-height: 100px;
+    border-bottom: 1px solid rgb(172, 172, 172);
     margin-top: 30px;
-    line-height: 100px;
+    /* line-height: 100px; */
     color: grey;
     
   }
-  #order .card-items .total-price>p:first-child{
+  #main_order_page  .card-items .total-price:last-of-type{
+    border-bottom: none;
+  }
+  #main_order_page  .card-items .total-price>div{
+    width: 100%;
+    height: auto;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin:10px 0;
+  }
+  #main_order_page .card-items .total-price>p:first-child{
       float: right;
   }
-  #order  .card-items .total-price>p:last-child{
+  #main_order_page  .card-items .total-price>p:last-child{
       float: left;
   }
-  #order .card-items .submit-order{
+  #main_order_page .card-items .submit-order{
      display: block;
       width: 70%;
       height: 50px;
@@ -162,7 +237,7 @@
       margin-bottom: 30px;
       text-align: center
   }
-  #order  .card-items .submit-order>a{
+  #main_order_page  .card-items .submit-order>a{
       display: block;
       width: 100%;
       height: 100%;
@@ -176,4 +251,31 @@
     color: grey;
   }
 
+  #postBox-info {
+    width: 100%;
+    min-height: 100px;
+    /* border: 1px solid grey; */
+    /* border-radius: 5px; */
+    margin: 30px 0;
+    /* padding: 10px; */
+  }
+  #postBox-info >div{
+    width: 100%;
+    height: auto;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 18px 0;
+  }
+  #postBox-info >div>p{
+    margin: 10px 0 
+  }
+  #postBox-info >div>p:last-of-type{
+    color: blue;
+    /* float: left; */
+    cursor: pointer;
+    display: block;
+    direction: ltr;
+    font-size: 13px;
+  }
 /* end card */

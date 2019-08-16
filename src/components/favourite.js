@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { favourite_display, delete_favourite } from "../actions/actions";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-
+import ProgressBar from "./details/progressBar";
 import noPhoto from "../Icon Simplestore/noPhoto.png";
 import close from "../Icon Simplestore/close.png";
 import "../style/favourite.css";
@@ -41,11 +41,18 @@ class Favourite extends Component {
     console.log(this.state.favourite_ptoduct, "fav dis");
     return (
       <div className="favourite">
-        <div className='closer' onClick={() =>{this.notDispaly()}}></div>
-        <div>
+        <div
+          className="closer"
+          onClick={() => {
+            this.notDispaly();
+          }}
+        />
+        <div className="fav_cart">
+          {this.props.card_req ? <ProgressBar /> : null}
+
           <img src={close} onClick={this.notDispaly} />
           {!this.state.currentUser.guest ? (
-            <div>
+            <div className="fav_cart_container">
               {this.props.favouriteProducts ? (
                 this.props.favouriteProducts.map(product => (
                   <div className="items">
@@ -103,7 +110,8 @@ class Favourite extends Component {
 const mapStateToProps = state => {
   return {
     favouriteDisplay: state.InitUserReducer.favouriteDisplay,
-    favouriteProducts: state.InitUserReducer.favouriteProducts
+    favouriteProducts: state.InitUserReducer.favouriteProducts,
+    card_req: state.CardReducer.card_req
   };
 };
 const mapDispatchToProps = {

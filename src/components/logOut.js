@@ -31,7 +31,7 @@ render(){
     return (
         <React.Fragment>
         <p onClick={this.logingOut} style={style1}>خروج از حساب</p>
-        {redirectState && <Redirect to={'/all'} />}
+        {redirectState && <Redirect to={'/'} />}
         </React.Fragment>
     )
 }

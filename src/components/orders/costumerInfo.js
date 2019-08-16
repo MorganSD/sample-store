@@ -16,7 +16,7 @@ class CostumerInfo extends Component {
       first_name_state: false,
       phone_number_state : false ,
       email_state : false,
-      error: ""
+      errors: []
     };
   }
   componentDidMount(){
@@ -45,13 +45,13 @@ class CostumerInfo extends Component {
           this.setState({
             first_name_state: false
           });
-        } else {
-          this.setState({
-            error: res.errors.form_errors
-          });
         }
       })
-      .catch(error => alert(error));
+      .catch(error => {
+        this.setState({
+          errors: error.response.data.errors.form_errors
+        })
+      });
   };
 
   editPhone = e =>{
@@ -66,13 +66,13 @@ class CostumerInfo extends Component {
           this.setState({
             phone_number_state: false
           });
-        } else {
-          this.setState({
-            error: res.errors
-          });
         }
       })
-      .catch(error => alert(error));
+      .catch(error => {
+        this.setState({
+          errors: error.response.data.errors.form_errors
+        })
+      });
   }
   editEmail = e =>{
     e.preventDefault();
@@ -86,18 +86,36 @@ class CostumerInfo extends Component {
           this.setState({
             email_state: false
           });
-        } else {
-          this.setState({
-            error: res.errors
-          });
         }
       })
-      .catch(error => alert(error));
-  }
+      .catch(error => {
+        this.setState({
+          errors: error.response.data.errors.form_errors
+        })
+      });
+      }
+  // editContactInfo = (e) => {
+  //   e.preventDefault();
+  //   axios
+  //     .patch("/v2/orders/cart/update/", {
+  //       [e.target]: this.state[name].value
+  //     })
+  //     .then(res => {
+  //       if (res.status < 400) {
+  //         this.props.init_card();
+  //         this.setState({
+  //          [ e.target.name]: false
+  //         });
+  //       } else {
+  //         this.setState({
+  //           error: res.errors.form_errors
+  //         });
+  //       }
+  //     })
+  //     .catch(error => alert(error));
+  // };
   render() {
-    console.log('edittttt', this.state)
-    console.log("edit contact info", this.state);
-    console.log('edit error' , this.state.error)
+   
     let cart = this.props.cart;
     return (
       <div id="customer-info">
@@ -126,12 +144,12 @@ class CostumerInfo extends Component {
                     }}
                     name="first_name"
                     value={this.state.first_name}
-                    required
+                    
                   />
                   <img
                     src={close}
                     onClick={() => {
-                      this.setState({ first_name_state: false , first_name : ''});
+                      this.setState({ first_name_state: false , first_name : '',errors :[]});
                     }}
                   />
                   <button type="submit">
@@ -139,13 +157,13 @@ class CostumerInfo extends Component {
                     <img src={check} />{" "}
                   </button>
                 </form>
-                {this.state.error
-                  ? this.state.error.form_errors 
-                    ? this.state.error.form_errors.map(e => (
-                        <span style={{ color: "red", fontSize: "13px" }} />
-                      ))
-                    : null
-                  : null}
+                {this.state.errors.first_name ? (
+                <span className="form_errors">
+                  {this.state.errors.first_name.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
               </>
             ) : null}
           </div>
@@ -174,12 +192,12 @@ class CostumerInfo extends Component {
                     }}
                     name="phone_number"
                     value={this.state.phone_number}
-                    required
+                    
                   />
                   <img
                     src={close}
                     onClick={() => {
-                      this.setState({ phone_number_state: false });
+                      this.setState({ phone_number_state: false , phone_number : '',errors :[] });
                     }}
                   />
                   <button type="submit">
@@ -187,13 +205,13 @@ class CostumerInfo extends Component {
                     <img src={check} />{" "}
                   </button>
                 </form>
-                {this.state.error
-                  ? this.state.error.length > 0
-                    ? this.state.error.map(e => (
-                        <span style={{ color: "red", fontSize: "13px" }} />
-                      ))
-                    : null
-                  : null}
+                {this.state.errors.phone_number ? (
+                <span className="form_errors">
+                  {this.state.errors.phone_number.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
               </>
             ) : null}
           </div>
@@ -221,12 +239,12 @@ class CostumerInfo extends Component {
                     }}
                     name="email"
                     value={this.state.email}
-                    required
+                    
                   />
                   <img
                     src={close}
                     onClick={() => {
-                      this.setState({ email_state: false , email : ''});
+                      this.setState({ email_state: false , email : '',errors :[]});
                     }}
                   />
                   <button type="submit">
@@ -234,13 +252,13 @@ class CostumerInfo extends Component {
                     <img src={check} />{" "}
                   </button>
                 </form>
-                {this.state.error
-                  ? this.state.error.form_errors 
-                    ? this.state.error.form_errors.map(e => (
-                        <span style={{ color: "red", fontSize: "13px" }} />
-                      ))
-                    : null
-                  : null}
+                {this.state.errors.email ? (
+                <span className="form_errors">
+                  {this.state.errors.email.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
               </>
             ) : null}
           </div>

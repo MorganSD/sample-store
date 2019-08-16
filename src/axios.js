@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 // const token = JSON.parse(localStorage.getItem("jwtToken")).token;
 
 const instance = axios.create({
-    baseURL : 'http://api.projectant.aasoo.ir:8002/',
+    baseURL : 'http://api.projectant.aasoo.ir/',
     // headers : { Authorization: `Token e4eb7493f0814fb9fc724b02c9284c1f848a188b`}
 })
 
@@ -20,6 +20,7 @@ instance.defaults.headers.common = {
 instance.interceptors.request.use(request => {
     
     if (!request.headers.Authorization) {
+      if(localStorage.getItem("jwtToken")){
         const token = JSON.parse(localStorage.getItem("jwtToken")).token;
         // console.log('token',token)
         if (token) {
@@ -30,6 +31,23 @@ instance.interceptors.request.use(request => {
         console.log('!token')
 
       }
+
+      }else{
+        axios.post('/profiles/guest/').then(res=>{
+        localStorage.setItem("jwtToken", JSON.stringify(res.data.data));
+
+        })
+        const token = JSON.parse(localStorage.getItem("jwtToken")).token;
+        if (token) {
+          request.headers.Authorization = `Token ${token}`;
+
+        
+      }else{
+        console.log('!token')
+
+      }
+      }
+       
   
     return request
 },error => {

@@ -16,8 +16,9 @@ export const card_requset_success = () => {
   };
 };
 
-export const card_requset_failed = () => {
+export const card_requset_failed = (error) => {
   return {
-    type: CARD_FAIL
+    type: CARD_FAIL,
+    error : error
   };
 };

@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import axios from "../axios";
 import { init_card } from "../actions/actions";
 import { existing_address,init_selected_add } from '../actions/costumerInfo';
+import {post_load_failed , post_load_success , post_req} from '../actions/post';
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 class SubmitForm extends Component {
   constructor() {
@@ -25,7 +27,7 @@ class SubmitForm extends Component {
         phone_number:'',
         address:''
       },
-      error : ''
+      errors : []
 
     };
   }
@@ -47,7 +49,7 @@ class SubmitForm extends Component {
       selected_state : slug
     })
   }
-  selectState = (event) =>{
+  selectState = (event) => {
     axios.get(`/locations/states/state/${event.target.value}/cities/`).then(res =>{
       this.setState({
         enableCities : true,
@@ -56,7 +58,7 @@ class SubmitForm extends Component {
     })
   }
 
-  changeContact = (e) =>{
+  changeContact = (e) => {
     this.setState({
       contactInfo : {
         ...this.state.contactInfo ,
@@ -83,35 +85,35 @@ class SubmitForm extends Component {
   }
   addInfo = (e) =>{
     e.preventDefault();
+    this.props.post_req();
+
     axios.post('/v2/profiles/address/add/',this.state.postInfo).then(res => {
       if(res.status < 400 ){
         this.props.existing_address();
         console.log('add add rs', res.data.data)
-        this.props.init_selected_add(res.data.data.address.slug)
-       let slug = res.data.data.address.slug
+   
         
         axios.patch('/v2/orders/cart/update/',{
           first_name : this.state.contactInfo.first_name,
           phone_number : this.state.contactInfo.phone_number,
           email : this.state.contactInfo.email,
-          delivering_address : slug
+          delivering_address : res.data.data.address.slug
         }).then(response => {
           if(response.status < 400){
             this.props.init_card();
-            this.props.shipping();
-
+            this.props.changeState();
+            this.props.post_load_success();
           }
         }).catch(error => {
-          alert('خطا ! دوباره تلاش کنید' , error)
           this.setState({
-            error : error.form_errors
+            errors: error.response.data.errors.form_errors
           })
         })
 
-      }else{alert('خطا ! دوباره تلاش کنید')}
+      }
     }).catch(error => {
       this.setState({
-        error : error.form_errors
+        errors: error.response.data.errors.form_errors
       })
     })
 
@@ -125,7 +127,7 @@ class SubmitForm extends Component {
         <h2>اطلاعات تماس</h2>
         {!this.props.userLogin ? (
           <p>
-            <a href='/user/login' style={{color : 'blue'}}>ورود به حساب کاربری</a>
+            <Link href='/user/login' style={{color : 'blue'}}>ورود به حساب کاربری</Link>
           </p>
         ) : null}
 
@@ -136,9 +138,14 @@ class SubmitForm extends Component {
           name='first_name'
           onChange ={this.changeContact}
           value={this.state.contactInfo.first_name}
-          required
-
         />
+         {this.state.errors.first_name ? (
+                <span className="form_errors">
+                  {this.state.errors.first_name.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
         <input
           type="phone"
           placeholder="تلفن همراه"
@@ -146,8 +153,15 @@ class SubmitForm extends Component {
           name='phone_number'
           onChange ={this.changeContact}
           value={this.state.contactInfo.phone_number}
-          required
+          
         />
+         {this.state.errors.phone_number ? (
+                <span className="form_errors">
+                  {this.state.errors.phone_number.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
         <input
           type="email"
           placeholder="ایمیل"
@@ -155,17 +169,26 @@ class SubmitForm extends Component {
           name='email'
           onChange ={this.changeContact}
           value={this.state.contactInfo.email}
-          required
+          
         />
+         {this.state.errors.email ? (
+                <span className="form_errors">
+                  {this.state.errors.email.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
         {/* <input type="checkbox" id="news" className="check" />
         <label for="news">
           علاقه دارم از اخبار تخفیف ها و پیشنهادات ویژه با خبر شوم
         </label> */}
 
         <h2>آدرس ارسال</h2>
-        <input type="text" placeholder="نام آدرس" className="fullWidth" required onChange={this.changePost} value={this.state.postInfo.title} name='title'/>
+        <input type="text" placeholder="نام آدرس" className="fullWidth"  onChange={this.changePost} value={this.state.postInfo.title} name='title'/>
         {states? (
-          <select onChange={this.selectState}>{states.map(state =>(
+          <select onChange={this.selectState}>
+          <option selected>استان</option>
+          {states.map(state =>(
           <option value={state.slug} onClick={()=>{this.changeState(state.slug)}}>{state.name}</option>
           ))}
           </select>
@@ -174,6 +197,7 @@ class SubmitForm extends Component {
           this.state.enableCities ?(
             this.state.cities ? (
             <select onChange={this.setCity}>
+              <option selected>شهر</option>
               {this.state.cities.map(city => (
                 <option value={city.slug}>{city.name}</option>
               ))}
@@ -183,9 +207,23 @@ class SubmitForm extends Component {
 
           ):null
         }
-        <input type="text" placeholder="آدرس" className="fullWidth" required name='address'
+         {this.state.errors.city ? (
+                <span className="form_errors">
+                  {this.state.errors.city.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
+        <input type="text" placeholder="آدرس" className="fullWidth"  name='address'
           onChange={this.changePost}
           value={this.state.contactInfo.address}/>
+           {this.state.errors.address ? (
+                <span className="form_errors">
+                  {this.state.errors.address.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
         <input
           type="text"
           placeholder="کدپستی"
@@ -193,8 +231,15 @@ class SubmitForm extends Component {
           name='postal_code'
           onChange={this.changePost}
           value={this.state.postInfo.postal_code}
-          required
+          
         />
+         {this.state.errors.postal_code ? (
+                <span className="form_errors">
+                  {this.state.errors.postal_code.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
         {/* <input type="checkbox" for="reminder" className="check" />
         <label fro="reminder">یادت بمونه</label> */}
 
@@ -218,6 +263,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   init_card : init_card,
   existing_address :existing_address,
-  init_selected_add : init_selected_add
+  init_selected_add : init_selected_add,
+  post_req : post_req,
+  post_load_success : post_load_success,
+  post_load_failed : post_load_failed
 }
 export default connect(mapStateToProps , mapDispatchToProps)(SubmitForm);

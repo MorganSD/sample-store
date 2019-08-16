@@ -3,7 +3,8 @@ import { CARD_REQ, CARD_SUCCESS, CARD_FAIL } from "../actions/card";
 const cardState = {
   card_req: false,
   card_success: false,
-  card_fail: false
+  card_fail: false,
+  card_error :''
 };
 
 const CardReducer = (state = cardState, action) => {
@@ -17,6 +18,7 @@ const CardReducer = (state = cardState, action) => {
     }
     case CARD_SUCCESS: {
       return {
+        ...state,
         card_req: false,
         card_success: true,
         card_fail: false
@@ -24,9 +26,11 @@ const CardReducer = (state = cardState, action) => {
     }
     case CARD_FAIL: {
       return {
+        
         card_req: false,
         card_success: false,
-        card_fail: true
+        card_fail: true,
+        card_error : action.error
       };
     }
     default:

@@ -9,12 +9,18 @@ import Spinner from '../details/spinner'
 import close from "../../Icon Simplestore/close.png";
 import plus from "../../Icon Simplestore/+.png";
 import mines from "../../Icon Simplestore/-.png";
-
+import noPhoto from "../../Icon Simplestore/noPhoto.png";
+import ProgressBar from '../details/progressBar';
+import { Redirect } from "react-router";
 
 
 class OrderCard extends Component {
   constructor() {
     super();
+    this.state={
+      coupon : '',
+      redirectState : false,
+    }
   }
 
   updateCard = () => {
@@ -50,24 +56,65 @@ class OrderCard extends Component {
       alert(`حداقل سفارش ${min_order}`);
     }
   };
-  deleteProduct = (slug) =>{
+  deleteProduct = (slug) => {
+    
     this.props.delete_product(slug);
+  }
+  // componentWillUpdate = (nextProps) => {
+
+  //   debugger
+  //   if(nextProps.cardDisplay.cart_products){
+  //     if(nextProps.cardDisplay.cart_products.length != this.props.cardDisplay.cart_products.length){
+  //       if(nextProps.cardProduct.cart_products.length < 1){
+  //         alert('sabad khali ast')
+  //         this.setState({
+  //           redirectState : true,
+  //         })
+  //       }
+  //     }
+      
+  //   }
+   
+  //   // if(this.props.cardProduct){
+  //   //   if(this.props.cardProduct.cart_products){
+       
+  //   //   } 
+  //   // }
+  // }
+  onChangeCoupon = (e) =>{
+    this.setState({
+    [e.target.name] : e.target.value
+    })
+  }
+  submitCoupon = (e) =>{
+    e.preventDefault();
+    // axios.patch('')
+
   }
   render() {
     var commaNumber = require("comma-number");
+    const { redirectState } = this.state.redirectState;
 
+console.log('coupen',this.state.coupon)
     return (
         <div className="card">
-        <img src={close} onClick={this.notDispaly} />
+        {/* <img src={close} onClick={this.notDispaly} /> */}
         <div className="card-items">
           <div>
-            {this.props.isLoading ? <Spinner /> : null}
+          {this.props.card_req ? <ProgressBar /> : null}
             {this.props.cardProduct ? (
               this.props.cardProduct.cart_products ? (
+               this.props.cardProduct.cart_products.length > 0 ?(
                 this.props.cardProduct.cart_products.map(product => (
                   <div className="items">
+                     <img src={close} className='delete-item' onClick={() => { if (window.confirm('محصول انتخاب شده حذف شود ؟')) this.deleteProduct(product.product.slug) }}/>
+
                     <Link to={`/item/${product.product.address}`} onClick={this.notDispaly}>
-                    <img src={product.product.thumbnail} />
+                    <img  src={
+                              product.product.thumbnail === null
+                                ? noPhoto
+                                : product.product.thumbnail
+                            } />
                     </Link>
                     <div className="item-info">
                       <p><Link to={`/item/${product.product.address}`} onClick={this.notDispaly}>{product.product.title} </Link></p>
@@ -102,6 +149,7 @@ class OrderCard extends Component {
                     </div>
                   </div>
                 ))
+               ):  <h3>سبد خرید شما خالی است</h3>
               ) : (
                 <h3>سبد خرید شما خالی است</h3>
               )
@@ -113,21 +161,55 @@ class OrderCard extends Component {
               this.props.cardProduct.cart_products ? (
                 this.props.cardProduct.cart_products.length > 0 ? (
                   <>
+                  <div className='coupon' >
+                    <form onSubmit={(e)=>{this.submitCoupon(e)}}>
+                      <input type='text' placeholder='کد تخفیف' value={this.state.coupon} name='coupon' onChange={(e)=>{this.onChangeCoupon(e)}}/>
+                      <button type='submit'>اعمال</button>
+                    </form>
+                  </div>
                     <div className="total-price">
-                      <p>جمع کل :</p>
+                     <div>
+                     <p>جمع  :</p>
                       <p>
                         {commaNumber(this.props.cardProduct.total_price)}{" "}
                         تومان
                       </p>
+                     </div>
+
+                     <div>
+                     <p>هزینه پست  :</p>
+                      <p>
+                        {commaNumber(this.props.cardProduct.total_price - this.props.cardProduct.products_price)}{" "}
+                        تومان
+                      </p>
+                     </div>
+                     <div>
+                     <p>تخفیف  :</p>
+                      <p>
+                        {commaNumber(this.props.cardProduct.total_price - this.props.cardProduct.discounted_price)}{" "}
+                        تومان
+                      </p>
+                     </div>
                     </div>
-                    <span className="submit-order">
+                    <div className="total-price">
+                     <div>
+                     <p> جمع کل  :</p>
+                      <p>
+                        {commaNumber(this.props.cardProduct.total_price)}{" "}
+                        تومان
+                      </p>
+                     </div>
+                    </div>
+                    {/* <span className="submit-order">
                       <a href="#">تکمیل سفارش خرید</a>
-                    </span>
+                    </span> */}
                   </>
                 ) : null
               ) : null
             ) : null
             }
+                    {redirectState && <Redirect to={'/'} />}
+
           </div>
         </div>
       </div>
@@ -138,7 +220,9 @@ const mapStateToProps = state => {
   return {
     cardDisplay: state.InitUserReducer.cardDisplay,
     cardProduct: state.InitUserReducer.card.cart,
-    isLoading: state.InitUserReducer.card.isLoading
+    isLoading: state.InitUserReducer.card.isLoading,
+    card_req: state.CardReducer.card_req
+
   };
 };
 const mapDispatchToProps = {

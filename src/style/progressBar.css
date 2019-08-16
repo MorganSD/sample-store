@@ -6,17 +6,18 @@
     height: 5px;
     margin: 0;
     background-color: rgba(0,0,0,0.34);
-    position: absolute;
+    position: fixed;
     top: 0px;
     width: 110%;
     right: 0;
+    z-index: 999;
   }
   
   .bar-horizontal {
-    width: 5%;
+    width: 0;;
     height: 100%;
     margin-left: 0;
-    background-color: darkred;
+    background-color: #1b4c52;
     
     animation-name: spinner;
     animation-duration: 2s;
@@ -28,31 +29,31 @@
   
   @keyframes spinner {
     0% {
-      /* width: 0; */
-      transform: translateX(0)
+      width: 0;
+      /* transform: translateX(0) */
     }
     25% {
-      /* width: 100%; */
-      /* margin-left: 50%; */
-      transform: translateX(-120px)
+      width: 100%;
+      margin-left: 50%;
+      /* transform: translateX(-200%) */
 
     }
     50% {
-      /* width: 100%; */
-      /* margin-left: 50%; */
-      transform: translateX(-240px)
+      width: 100%;
+      margin-left: 50%;
+      /* transform: translateX(-400%) */
 
     }
     75% {
-      /* width: 100%; */
-      /* margin-left: 50%; */
-      transform: translateX(-360px)
+      width: 100%;
+      margin-left: 50%;
+      /* transform: translateX(-600%) */
 
     }
     100% {
-      /* width: 0; */
-      /* margin-left: 100%; */
-      transform: translateX(-500px)
+      width: 0;
+      margin-left: 100%;
+      /* transform: translateX(-800%) */
 
     }
   }

@@ -39,7 +39,7 @@ class SidebarMain extends Component {
     return (
       <section className="sidebar">
         <div className="logo">
-          <Link to="/all" onClick={this.getlist}>
+          <Link to="/" onClick={this.getlist}>
             <img src={formaloo} />
             <p>فرم ساز آنلاین فرمالو</p>
           </Link>

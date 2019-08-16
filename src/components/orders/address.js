@@ -1,114 +1,152 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { update_address, remove_address,init_selected_add,existing_address } from "../../actions/costumerInfo";
-import axios from '../../axios';
+import {
+  update_address,
+  remove_address,
+  init_selected_add,
+  existing_address
+} from "../../actions/costumerInfo";
+import {
+  post_req,
+  post_load_success,
+  post_load_failed
+} from "../../actions/post";
+import axios from "../../axios";
 class Address extends Component {
   constructor() {
     super();
     this.state = {
+      selected_state: "",
+      enableCities: false,
+      cities: {},
+      states: {},
       isEdit: false,
       title: "",
-        city: "",
-        phone_number: "",
-        postal_code: "",
-        address: "",
-      // edited: {
-      //   title: "",
-      //   city: "",
-      //   phone_number: "",
-      //   postal_code: "",
-      //   address: "",
-      //   data : []
-      // }
+      city: "",
+      phone_number: "",
+      postal_code: "",
+      address: "",
+      edited: {},
+      errors: []
     };
   }
+
+  componentWillMount() {
+    axios
+      .get("/locations/states/")
+      .then(res => {
+        if (res.status < 400) {
+          console.log("states", res.data.data);
+          this.setState({
+            states: res.data.data
+          });
+        }
+      })
+      .catch(error => console.log("states error", error));
+  }
+  setCity = e => {
+    this.setState({
+      edited: {
+        ...this.state.edited,
+        city: e.target.value
+      }
+    });
+  };
+  changeState = slug => {
+    this.setState({
+      selected_state: slug
+    });
+  };
+  selectState = event => {
+    axios
+      .get(`/locations/states/state/${event.target.value}/cities/`)
+      .then(res => {
+        this.setState({
+          enableCities: true,
+          cities: res.data.data.cities
+        });
+      });
+  };
   editAdd = () => {
     this.setState({
       isEdit: !this.state.isEdit
     });
+   
   };
   removeAdd = slug => {
     this.props.removeAddress(slug);
   };
-  submitEditAdd = (e , address_slug) => {
+  submitEditAdd = (e, address_slug) => {
+    this.props.post_req();
     e.preventDefault();
-    let editAdd = [];
-    // let add = this.state.edited;
-    if(this.state.title != ''){
-      editAdd.push(this.state.title)
-    }
-    if(this.state.city !=''){
-      editAdd.push(this.state.city)
-    }
-    if(this.state.phone_number !=''){
-      editAdd.push(this.state.phone_number)
-    }
-    if(this.state.postal_code !=''){
-      editAdd.push(this.state.postal_code)
-    }
-    if(this.state.address !=''){
-      editAdd.push(this.state.address)
-    }
-    
-    if(editAdd.length > 0){
-      axios.patch(`/v2/profiles/address/${address_slug}/update/`, editAdd)
-      .then(res => {
-        if (res.status < 400) {
-          this.props.updateAddress();
-          this.setState({
-            title: "",
-              city: "",
-              phone_number: "",
-              postal_code: "",
-              address: "",
-            edited: {
+    if (this.state.edited != null) {
+      axios
+        .patch(
+          `/v2/profiles/address/${address_slug}/update/`,
+          this.state.edited
+        )
+        .then(res => {
+          if (res.status < 400) {
+            this.props.updateAddress();
+            this.setState({
               title: "",
               city: "",
               phone_number: "",
               postal_code: "",
-              address: ""
-            },
-            isEdit:false
-          })
-        }else{alert('خطایی رخ داده است ! دوباره تلاش کنید')}
-      })
-      .catch(error => console.log(error, "update address"));
-    }else{
-      alert('هیچی برای آپدیت نیست ')
+              address: "",
+              edited: {},
+              isEdit: false
+            });
+            this.props.post_load_success();
+          }
+        })
+        .catch(error => {
+          this.setState({
+            errors: error.response.data.errors.form_errors
+          });
+        });
+    } else {
+      alert("هیچی برای آپدیت نیست ");
     }
-  
-    // this.props.updateAddress(slug, this.state.edited);
-    // this.setState({
-    //   isEdit: {
-    //     slug: false
-    //   }
-    // });
   };
   onChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
-    // if (event.target.value != "") {
-    //   this.setState({
-    //     edited: {
-    //       [event.target.name]: event.target.value
-    //     }
-    //   });
-    //   console.log(this.state.edited, "new address");
-    // }
-  };
-  select_address = (e,address_slug) =>{
-    if(e.target.checked){
-      this.props.selectAddress(address_slug)
+    // this.checkNull(event.target.name )
+    if (event.target.value != "") {
+      this.setState({
+        edited: {
+          ...this.state.edited,
+          [event.target.name]: event.target.value
+        }
+      });
+      // console.log(this.state.edited, "new address");
     }
-  }
+  };
+
+  select_address = (e, address_slug) => {
+    if (e.target.checked) {
+      this.props.selectAddress(address_slug);
+    }
+  };
   render() {
     let address = this.props.prop;
-console.log('edit address error', this.state.edited)
+    let states = this.state.states.states;
+
+    console.log("edit address error", this.state.edited);
     return (
       <section>
         <div>
-          <input type="radio" id={address.slug} name="address" onChange={(e)=>{this.select_address(e,address.slug)}}/>
+          <input
+            type="radio"
+            id={address.slug}
+            name="address"
+            onChange={e => {
+              this.select_address(e, address.slug);
+            }}
+          />
+
           <label for={address.slug}>
             <h3>{address.title}</h3>
             {address.city != null ? (
@@ -132,52 +170,112 @@ console.log('edit address error', this.state.edited)
           </div>
         </div>
 
-         {this.state.isEdit ? (
-                  <div className='edit-address'>
-                    <form
-                      onSubmit={e => {
-                        this.submitEditAdd(e, address.slug);
+        {this.state.isEdit ? (
+          <div className="edit-address">
+            <form
+              onSubmit={e => {
+                this.submitEditAdd(e, address.slug);
+              }}
+            >
+              <input
+                type="text"
+                placeholder="عنوان آدرس"
+                value={this.state.title}
+                onChange={this.onChange}
+                name="title"
+              />
+              {this.state.errors.title ? (
+                <span className="form_errors">
+                  {this.state.errors.title.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
+
+              {states ? (
+                <select onChange={this.selectState}>
+                  <option selected>استان</option>
+                  {states.map(state => (
+                    <option
+                      value={state.slug}
+                      onClick={() => {
+                        this.changeState(state.slug);
                       }}
                     >
-                      <input
-                        type="text"
-                        placeholder='عنوان آدرس'
-                        value={this.state.title}
-                        onChange={this.onChange}
-                        name="title"
-                      />
-                      <select>
-                        <option>شهر</option>
-                      </select>
-                      <input
-                        type="text"
-                        placeholder='آدرس'
-                        value={this.state.address}
-                        onChange={this.onChange}
-                        name="address"
-                      />
-                      <input
-                        type="text"
-                        placeholder='کدپستی'
-                        value={this.state.postal_code}
-                        onChange={this.onChange}
-                        name="postal_code"
-                      />
-                      <input
-                        type="phone"
-                        placeholder='تلفن همراه'
-                        value={this.state.phone_number}
-                        onChange={this.onChange}
-                        name="phone_number"
-                      />
+                      {state.name}
+                    </option>
+                  ))}
+                </select>
+              ) : null}
+              {this.state.enableCities ? (
+                this.state.cities ? (
+                  <select onChange={this.setCity}>
+                    <option selected>شهر</option>
+                    {this.state.cities.map(city => (
+                      <option value={city.slug}>{city.name}</option>
+                    ))}
+                  </select>
+                ) : null
+              ) : null}
+              {this.state.errors.city ? (
+                <span className="form_errors">
+                  {this.state.errors.city.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
 
-                      <button type="submit" className="update-btn">
-                        بروزرسانی{" "}
-                      </button>
-                    </form>
-                  </div>
-         ):null}
-              
+              <input
+                type="text"
+                placeholder="آدرس"
+                value={this.state.address}
+                onChange={this.onChange}
+                name="address"
+              />
+              {this.state.errors.address ? (
+                <span className="form_errors">
+                  {this.state.errors.address.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
+
+              <input
+                type="text"
+                placeholder="کدپستی"
+                value={this.state.postal_code}
+                onChange={this.onChange}
+                name="postal_code"
+              />
+              {this.state.errors.postal_code ? (
+                <span className="form_errors">
+                  {this.state.errors.postal_code.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
+
+              <input
+                type="phone"
+                placeholder="تلفن همراه"
+                value={this.state.phone_number}
+                onChange={this.onChange}
+                name="phone_number"
+              />
+              {this.state.errors.phone_number ? (
+                <span className="form_errors">
+                  {this.state.errors.phone_number.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
+
+              <button type="submit" className="update-btn">
+                بروزرسانی{" "}
+              </button>
+            </form>
+          </div>
+        ) : null}
       </section>
     );
   }
@@ -185,7 +283,10 @@ console.log('edit address error', this.state.edited)
 const mapDispatchToProps = {
   updateAddress: existing_address,
   removeAddress: remove_address,
-  selectAddress : init_selected_add
+  selectAddress: init_selected_add,
+  post_req: post_req,
+  post_load_success: post_load_success,
+  post_load_failed: post_load_failed
 };
 export default connect(
   null,

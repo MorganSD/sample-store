@@ -13,9 +13,20 @@
     .itemBox{
         width: 190px;
         margin-left: 14px;
+        /* display: none; */
     } 
     .related .carousel>div>div>div{
         width: 80%;
         margin-right: 10%;
+    }
+}
+@media screen and (max-width:768px){
+    .sidebar{
+        /* transform: translateX(350px); */
+        display: none;
+    }
+    .homeList{
+        width: 90%;
+        margin-right: 5%;
     }
 }

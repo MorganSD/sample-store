@@ -11,7 +11,7 @@ import Card from "./card";
 import {connect}  from 'react-redux';
 import Favourite from '../components/favourite';
 import LogOut from '../components/logOut';
-import {card_dispaly,card_call,favourite_display ,list_by_cat} from '../actions/actions';
+import {card_dispaly,favourite_display ,list_by_cat} from '../actions/actions';
 import {post_req , post_load_success , post_load_failed} from '../actions/post';
 
 class Header extends Component {
@@ -30,17 +30,19 @@ class Header extends Component {
   
   componentDidMount() {
     // console.log('redux' , this.props)
-    this.props.post_req();
+    // this.props.post_req();
     axios.get("/shelves/categories/menu/list").then(response => {
       if(response.status < 400){
-        this.props.post_load_success();
+        // this.props.post_load_success();
         this.setState({
           categories: response.data.data.categories
         });
+      }else{
+        // this.props.post_load_failed(response.errors)
+
       }
       
     }).catch(error =>{
-      this.props.post_load_failed(error)
       console.log('categories',error)
     })
    
@@ -152,7 +154,7 @@ const mapStatToProps = (state) =>{
 }
 const mapDispatchToProps = {
   
-  cardDisplayChange : card_call ,
+  cardDisplayChange : card_dispaly ,
   favouriteDisplayChange : favourite_display,
   get_list_cat : list_by_cat,
   post_req : post_req,

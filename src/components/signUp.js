@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import '../style/signup.css';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { connect } from 'react-redux';
-import { userSignUpRequest } from '../actions/signUpActions';
 import PropTypes from 'prop-types';
 import * as EmailValidator from 'email-validator';
 import isNumeric from 'validator/lib/isEmail';

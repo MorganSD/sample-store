@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { init_selected_shipping , init_selected_shipping_date } from "../../actions/costumerInfo";
-import ShippingMethod from "./shippingMethod";
 
 class Shipping extends Component {
   constructor() {
@@ -169,8 +168,8 @@ class InnerAccordionItem extends React.Component {
              value={this.props.interval_hour.slug}
              onChange ={(e)=>{this.setShippingDate(e)}}
             />
-            <label for={this.props.interval_hour.slug}>
-              {this.props.interval_hour.start_time} -{" "}
+            <label for={this.props.interval_hour.slug} className='inner_label'>
+              {this.props.interval_hour.start_time} + {" - "} +
               {this.props.interval_hour.end_time}
             </label>
           </h3>

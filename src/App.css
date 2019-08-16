@@ -40,5 +40,6 @@ a{
 
 input, button, select{
   font-family: 'iranyekan';
+  outline: none;
 }
 

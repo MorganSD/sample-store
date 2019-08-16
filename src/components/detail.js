@@ -13,6 +13,7 @@ import axios from "../axios";
 import { connect } from "react-redux";
 import Choice from "../components/details/choice";
 import SelectOption from '../components/details/select';
+import {post_req, post_load_success, post_load_failed} from '../actions/post';
 
 import Addbasket from "../Icon Simplestore/Asset-white.png";
 import formaloo from "../Icon Simplestore/formaloo-01.png";
@@ -61,44 +62,63 @@ class Detail extends Component {
   componentWillMount() {
     const { address } = this.props.match.params;
     console.log(address);
+    // this.props.post_req();
+
     axios.get(`/shelves/product/address/${address}`).then(response => {
-      if (response.data.data.product.favorite === true) {
+      if(response.status < 400){
+        if (response.data.data.product.favorite === true) {
+          this.setState({
+            isFavourite: true
+          });
+        } else {
+          this.setState({
+            isFavourite: false
+          });
+        }
         this.setState({
-          isFavourite: true
+          product: response.data.data.product
         });
-      } else {
-        this.setState({
-          isFavourite: false
-        });
+        // this.props.post_load_success();
+        console.log(response.data.data.product);
+      }else{
+        // this.props.post_load_failed(response.errors)
       }
-      this.setState({
-        product: response.data.data.product
-      });
-      console.log(response.data.data.product);
+    
     });
   }
 
   componentDidUpdate(prevProps) {
     let { address } = this.props.match.params;
     if (prevProps.match.params != this.props.match.params) {
-      axios.get(`/shelves/product/address/${address}`).then(response =>
-        this.setState({
-          product: response.data.data.product
-        })
+      this.props.post_req();
+
+      axios.get(`/shelves/product/address/${address}`).then(response => {
+        if(response.status < 400){
+          this.props.post_load_success();
+          this.setState({
+            product: response.data.data.product
+          })
+        
+        }else{
+          this.props.post_load_failed(response.errors)
+        }
+        
+      }
+       
       );
     }
   }
-  updateCard = () => {
-    axios.get("/orders/cart/show/").then(res => {
-      console.log("updated card", res.data.data.cart);
-      if (res.status < 400) {
-        localStorage.setItem("card", JSON.stringify(res.data.data.cart));
-        this.props.addProductToCart(res.data.data.cart);
-      } else {
-        console.log("update cart error", res.errors);
-      }
-    });
-  };
+  // updateCard = () => {
+  //   axios.get("/orders/cart/show/").then(res => {
+  //     console.log("updated card", res.data.data.cart);
+  //     if (res.status < 400) {
+  //       localStorage.setItem("card", JSON.stringify(res.data.data.cart));
+  //       this.props.addProductToCart(res.data.data.cart);
+  //     } else {
+  //       console.log("update cart error", res.errors);
+  //     }
+  //   });
+  // };
 
   addToCard = (max_order, slug) => {
     let cardStorage = JSON.parse(localStorage.getItem("card"));
@@ -156,7 +176,7 @@ getList = () =>{
     return (
       <div id="detail">
         <div className="logo">
-          <Link to="/all" onClick={this.getList}>
+          <Link to="/" onClick={this.getList}>
             <img src={formaloo} />
             <p>فرم ساز آنلاین فرمالو</p>
           </Link>
@@ -270,7 +290,10 @@ const mapDispatchToProps = {
   deleteFavorite: delete_favourite,
   addFavourite: add_favourite,
   favouriteDisplayChange: favourite_display,
-  init_list : all_list
+  init_list : all_list,
+  post_req : post_req,
+  post_load_success : post_load_success,
+  post_load_failed : post_load_failed
 
 };
 export default connect(

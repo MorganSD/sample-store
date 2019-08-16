@@ -9,17 +9,7 @@ const Breadcrumb = (props) => {
       if(props.product.length === 0 ){
         return null;
       }else{
-        // console.log("bread", props.product.address);
-        // if(props.product.parent_category){
-        //   return (
-        //     <li>
-        //       <Link to={`/${props.product.address}`}>
-        //         {props.product.parent_category}
-        //       </Link>
-        //       <img src={breadcrumbIcon} />
-        //     </li>
-        //   );
-        // }else{return null}
+       
       
         if (props.product.categories) {
           if(props.product.categories.length != 0 )

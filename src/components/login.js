@@ -39,7 +39,6 @@ isValid(){
     if(this.isValid){
     this.setState({spinner : 'none'})
     this.props.loginUser( this.state.username , this.state.password);
-    // this.props.setFavourite();
     this.setState({
       redirectState : true
     })
@@ -96,7 +95,7 @@ isValid(){
           کاربر جدید هستید ؟<Link to={`/user/sign-up`}>ثبت نام کنید </Link>
           <p><Link to={'/all'}>صفحه اصلی</Link></p>
         </div>
-        {redirectState && <Redirect to={'/all'} />}
+        {redirectState && <Redirect to={'/'} />}
       </div>
     );
   }

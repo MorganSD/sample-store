@@ -28,6 +28,8 @@ import OrderResult from "./components/orders/orderResult";
 import OrderResultFail from "./components/orders/orderResultFail";
 import ProgressBar from "./components/details/progressBar";
 import PopUp from "./components/details/popup";
+import OrderPage from "./components/orders/order";
+import Main from "./main";
 class App extends Component {
   constructor() {
     super();
@@ -68,37 +70,31 @@ class App extends Component {
   }
 
   render() {
-    // console.log("token g", this.props.userToken);
-    // console.log(JSON.parse(localStorage.getItem("card")));
-    console.log("consoool", this.props.isLoading);
-
     if (this.state.userLogedIn) {
-      return (
-        <React.Fragment>
-          <Router basename={process.env.PUBLIC_URL}>
-            {this.props.isLoading ? <ProgressBar /> : null}
+
+    return(
+      <React.Fragment>
+          {this.props.isLoading ? <ProgressBar /> : null}
             {this.props.error ? (
               <PopUp massage={this.props.errorMassage} close={this.props.reset_errors}/>
             ) : null}
-            <Header />
-            <Route exact path="/:category" component={Home} />
-            <Route path="/user/login" component={Login} />
-            <Route path="/item/:address" component={Detail} />
-            <Route path="/user/sign-up" component={SignUp} />
-            <Route path="/user/Info" component={UserInfo} />
-            <Route path="/search/:search" component={SearchResult} />
-            <Route path="/order/submit" component={Order} />
+         <Router basename={process.env.PUBLIC_URL}>
+            <Route exact path='/' component={Main} />
+            {/* <Route path='/order/order' component={} /> */}
+            <Route path="/order/submit" component={OrderPage} />
             <Route path="/submit/order/success" component={OrderResult} />
             <Route path="/submit/order/fail" component={OrderResultFail} />
             <Footer />
-          </Router>
-        </React.Fragment>
-      );
-    } else {
-      return null;
-    }
+        </Router>
+      </React.Fragment>
+    )
+  } else {
+    return null;
   }
 }
+}
+
+
 const mapStateToProps = state => {
   return {
     currentUser: state.InitUserReducer.currentUser,
@@ -129,3 +125,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
+
