@@ -1,30 +1,25 @@
 import React from 'react';
 import noPhoto from "../../Icon Simplestore/noPhoto.png";
-
+import Rate from '../rate';;
 
 
 const Comments = (props) => {
-    if (props.comment.answered_questions) {
-      if (props.comment.answered_questions.length === 0) {
+    if (props.comment.rates) {
+      if (props.comment.rates.length < 1) {
         return <p>نظری ثبت نشده است</p>;
       } else {
         return (
           <>
-            {props.comment.answered_questions.map(comment => (
+            {props.comment.rates.map(c => (
               <div className="comment-box">
-                <img src={noPhoto} />
                 <div>
                   <p>
-                    <span>نام و نام خانوادگی</span>
-                    <span>rate</span>
+                    <span>{c.user.first_name} </span>
+                    <span className='user_rate'><Rate product={c}/></span>
                   </p>
   
                   <div>
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و
-                    مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی
-                    تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                    کاربردی می باشد.
+                   {c.comment}
                   </div>
                 </div>
               </div>

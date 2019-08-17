@@ -6,7 +6,9 @@ function Rate(props) {
   if (props.product.rate === 0) {
     return (
       <React.Fragment>
-        <sup>({props.product.ratings_count})</sup>
+        {props.product.ratings_count ?
+        <sup>({ props.product.ratings_count} )</sup>
+          : null}
         <img src={lightstar} />
         <img src={lightstar} />
         <img src={lightstar} />
@@ -17,8 +19,9 @@ function Rate(props) {
   } else if (props.product.rate === 1) {
     return (
       <React.Fragment>
-        <sup>({props.product.ratings_count})</sup>
-        <img src={darkstar} />
+ {props.product.ratings_count ?
+        <sup>({ props.product.ratings_count} )</sup>
+          : null}        <img src={darkstar} />
         <img src={lightstar} />
         <img src={lightstar} />
         <img src={lightstar} />
@@ -28,8 +31,9 @@ function Rate(props) {
   } else if (props.product.rate === 2) {
     return (
       <React.Fragment>
-        <sup>({props.product.ratings_count})</sup>
-        <img src={darkstar} />
+ {props.product.ratings_count ?
+        <sup>({ props.product.ratings_count} )</sup>
+          : null}        <img src={darkstar} />
         <img src={darkstar} />
         <img src={lightstar} />
         <img src={lightstar} />
@@ -39,8 +43,9 @@ function Rate(props) {
   } else if (props.product.rate === 3) {
     return (
       <React.Fragment>
-        <sup>({props.product.ratings_count})</sup>
-        <img src={darkstar} />
+ {props.product.ratings_count ?
+        <sup>({ props.product.ratings_count} )</sup>
+          : null}        <img src={darkstar} />
         <img src={darkstar} />
         <img src={darkstar} />
         <img src={lightstar} />
@@ -50,8 +55,9 @@ function Rate(props) {
   } else if (props.product.rate === 4) {
     return (
       <React.Fragment>
-        <sup>({props.product.ratings_count})</sup>
-        <img src={darkstar} />
+ {props.product.ratings_count ?
+        <sup>({ props.product.ratings_count})</sup>
+          : null}        <img src={darkstar} />
         <img src={darkstar} />
         <img src={darkstar} />
         <img src={darkstar} />
@@ -61,8 +67,9 @@ function Rate(props) {
   } else if (props.product.rate === 5) {
     return (
       <React.Fragment>
-        <sup>({props.product.ratings_count})</sup>
-        <img src={darkstar} />
+ {props.product.ratings_count ?
+        <sup>({ props.product.ratings_count} )</sup>
+          : null}        <img src={darkstar} />
         <img src={darkstar} />
         <img src={darkstar} />
         <img src={darkstar} />

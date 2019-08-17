@@ -6,6 +6,8 @@ export const INIT_SELECTED_ADD = "INIT_SELECTED_ADD";
 export const INIT_SELECTED_SHIPPING = 'INIT_SELECTED_SHIPPING';
 export const INIT_SELECTED_PAYMENT ='INIT_SELECTED_PAYMENT';
 export const INIT_SELECTED_SHIPPING_DATE ='INIT_SELECTED_SHIPPING_DATE'
+export const INIT_RATE = 'INIT_RATE';
+export const INIT_COMMENT = 'INIT_COMMENT';
 export const init_address = address => {
   return {
     type: INIT_ADDRESS,
@@ -99,6 +101,19 @@ export const init_selected_payment = (selected_method) =>{
         type : INIT_SELECTED_PAYMENT ,
         method : selected_method
     }
+}
+
+export const init_rate = (rate) =>{
+  return {
+    type : INIT_RATE ,
+    rate : rate
+  }
+}
+export const init_comment=(comment) => {
+  return{
+    type : INIT_COMMENT,
+    comment : comment
+  }
 }
 // export function update_cart_shipping(selected_method){
 //     return function(dispatch){

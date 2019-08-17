@@ -84,6 +84,7 @@ class App extends Component {
             <Route path="/order/submit" component={OrderPage} />
             <Route path="/submit/order/success" component={OrderResult} />
             <Route path="/submit/order/fail" component={OrderResultFail} />
+            <Route path="/item/:address" component={Detail} />
             <Footer />
         </Router>
       </React.Fragment>

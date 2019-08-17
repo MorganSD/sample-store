@@ -262,9 +262,9 @@ color: grey;
   padding: 10px 0;
   /* border-top:1px solid black; */
   border-bottom: 1px solid #000;
-  margin: 20px 0;
+  margin: 10px 0 20px;
 }
-
+/* 
 .comment-box > img {
   width: 60px;
   height: 60px;
@@ -272,11 +272,11 @@ color: grey;
   border: 1px solid grey;
   float: right;
   margin-top: 10px;
-}
+} */
 .comment-box > div {
-  width: calc(100% - 70px);
+  width: 100%;
   height: auto;
-  margin-right: 70px;
+  /* margin-right: 70px; */
   font-size: 14px;
 }
 .comment-box > div > p {
@@ -285,6 +285,9 @@ color: grey;
 }
 .comment-box > div > p > span:nth-of-type(2) {
   float: left;
+}
+.comment-box > div >div:last-child{
+  padding: 0 10px 0 110px;
 }
 .related {
   width: 100%;
@@ -295,6 +298,7 @@ color: grey;
   /* overflow: hidden; */
  
 }
+
 .related>div {
   width: 100%;
   height: 100%;
@@ -477,4 +481,78 @@ right: 0;
   font-size: 14px;
   float: right;
   margin-left: 10px;
+}
+#give_comment{
+  width: 100%;
+  min-height: 100px;
+  /* border: 1px solid red; */
+  margin: 20px 0 30px;
+}
+
+#give_rate{
+  width: 100%;
+  height: 30px;
+  /* border: 1px solid red; */
+}
+#give_rate>input{
+  display: none;
+}
+#give_rate > label{
+  display: block;
+  width: 20px;
+  height: 20px;
+  float: right;
+  margin: 5px 2px;
+ cursor: pointer;
+}
+#give_rate > label>img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#comment_box {
+  width: 100%;
+  min-height: 100px;
+  /* border: 1px solid red; */
+}
+#comment_box > textarea{
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-bottom: 1px solid rgb(177, 177, 177);
+  border-top: 1px solid rgb(177, 177, 177);
+  margin: 20px 0;
+
+}
+#comment_box .submit-btn{
+  /* display: block; */
+  width: 200px;
+  height: 50px;
+  background: #1f2c32;
+  line-height: 50px;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  font-size: 16px;
+  margin-right: calc(100% - 200px);
+ 
+}
+.form_errors{
+  display: block;
+  color: red;
+  padding-right: 20px;
+  font-size: 13px;
+}
+.user_rate{
+  width: 100px;
+  height: 30px;
+}
+.user_rate img{
+  width: 20px;
+  height: 20px;
 }

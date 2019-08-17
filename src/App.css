@@ -38,7 +38,7 @@ a{
 }
 
 
-input, button, select{
+input, button, select, textarea{
   font-family: 'iranyekan';
   outline: none;
 }

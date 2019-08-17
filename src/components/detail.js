@@ -12,15 +12,15 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "../axios";
 import { connect } from "react-redux";
 import Choice from "../components/details/choice";
-import SelectOption from '../components/details/select';
-import {post_req, post_load_success, post_load_failed} from '../actions/post';
+import SelectOption from "../components/details/select";
+import { post_req, post_load_success, post_load_failed } from "../actions/post";
 
 import Addbasket from "../Icon Simplestore/Asset-white.png";
 import formaloo from "../Icon Simplestore/formaloo-01.png";
 import breadcrumbIcon from "../Icon Simplestore/apple-keyboard-control-3.png";
 import notFav from "../Icon Simplestore/like.png";
 import isFav from "../Icon Simplestore/like2.png";
-
+import GiveComment from "./details/giveComment";
 import "../style/detail.css";
 import "../style/react-tabs.css";
 import "../style/itemList.css";
@@ -46,7 +46,7 @@ const Options = props => {
     return <Choice options={props.options} />;
   } else {
     // console.log(props.options,'options')
-    return <SelectOption options={props.options}/>;
+    return <SelectOption options={props.options} />;
     // return <h3>selection</h3>
   }
 };
@@ -56,7 +56,8 @@ class Detail extends Component {
     super();
     this.state = {
       product: [],
-      isFavourite: false
+      isFavourite: false,
+      comment: false
     };
   }
   componentWillMount() {
@@ -65,7 +66,7 @@ class Detail extends Component {
     // this.props.post_req();
 
     axios.get(`/shelves/product/address/${address}`).then(response => {
-      if(response.status < 400){
+      if (response.status < 400) {
         if (response.data.data.product.favorite === true) {
           this.setState({
             isFavourite: true
@@ -80,32 +81,28 @@ class Detail extends Component {
         });
         // this.props.post_load_success();
         console.log(response.data.data.product);
-      }else{
+      } else {
         // this.props.post_load_failed(response.errors)
       }
-    
     });
   }
 
   componentDidUpdate(prevProps) {
     let { address } = this.props.match.params;
     if (prevProps.match.params != this.props.match.params) {
-      this.props.post_req();
+      // this.props.post_req();
 
-      axios.get(`/shelves/product/address/${address}`).then(response => {
-        if(response.status < 400){
-          this.props.post_load_success();
-          this.setState({
-            product: response.data.data.product
-          })
-        
-        }else{
-          this.props.post_load_failed(response.errors)
-        }
-        
-      }
-       
-      );
+      axios
+        .get(`/shelves/product/address/${address}`)
+        .then(response => {
+          if (response.status < 400) {
+            // this.props.post_load_success();
+            this.setState({
+              product: response.data.data.product
+            });
+          }
+        })
+        .catch(error => console.log(error.response.data.errors));
     }
   }
   // updateCard = () => {
@@ -149,17 +146,16 @@ class Detail extends Component {
         });
       }
     } else {
-      let currnet_user = JSON.parse(localStorage.getItem('jwtToken'))
-      if(currnet_user.guest){
+      let currnet_user = JSON.parse(localStorage.getItem("jwtToken"));
+      if (currnet_user.guest) {
         this.favDispaly();
-      }else{
+      } else {
         this.favDispaly();
         this.props.addFavourite(slug);
         this.setState({
           isFavourite: true
         });
       }
-     
     }
   };
   favDispaly = () => {
@@ -167,9 +163,14 @@ class Detail extends Component {
       this.props.favouriteDisplayChange();
     }
   };
-getList = () =>{
-  this.props.init_list();
-}
+  getList = () => {
+    this.props.init_list();
+  };
+  giveComment = () => {
+    this.setState({
+      comment: !this.state.comment
+    });
+  };
   render() {
     var commaNumber = require("comma-number");
 
@@ -219,24 +220,24 @@ getList = () =>{
             <div className="product-price">
               {this.state.product.in_stock ? (
                 <>
-                              <p>{commaNumber(this.state.product.price)} تومان</p>
+                  <p>{commaNumber(this.state.product.price)} تومان</p>
 
-                 <button
-                 className="basket-btn"
-                 onClick={() => {
-                   this.addToCard(
-                     this.state.product.max_order_count,
-                     this.state.product.slug
-                   );
-                 }}
-               >
-                 <img src={Addbasket} />
-                 اضافه کردن به سبد خرید
-               </button>
-               </>
-              ): <h4>موجود نمی باشد</h4>
-              }
-             
+                  <button
+                    className="basket-btn"
+                    onClick={() => {
+                      this.addToCard(
+                        this.state.product.max_order_count,
+                        this.state.product.slug
+                      );
+                    }}
+                  >
+                    <img src={Addbasket} />
+                    اضافه کردن به سبد خرید
+                  </button>
+                </>
+              ) : (
+                <h4>موجود نمی باشد</h4>
+              )}
 
               <p>{this.state.product.short_description}</p>
             </div>
@@ -268,9 +269,43 @@ getList = () =>{
                   <p>{this.state.product.ratings_count} مشارکت کننده</p>
                 </div>
               </div>
-              <span className="submitComment">ثبت نظر</span>
+              <span
+                className="submitComment"
+                onClick={() => {
+                  this.giveComment();
+                }}
+              >
+                ثبت نظر
+              </span>
             </div>
-            <Comments comment={this.state.product} />
+            {this.state.comment ? (
+              <>
+                {this.props.isLoggedIn ? (
+                  <GiveComment
+                    slug={this.state.product.slug}
+                    changeState={() => {
+                      {
+                        this.setState({ comment: false });
+                      }
+                    }}
+                  />
+                ) : (
+                  <p
+                    style={{
+                      margin: "10px 0",
+                      borderBottom: "1px solid grey",
+                      paddingBottom: "10px"
+                    }}
+                  >
+                    برای ارسال نظر <Link to='/user/login' style={{color : 'blue'}}>وارد</Link> شوید
+                  </p>
+                )}
+              </>
+            ) : null}
+            <>
+              {/* {this.props.isLoggedIn ? ():} */}
+              <Comments comment={this.state.product} />
+            </>
           </TabPanel>
         </Tabs>
 
@@ -281,7 +316,8 @@ getList = () =>{
 }
 const mapStateToProps = state => {
   return {
-    favouriteDisplay: state.InitUserReducer.favouriteDisplay
+    favouriteDisplay: state.InitUserReducer.favouriteDisplay,
+    isLoggedIn: state.InitUserReducer.userLogedIn
   };
 };
 
@@ -290,11 +326,10 @@ const mapDispatchToProps = {
   deleteFavorite: delete_favourite,
   addFavourite: add_favourite,
   favouriteDisplayChange: favourite_display,
-  init_list : all_list,
-  post_req : post_req,
-  post_load_success : post_load_success,
-  post_load_failed : post_load_failed
-
+  init_list: all_list,
+  post_req: post_req,
+  post_load_success: post_load_success,
+  post_load_failed: post_load_failed
 };
 export default connect(
   mapStateToProps,

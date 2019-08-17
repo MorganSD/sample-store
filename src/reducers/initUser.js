@@ -19,7 +19,10 @@ import {
   INIT_SELECTED_ADD,
   INIT_SELECTED_SHIPPING,
   INIT_SELECTED_PAYMENT,
-  INIT_SELECTED_SHIPPING_DATE
+  INIT_SELECTED_SHIPPING_DATE,
+  INIT_RATE,
+  INIT_COMMENT,
+  init_comment
 } from "../actions/costumerInfo";
 
 const initialState = {
@@ -34,6 +37,8 @@ const initialState = {
     selected_shipping: "",
     selected_payment: "",
     selected_shipping_date: "",
+    rate : '',
+    comment : '',
     address: {
       addresss: []
     }
@@ -187,6 +192,25 @@ const InitUserReducer = (state = initialState, action) => {
         }
       };
     }
+    case INIT_RATE :{
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          rate : action.rate
+        }
+      };
+    }
+    case INIT_COMMENT :{
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+        comment : action.comment
+          }
+        }
+      };
+    
     default:
       return state;
   }
