@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/sample-store/static/css/main.893b31ef.chunk.css",
+    "main.js": "/sample-store/static/js/main.b3d74b36.chunk.js",
+    "main.js.map": "/sample-store/static/js/main.b3d74b36.chunk.js.map",
+    "runtime~main.js": "/sample-store/static/js/runtime~main.93efb4dd.js",
+    "runtime~main.js.map": "/sample-store/static/js/runtime~main.93efb4dd.js.map",
+    "static/css/2.9522b9fe.chunk.css": "/sample-store/static/css/2.9522b9fe.chunk.css",
+    "static/js/2.f7c14896.chunk.js": "/sample-store/static/js/2.f7c14896.chunk.js",
+    "static/js/2.f7c14896.chunk.js.map": "/sample-store/static/js/2.f7c14896.chunk.js.map",
+    "index.html": "/sample-store/index.html",
+    "precache-manifest.77e40df88ebe579123e396a08be47ed0.js": "/sample-store/precache-manifest.77e40df88ebe579123e396a08be47ed0.js",
+    "service-worker.js": "/sample-store/service-worker.js",
+    "static/css/2.9522b9fe.chunk.css.map": "/sample-store/static/css/2.9522b9fe.chunk.css.map",
+    "static/css/main.893b31ef.chunk.css.map": "/sample-store/static/css/main.893b31ef.chunk.css.map",
+    "static/media/Asset-white.png": "/sample-store/static/media/Asset-white.c3e570eb.png",
+    "static/media/Asset.png": "/sample-store/static/media/Asset.70fbe50e.png",
+    "static/media/Group 771.png": "/sample-store/static/media/Group 771.f7361ed9.png",
+    "static/media/formaloo-01.png": "/sample-store/static/media/formaloo-01.ac1755ef.png",
+    "static/media/App.css": "/sample-store/static/media/iranyekanwebregular.e4f82d0d.ttf",
+    "static/media/like.png": "/sample-store/static/media/like.8e9cec9b.png",
+    "static/media/like2.png": "/sample-store/static/media/like2.990b3edf.png",
+    "static/media/logo.svg": "/sample-store/static/media/logo.5d5d9eef.svg",
+    "static/media/noPhoto.png": "/sample-store/static/media/noPhoto.21027234.png",
+    "static/media/search.png": "/sample-store/static/media/search.0586bdad.png",
+    "static/media/shopping-cart (2).png": "/sample-store/static/media/shopping-cart (2).9814e765.png",
+    "static/media/star (1).png": "/sample-store/static/media/star (1).a0ffb106.png",
+    "static/media/star.png": "/sample-store/static/media/star.d62f4a47.png"
+  }
+}
