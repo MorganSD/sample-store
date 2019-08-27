@@ -6,7 +6,8 @@ import SidebarMain from "./sidebar";
 import "../style/style.css";
 import {connect} from 'react-redux';
 import Pagination from '../components/pagination';
-import {nextPaginate , prevPaginate ,all_list} from '../actions/actions';
+import {nextPaginate , prevPaginate ,all_list , search_filter} from '../actions/actions';
+import Header from "../components/header";
 
 class SearchResult extends Component {
     constructor(){
@@ -16,17 +17,21 @@ class SearchResult extends Component {
             filtered_item :[]
         }
     }
-// componentWillMount(){
-   
-//     axios.get(`/shelves/products/`).then(response => {
-//       console.log(response.data,'search')
-//       this.setState({
-//         items: response.data.data.products,
-       
-//       });
-//     })
-
-// }
+    componentWillMount(){
+      if(this.props.match.params.search ){
+        const filter = this.props.match.params.search
+        this.props.search_filter(filter);
+        if(this.props.location.hash){
+    // this.props.history.push(null, null, window.location.href.split('#')[0]);
+          this.props.location.hash.replace('')
+          // const field = this.props.location.hash
+          // const choice = this.props.location.serach
+          // this.props.filter_list(category , field , choice);
+        }
+        
+    }else{
+      this.props.all_list();
+    } }
 pageIncrease =(next) => {
   this.props.nextPage(next);
 }
@@ -39,8 +44,10 @@ render(){
   // console.log(filter_items , this.state.items , 'items',this.props.search_filter)
   let filter_items = this.props.product_list.products
     return(
+      <>
+      <Header />
       <div id='home'>
-        <SidebarMain />
+      <SidebarMain match={this.props.match}/>
         <section className="homeList">
         {filter_items ? (
           filter_items.length != 0 ? (
@@ -52,6 +59,7 @@ render(){
     <Pagination list={this.props.product_list} increase ={this.pageIncrease} decrease={this.pageDecrease} />
       </section>
       </div>
+      </>
     )
 }
 }
@@ -65,7 +73,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   nextPage : nextPaginate,
   prevPage : prevPaginate, 
-  initList : all_list
+  initList : all_list,
+  search_filter : search_filter
 
 };
 

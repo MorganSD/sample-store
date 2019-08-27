@@ -18,6 +18,7 @@ const Thumbnail = (props) =>{
 
 class Product extends Component{
   addToCard = (max_order, slug) => {
+   
     let cardStorage = JSON.parse(localStorage.getItem("card"));
     let item = cardStorage.cart_products.find(
       item => item.product.slug === slug

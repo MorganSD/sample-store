@@ -1,3 +1,10 @@
+@keyframes list {
+    to{
+        height: calc(100vh - 50px);
+        opacity: 1;
+    }
+}
+
 header{
     width: 100%;
     height: 100px;
@@ -46,7 +53,7 @@ header .searchForm>input{
 }
 header .userTool>li:nth-of-type(4){
     float: left;
-    width: 100px;
+    width: auto;
     height: 100%;
     text-align: center;
     margin-left: 5px;
@@ -262,4 +269,149 @@ padding: 0 8px
 .login-box .lds-spinner{
     margin-right: calc(50% - 32px);
     margin-bottom: 20px;
+}
+/* responsive category list */
+
+.cat_hamMenu{
+    display: block;
+    width: 25px;
+    height: 13px;
+    margin-top: 20px;
+    cursor: pointer;
+
+}
+
+.cat_hamMenu>input{
+    display: none;
+}
+.cat_hamMenu>input:checked + label{
+transform: rotate(-45deg)
+}
+.cat_hamMenu>input:checked + label>span{
+    right: 10px;
+}
+.cat_hamMenu>label{
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    transition: .4s;
+    z-index: 5;
+}
+.cat_hamMenu>label:hover::after{
+bottom: -2px;
+}
+.cat_hamMenu>label:hover::before{
+    top: -2px;
+}
+.cat_hamMenu>label::after ,.cat_hamMenu>label::before{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: black;
+    position: absolute;
+    right: 0;
+    transition: .3s;
+
+}
+.cat_hamMenu>label::after{
+    bottom: 0;
+}
+.cat_hamMenu>label::before{
+    top: 0;
+}
+.cat_hamMenu>label>span{
+    display: block;
+    width: 100%;
+    height: 1px;
+    border-radius: 5px;
+    background: black;
+    position: absolute;
+    top: 5.5px;
+    right: 0;
+    transition: .4s;
+}
+.cat_hamMenu_list{
+    width: 100%;
+    height: calc(100vh - 50px) ;
+    position: fixed;
+    top: 50px;
+    right: 0;
+    background: rgb(202, 202, 202);
+    z-index: 4;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 40px;
+    border-top: 1px solid #000;
+    /* opacity: 0; */
+    /* animation: list 1s linear forwards; */
+}
+.cat_hamMenu_list>li{
+    margin: 10px 0;
+position: relative;
+}
+.cat_hamMenu_list>li>a , .cat_hamMenu_list>li>a:visited{
+    color: #000
+}
+.cat_hamMenu_list>li::after{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: black;
+    transform-origin: center;
+    transform: scaleX(0);
+    transition: .4s;
+
+}
+.cat_hamMenu_list>li:hover::after{
+    transform: scaleX(1)
+}
+.panel_wraper{
+    width: 30px;
+    height: 100%;
+    /* border: 1px solid red; */
+    position: relative;
+}
+.userPanel{
+    width: 100px;
+    height: auto;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    /* border: 1px solid rgb(177, 176, 176); */
+    position: relative;
+    left: 35px;
+    z-index: 6;
+    background: rgb(202, 202, 202);
+    border-radius: 5px;
+}
+.userPanel a{
+    color: #000 !important;
+}
+.userPanel::before{
+content: '';
+display: block;
+clip-path: polygon(50% 100% , 100% 0 , 0 0);
+width: 20px;
+height: 15px;
+position: absolute;
+top: -15px;
+right: calc(50% - 10px);
+background: rgb(202, 202, 202);
+transform: rotate(180deg)
 }

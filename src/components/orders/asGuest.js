@@ -141,7 +141,7 @@ class AsGuest extends Component {
            window.location.href = res.data.data.order.payment_method_data.payment_url 
            this.props.init_card();
           } else {
-     
+        this.props.init_card();
         this.setState({
             redirectSuccessState: true
           });
@@ -149,7 +149,11 @@ class AsGuest extends Component {
         } 
       })
       .catch(error => {
-        this.props.post_load_failed(error.response.data.errors)
+        if(error.response.data.status === 500){
+        return ( <Redirect to={"/serverError"} />  )     
+        }else{
+          this.props.post_load_failed(error.response.data.errors)
+        }
       });
   };
   render() {

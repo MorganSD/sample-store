@@ -21,7 +21,7 @@ import {
   all_list
 } from "./actions/actions";
 import { existing_address } from "./actions/costumerInfo";
-import {reset_errors} from './actions/post';
+import { reset_errors } from "./actions/post";
 import SubmitForm from "./components/SubmitForm";
 import Order from "./components/submitOrder";
 import OrderResult from "./components/orders/orderResult";
@@ -30,6 +30,7 @@ import ProgressBar from "./components/details/progressBar";
 import PopUp from "./components/details/popup";
 import OrderPage from "./components/orders/order";
 import Main from "./main";
+import ErrorDisplay from "./components/error500";
 class App extends Component {
   constructor() {
     super();
@@ -71,30 +72,40 @@ class App extends Component {
 
   render() {
     if (this.state.userLogedIn) {
-
-    return(
-      <React.Fragment>
+      return (
+        <React.Fragment>
           {this.props.isLoading ? <ProgressBar /> : null}
-            {this.props.error ? (
-              <PopUp massage={this.props.errorMassage} close={this.props.reset_errors}/>
-            ) : null}
-         <Router basename={process.env.PUBLIC_URL}>
-            <Route exact path='/' component={Main} />
+          {/* <ProgressBar /> */}
+          {this.props.error ? (
+            <PopUp
+              massage={this.props.errorMassage}
+              close={this.props.reset_errors}
+            />
+          ) : null}
+          <Router basename={process.env.PUBLIC_URL}>
+            <Route exact path={['/' , "/:id"]} component={Home} />
+
+            {/* <Route exact path='/' component={Main} /> */}
             {/* <Route path='/order/order' component={} /> */}
+            <Route path='/serverError' component={ErrorDisplay}/>
+            <Route path="/user/login" component={Login} />
+            <Route path="/item/:address" component={Detail} />
+            <Route path="/user/sign-up" component={SignUp} />
+            <Route path="/user/Info" component={UserInfo} />
+            <Route path="/search/:search" component={SearchResult} />
             <Route path="/order/submit" component={OrderPage} />
             <Route path="/submit/order/success" component={OrderResult} />
             <Route path="/submit/order/fail" component={OrderResultFail} />
-            <Route path="/item/:address" component={Detail} />
+
             <Footer />
-        </Router>
-      </React.Fragment>
-    )
-  } else {
-    return null;
+          </Router>
+        </React.Fragment>
+      );
+    } else {
+      return null;
+    }
   }
 }
-}
-
 
 const mapStateToProps = state => {
   return {
@@ -115,7 +126,7 @@ const mapDispatchToProps = {
   setFavourite: init_fav,
   init_list: all_list,
   init_address: existing_address,
-  reset_errors : reset_errors
+  reset_errors: reset_errors
   // return {
   //   setGuestUser : () => {dispatch({type: 'INIT_GUEST'})},
   //   setUser : () => {dispatch({type : 'INIT_LOGIN_USER'})},
@@ -126,4 +137,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
-

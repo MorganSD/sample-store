@@ -127,7 +127,7 @@ class SubmitForm extends Component {
         <h2>اطلاعات تماس</h2>
         {!this.props.userLogin ? (
           <p>
-            <Link href='/user/login' style={{color : 'blue'}}>ورود به حساب کاربری</Link>
+            <Link to='/user/login' style={{color : 'blue'}}>ورود به حساب کاربری</Link>
           </p>
         ) : null}
 

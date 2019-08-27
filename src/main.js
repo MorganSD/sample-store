@@ -27,12 +27,13 @@ class Main extends Component{
             <React.Fragment>
             <Router>
               <Header />
+                
                 <Route exact path="/" component={Home} />
-                <Route path="/user/login" component={Login} />
+                {/* <Route path="/user/login" component={Login} />
                 <Route path="/item/:address" component={Detail} />
                 <Route path="/user/sign-up" component={SignUp} />
                 <Route path="/user/Info" component={UserInfo} />
-                <Route path="/search/:search" component={SearchResult} />
+                <Route path="/search/:search" component={SearchResult} /> */}
              </Router>
             </React.Fragment>
           );

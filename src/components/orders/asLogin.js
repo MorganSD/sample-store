@@ -31,6 +31,7 @@ class AsLogin extends Component {
     };
   }
   submitSelectedAddress = () => {
+    
     if (this.props.selected_address != null) {
       axios
         .patch(`/v2/orders/cart/update/`, {
@@ -118,7 +119,6 @@ class AsLogin extends Component {
     });
   };
   submitFinalOrder = () => {
-    debugger;
     this.props.post_req();
 
     axios
@@ -127,7 +127,6 @@ class AsLogin extends Component {
         products: this.props.cart.product_list
       })
       .then(res => {
-        debugger;
         if (res.status === 200 || res.status === 201) {
           this.props.post_load_success();
           this.setState({
@@ -143,17 +142,15 @@ class AsLogin extends Component {
 
             // window.location.assign(`${res.payment_method_data.payment_url}`);
           } else {
+            this.props.init_card();
             this.setState({
               redirectSuccessState: true
             });
           }
-        } else {
-          // this.props.post_load_failed(res.errors)
-          alert("mbmbmjbmb");
-        }
+        } 
       })
       .catch(error => {
-        debugger;
+        this.props.post_load_failed(error.response.data.errors)
         console.log("error patch");
         console.log(error);
         // alert("خطایی رخ داده است ! دوباره تلاش کنید");
@@ -189,10 +186,10 @@ class AsLogin extends Component {
                 </>
               ) : (
                 <PostInfo
-                  changeAdd={() => {
+                changeAddState={() => {
                     this.isShipping();
                   }}
-                  phone_number={this.props.this.props.cart.phone_number}
+                  phone_number={this.props.cart.phone_number}
                 />
               )
             ) : null

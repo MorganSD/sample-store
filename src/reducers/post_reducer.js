@@ -1,4 +1,4 @@
-import { POST_REQ, POST_LOAD_SUCCESS, POST_LOAD_FAILED ,POST_RESET_ERRORS} from "../actions/post";
+import { POST_REQ, POST_LOAD_SUCCESS, POST_LOAD_FAILED ,POST_RESET_ERRORS,INTERNAL_SERVER_500} from "../actions/post";
 
 const postState = {
   post_req: false,
@@ -37,6 +37,14 @@ const PostReducer = (state = postState, action) => {
             ...state,
             post_fail : false
         }
+    }
+    case INTERNAL_SERVER_500 :{
+      return {
+        ...state,
+        post_fail : true,
+        post_req : false,
+        post_error : action.error
+      }
     }
     default:
         return state;

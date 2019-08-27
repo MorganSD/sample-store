@@ -8,40 +8,6 @@ import {connect} from 'react-redux';
 import {prevPaginate , nextPaginate} from '../actions/actions';
 import Pagination from '../components/pagination';
 
-// class Pagination extends Component {
-//   render(){
-//     const diActive = {
-//       display : 'none'
-//     }
-
-//   if(this.props.list.page_count > 1){
-//     if(this.props.list.current_page === 1){
-//       return (
-//         <div className="pagination">
-//         <div onClick={() =>{this.props.increase(this.props.list.next)}}>بعدی</div>
-//         <div onClick={() => {this.props.decrease(this.props.list.previous)}} style={diActive}>قبلی</div>
-//       </div>
-//       )
-//     }else if(this.props.list.current_page === this.props.list.page_count){
-//         return (
-//           <div className="pagination">
-//           <div onClick={() =>{this.props.increase(this.props.list.next)}} style={diActive}>بعدی</div>
-//           <div onClick={() => {this.props.decrease(this.props.list.previous)}}>قبلی</div>
-//         </div>
-//         )
-//     }else {
-//       return (
-//         <div className="pagination">
-//         <div onClick={() =>{this.props.increase(this.props.list.next)}}>بعدی</div>
-//         <div onClick={() => {this.props.decrease(this.props.list.previous)}}>قبلی</div>
-//       </div>
-//       )
-//     }
-//   }else{
-//     return null
-//   }
-// }
-// }
 
 class ItemList extends Component {
   constructor(props) {
@@ -61,15 +27,12 @@ class ItemList extends Component {
   }
   render() {
     
-    // let items = this.state.items.filter(item => item.in_stock > 0)
-    // console.log('path', this.props.location.pathname)
+   
     let items = this.props.product_list.products
-    // let items = list.filter(item => item.in_stock > 0)
-    // let items = this.props.product_list.products.filter(item => item.in_in_stock >0)
+ 
     console.log("total_page", this.state.pageInfo.total_page);
     return (
       <section className="homeList">
-        {/* <Spinner display={this.state.spinner} /> */}
         {items ? (
           items.length > 0 ?(
           items.map(item => <Product product={item} />)

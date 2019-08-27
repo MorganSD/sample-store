@@ -76,21 +76,27 @@ class PostInfo extends Component {
       .post("/profiles/address/add/", this.state.address)
       .then(res => {
         if (res.status < 400) {
-          this.props.init_card();
+          // this.props.init_card();
           this.props.updateAddress();
           axios
             .patch("/v2/orders/cart/update/", {
               delivering_address: res.data.data.address.slug
             })
-            .then(response => {
-              if (response.status < 400) {
+            .then(ress => {
+              
+              if (ress.status < 400) {
                 this.props.changeAddState();
                 this.props.init_card();
               }
             })
-            .catch(error =>
+            .catch(error => {
               this.props.post_load_failed(error.response.data.errors)
-            );
+              this.setState({
+                errors : error.response.data.errors.form_errors
+                
+              })
+              // alert(error)
+            });         
         }
       })
       .catch(error => {
@@ -123,6 +129,16 @@ class PostInfo extends Component {
           }}
           
         />
+         {/* <input
+          type="phone"
+          placeholder="تلفن همراه"
+          className="fullWidth"
+          name='phone_number'
+          onChange={e => {
+            this.changeData(e);
+          }}          value={this.state.address.phone_number}
+          
+        /> */}
         {this.state.errors.title ? (<span className='form_errors'>{this.state.errors.title.map(e => <p>{e}</p>)}</span>) : null}
         {states ? (
           <>

@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import '../../style/submitOrder.css';
 
 import { connect } from "react-redux";
-import { inc_count, card_dispaly, dec_count ,delete_product} from "../../actions/actions";
+import { inc_count, card_dispaly, dec_count ,delete_product , init_card} from "../../actions/actions";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import axios from "../../axios";
-import Spinner from '../details/spinner'
 import close from "../../Icon Simplestore/close.png";
 import plus from "../../Icon Simplestore/+.png";
 import mines from "../../Icon Simplestore/-.png";
@@ -13,13 +12,13 @@ import noPhoto from "../../Icon Simplestore/noPhoto.png";
 import ProgressBar from '../details/progressBar';
 import { Redirect } from "react-router";
 
-
 class OrderCard extends Component {
   constructor() {
     super();
     this.state={
       coupon : '',
-      redirectState : false,
+      // redirectState : false,
+      errors : []
     }
   }
 
@@ -57,47 +56,43 @@ class OrderCard extends Component {
     }
   };
   deleteProduct = (slug) => {
-    
     this.props.delete_product(slug);
   }
-  // componentWillUpdate = (nextProps) => {
 
-  //   debugger
-  //   if(nextProps.cardDisplay.cart_products){
-  //     if(nextProps.cardDisplay.cart_products.length != this.props.cardDisplay.cart_products.length){
-  //       if(nextProps.cardProduct.cart_products.length < 1){
-  //         alert('sabad khali ast')
-  //         this.setState({
-  //           redirectState : true,
-  //         })
-  //       }
-  //     }
-      
-  //   }
-   
-  //   // if(this.props.cardProduct){
-  //   //   if(this.props.cardProduct.cart_products){
-       
-  //   //   } 
-  //   // }
-  // }
   onChangeCoupon = (e) =>{
     this.setState({
-    [e.target.name] : e.target.value
+      coupon : e.target.value
     })
   }
   submitCoupon = (e) =>{
     e.preventDefault();
-    // axios.patch('')
+    axios.patch('/v2/orders/cart/update/' , {
+      coupon_code : this.state.coupon
+    }).then(res =>{
+      if(res.status < 400){
+        this.props.init_card();
+        this.setState({
+          errors : [],
+          coupon : ''
+        })
+      }
+    }).catch(error => this.setState({errors : error.response.data.errors.form_errors }))
 
+  }
+  renderRedirect = () => {
+    if (this.props.cardProduct && this.props.cardProduct.cart_products && this.props.cardProduct.cart_products.length <= 0 ) {
+      alert('سبد خرید شما خالی است !')
+      return <Redirect to='/' />
+    }
   }
   render() {
     var commaNumber = require("comma-number");
-    const { redirectState } = this.state.redirectState;
+    // const { redirectState } = this.state.redirectState;
 
 console.log('coupen',this.state.coupon)
     return (
         <div className="card">
+          {this.renderRedirect()}
         {/* <img src={close} onClick={this.notDispaly} /> */}
         <div className="card-items">
           <div>
@@ -164,8 +159,16 @@ console.log('coupen',this.state.coupon)
                   <div className='coupon' >
                     <form onSubmit={(e)=>{this.submitCoupon(e)}}>
                       <input type='text' placeholder='کد تخفیف' value={this.state.coupon} name='coupon' onChange={(e)=>{this.onChangeCoupon(e)}}/>
+                    
                       <button type='submit'>اعمال</button>
                     </form>
+                    {this.state.errors.coupon_code ? (
+                <span className="form_errors" >
+                  {this.state.errors.coupon_code.map(e => (
+                    <p>{e}</p>
+                  ))}
+                </span>
+              ) : null}
                   </div>
                     <div className="total-price">
                      <div>
@@ -195,7 +198,7 @@ console.log('coupen',this.state.coupon)
                      <div>
                      <p> جمع کل  :</p>
                       <p>
-                        {commaNumber(this.props.cardProduct.total_price)}{" "}
+                        {commaNumber(this.props.cardProduct.discounted_price)}{" "}
                         تومان
                       </p>
                      </div>
@@ -208,7 +211,7 @@ console.log('coupen',this.state.coupon)
               ) : null
             ) : null
             }
-                    {redirectState && <Redirect to={'/'} />}
+                    {/* {redirectState && <Redirect to={'/'} />} */}
 
           </div>
         </div>
@@ -229,7 +232,8 @@ const mapDispatchToProps = {
   inc_count: inc_count,
   dec_count: dec_count,
   delete_product :delete_product ,
-  cardDisplayChange: card_dispaly
+  cardDisplayChange: card_dispaly,
+  init_card : init_card
 };
 export default connect(
   mapStateToProps,

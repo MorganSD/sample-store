@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../style/popUp.css'
-const PopUp = (props) =>{
+const CardPopUp = (props) =>{
     
     return(
         <div id='popUp' onClick={props.close}>
@@ -12,7 +12,10 @@ const PopUp = (props) =>{
             (
                 <div>{props.massage}</div>
             )} */}
-            <div>خطا ! {props.massage.general_errors} </div>
+            <div>خطا ! {props.massage.general_errors ? 
+ props.massage.general_errors.map(e => e.map(
+     array => <span>{array}</span>
+ )): null}  </div>
             
             {/* { props.massage.form_errors != null ?(
                 props.massage.form_errors.map( e=>(
@@ -26,4 +29,4 @@ const PopUp = (props) =>{
         </div>
     )
 }
-export default PopUp;
+export default CardPopUp;

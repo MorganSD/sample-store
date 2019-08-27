@@ -8,19 +8,25 @@ class SelectOption extends Component {
             // options : this.props.options
         }
     }
-    
+    selectOptions = (e , field) =>{
+      this.props.selectOptionFunc(e.target.value , field)
+      // alert(e.target.value)
+    }
   render() {
     console.log(this.props.options.choice_items,'options')
-    // const choice = this.props.options.choice_items.map(choice => choice.value)
     return (
       <div className="select-option">
+       {this.props.options.choice_items ? (
+         <select onChange={(e)=>{this.selectOptions(e ,  this.props.options.slug)}}>
+           <option selected>انتخاب {this.props.options.title}</option>
+           {
+             this.props.options.choice_items.map(choice =>(
+               <option value={choice.slug} >{choice.title}</option>
+             ))
+           }
+         </select>
+       ):null}
        
-        {/* <Select
-          value={selectedOption}
-          onChange={this.handleChange}
-          options={this.state.options}
-          placeholder={"مرتب سازی براساس "}
-        /> */}
       </div>
     );
   }

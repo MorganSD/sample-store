@@ -6,7 +6,7 @@ import { Redirect } from "react-router";
 import {loginUser,init_fav} from '../actions/actions';
 
 import * as EmailValidator from 'email-validator';
-
+import Header from "./header";
 import Home from './home';
 import Spinner from "./details/spinner";
 class Login extends Component {
@@ -56,6 +56,9 @@ isValid(){
     console.log(this.props.loginToken ,'usertoken')
     const { redirectState } = this.state;
     return (
+      <>
+              <Header />
+
       <div className="login-box">
         <p>ورود به فروشگاه</p>
         <form
@@ -93,10 +96,11 @@ isValid(){
         </form>
         <div>
           کاربر جدید هستید ؟<Link to={`/user/sign-up`}>ثبت نام کنید </Link>
-          <p><Link to={'/all'}>صفحه اصلی</Link></p>
+          <p><Link to={'/'}>صفحه اصلی</Link></p>
         </div>
-        {redirectState && <Redirect to={'/'} />}
+        {redirectState && <Redirect to={`/`} />}
       </div>
+      </>
     );
   }
 }

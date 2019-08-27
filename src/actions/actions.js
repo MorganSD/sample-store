@@ -1,11 +1,12 @@
 import axios from "../axios";
+import {Redirect} from 'react-router';
 import { existing_address, clear_address } from "./costumerInfo";
 import {
   card_requset,
   card_requset_success,
   card_requset_failed
 } from "./card";
-import { post_req, post_load_success, post_load_failed } from "./post";
+import { post_req, post_load_success, post_load_failed ,internal_server_500} from "./post";
 export const CARD_DISPLAY = "CARD_DISPLAY";
 export const INIT_SEARCH = "INIT_SEARCH";
 export const INIT_GUEST = "INIT_GUEST";
@@ -18,7 +19,7 @@ export const FAVOURITE_DISPALY = "FAVOURITE_DISPALY";
 export const INIT_USER_TOKEN = "INIT_USER_TOKEN";
 export const INIT_LOGOUT_USER = "INIT_LOGOUT_USER";
 export const INIT_LIST = "INIT_LIST";
-
+export const NEXT_FIELD = 'NEXT_FIELD';
 //start card actions
 
 export const card_dispaly = () => {
@@ -43,10 +44,38 @@ export const display_card_product = cart => {
     cart: cart
   };
 };
+export const next_field = (slug) =>{
+  return{
+    type : NEXT_FIELD ,
+    next : slug
+  }
+}
+// export const checkOption = (slug , options) =>{
+//  return function (dispatch){ 
+//    if(options){
+
+// alert('add')
+//   }else{
+//     dispatch(add_to_card(slug))
+//   }}
+// }
+export function add_to_card_options(slug){
+  return function(dispatch){
+    return axios.post(`/shelves/product/${slug}/sub_products/`).then(res =>{
+      if(res.status < 400){
+        // dispatch(next_field(res.data.data.next_field.slug))
+        console.log(res.data.data.next_field.slug,'slug')
+      }
+    }).catch(error =>{
+      dispatch(post_load_failed(error.response.data.errors))
+    })
+  }
+}
 export function add_to_card(slug) {
   return function(dispatch) {
     dispatch(card_dispaly());
     dispatch(card_requset());
+
     return axios
       .post("/orders/cart/add/", {
         product: slug
@@ -70,10 +99,12 @@ export function add_to_card(slug) {
             });
           // dispatch (display_card_product(res.data))
           // localStorage.setItem('card' , JSON.stringify(res.data.data))
-        } else {
-          alert("add to cart errors :", res.data.errors.general_errors);
-        }
-      });
+        } 
+      }).catch(error => {
+        dispatch(post_load_failed(error.response.data.errors))
+        dispatch(card_requset_failed())
+        console.log('errrrrr',error.response.data.errors)
+      })
   };
 }
 
@@ -132,18 +163,18 @@ export function dec_count(slug, step_count) {
   };
 }
 export function delete_product(slug) {
+
   return function(dispatch) {
     dispatch(post_req());
     return axios
       .post("/orders/cart/remove/", {
         product: slug
-      })
-      .then(res => {
+      }).then(res => {
         if (res.status < 400) {
           dispatch(init_card());
+          dispatch(post_load_success())
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         dispatch(post_load_failed(error.response.data.errors));
         console.log(error.res, "dec count error with catch");
       });
@@ -342,7 +373,11 @@ export function list_by_cat(category) {
           dispatch(post_load_success());
         }
       })
-      .catch(error => dispatch(post_load_failed(error.response.data.errors)));
+      .catch(error => {
+        if(error.response.data.status === 500){
+          dispatch(internal_server_500());
+        }
+        dispatch(post_load_failed(error.response.data.errors))});
   };
 }
 export function all_list() {
@@ -357,17 +392,28 @@ export function all_list() {
         }
       })
       .catch(error => {
+        
         dispatch(post_load_failed(error.response.data.errors));
         console.log(error, "all list error with catch");
       });
   };
 }
-export function filter_list(category, field, filter) {
+export function filter_list(category, filter) {
   return function(dispatch) {
     dispatch(post_req());
     if (category != null) {
+      let filter_list = [];
+      if(filter.length > 1){
+        for(let i = 0;i< filter.length - 1 ; i++){
+          filter_list = filter_list + filter[i] + '&'
+        }
+        filter_list = filter_list + filter[filter.length-1]
+      }else{
+        filter_list = filter_list + filter[0]
+
+      }
       return axios
-        .get(`/shelves/category/${category.slug}/products/?${field}=${filter}`)
+        .get(`/shelves/category/${category.slug}/products/?${filter_list}`)
         .then(res => {
           if (res.status < 400) {
             dispatch(init_list(res.data.data));
@@ -380,8 +426,20 @@ export function filter_list(category, field, filter) {
           dispatch(post_load_failed(error.response.data.errors));
         });
     } else {
+      let filter_list = '';
+      if(filter.length > 1){
+        for(let i = 0;i< filter.length - 1 ; i++){
+          filter_list = filter_list + filter[i] + '&'
+        }
+        filter_list = filter_list + filter[filter.length-1]
+      }else{
+        filter_list = filter_list + filter[0]
+
+      }
+     
+
       return axios
-        .get(`/shelves/products/?${field}=${filter}`)
+        .get(`/shelves/products/?${filter_list}`)
         .then(res => {
           if (res.status < 400) {
             dispatch(init_list(res.data.data));

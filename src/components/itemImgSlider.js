@@ -148,6 +148,7 @@ this.setState({
       <React.Fragment>
        
          {bannerZoomDispaly && (
+          <div style={{direction: 'ltr'}}>
           <Lightbox
             mainSrc={img[photoIndex].image}
             nextSrc={img[(photoIndex + 1) % img.length].image}
@@ -164,6 +165,7 @@ this.setState({
               })
             }
           />
+          </div>
         )}
         <div className="banner" onClick={() => this.lightBox()}>
           {this.state.banner === null ? (

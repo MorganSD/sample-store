@@ -8,31 +8,37 @@ class GiveRate extends Component {
   constructor(props) {
     super(props);
 
-    this.state = [false, false, false, false, false];
+    this.state = {
+      rate :[false, false, false, false, false]
+    };
   }
   rate = e => {
     const counter = e.target.id - 1;
-    const currentstate = this.state[counter];
+    const currentstate = this.state.rate[counter];
 
-    if (this.state[counter + 1] === true) {
+    if (this.state.rate[counter + 1] === true) {
       for (let i = 5; i > counter; i--) {
         this.setState({
-          [i]: false
+
+          rate :[
+            i = false
+          ]
         });
       }
     } else {
       for (let i = 0; i <= counter; i++) {
-        const current = this.state[i];
+        const current = this.state.rate[i];
         this.setState({
-          [i]: true
-        });
+
+          // rate[i] : true       
+         });
       }
     }
 
     this.props.init_rate(e.target.id);
   };
   render() {
-    console.log("rate", this.state);
+    console.log("rate", this.state.rate);
     return (
       <div id="give_rate">
         <input
@@ -44,7 +50,7 @@ class GiveRate extends Component {
           name="rate"
         />
         <label for="1">
-          <img src={this.state[0] === true ? selectedSart : star} />
+          <img src={this.state.rate[0] === true ? selectedSart : star} />
         </label>
         <input
           id="2"
@@ -55,7 +61,7 @@ class GiveRate extends Component {
           name="rate"
         />
         <label for="2">
-          <img src={this.state[1] === true ? selectedSart : star} />
+          <img src={this.state.rate[1] === true ? selectedSart : star} />
         </label>
         <input
           id="3"
@@ -66,7 +72,7 @@ class GiveRate extends Component {
           name="rate"
         />
         <label for="3">
-          <img src={this.state[2] === true ? selectedSart : star} />
+          <img src={this.state.rate[2] === true ? selectedSart : star} />
         </label>
         <input
           id="4"
@@ -77,7 +83,7 @@ class GiveRate extends Component {
           name="rate"
         />
         <label for="4">
-          <img src={this.state[3] === true ? selectedSart : star} />
+          <img src={this.state.rate[3] === true ? selectedSart : star} />
         </label>
         <input
           id="5"
@@ -88,7 +94,7 @@ class GiveRate extends Component {
           name="rate"
         />
         <label for="5">
-          <img src={this.state[4] === true ? selectedSart : star} />
+          <img src={this.state.rate[4] === true ? selectedSart : star} />
         </label>
       </div>
     );

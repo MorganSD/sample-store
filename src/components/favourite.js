@@ -53,7 +53,8 @@ class Favourite extends Component {
           <img src={close} onClick={this.notDispaly} />
           {!this.state.currentUser.guest ? (
             <div className="fav_cart_container">
-              {this.props.favouriteProducts ? (
+              {this.props.favouriteProducts ? 
+              this.props.favouriteProducts.length> 0 ? (
                 this.props.favouriteProducts.map(product => (
                   <div className="items">
                     <Link
@@ -92,14 +93,16 @@ class Favourite extends Component {
                 <h3 className="noProduct">
                   محصولی در سبد مورد علاقه های شما ثبت نشده است
                 </h3>
-              )}
+              )
+            : null
+            }
             </div>
           ) : (
             <>
               <h3 className="noProduct">
                 برای نمایش محصولات مورد علاقه باید به حساب کاربری خود وارد شوید
               </h3>
-              <a href="/user/login">ورود</a>
+              <Link to="/user/login" onClick={()=> {this.notDispaly()}}>ورود</Link>
             </>
           )}
         </div>
@@ -111,12 +114,14 @@ const mapStateToProps = state => {
   return {
     favouriteDisplay: state.InitUserReducer.favouriteDisplay,
     favouriteProducts: state.InitUserReducer.favouriteProducts,
-    card_req: state.CardReducer.card_req
+    card_req: state.CardReducer.card_req,
+    
   };
 };
 const mapDispatchToProps = {
   favouriteDisplayChange: favourite_display,
-  delete_favourite: delete_favourite
+  delete_favourite: delete_favourite,
+  
 };
 export default connect(
   mapStateToProps,

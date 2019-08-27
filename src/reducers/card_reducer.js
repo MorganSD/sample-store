@@ -1,4 +1,4 @@
-import { CARD_REQ, CARD_SUCCESS, CARD_FAIL } from "../actions/card";
+import { CARD_REQ, CARD_SUCCESS, CARD_FAIL,CARD_RESET_ERROR } from "../actions/card";
 
 const cardState = {
   card_req: false,
@@ -32,6 +32,12 @@ const CardReducer = (state = cardState, action) => {
         card_fail: true,
         card_error : action.error
       };
+    }
+    case CARD_RESET_ERROR :{
+      return{
+        ...state,
+        card_fail : false
+      }
     }
     default:
       return state;

@@ -11,7 +11,8 @@ import {
   UPDATE_FAVOURITES,
   INIT_USER_TOKEN,
   INIT_LOGOUT_USER,
-  INIT_LIST
+  INIT_LIST,
+  NEXT_FIELD
 } from "../actions/actions";
 import {
   INIT_ADDRESS,
@@ -37,8 +38,10 @@ const initialState = {
     selected_shipping: "",
     selected_payment: "",
     selected_shipping_date: "",
-    rate : '',
-    comment : '',
+    rate: "",
+    comment: "",
+    next_field: '',
+    complete_sub_pro : false ,
     address: {
       addresss: []
     }
@@ -47,7 +50,8 @@ const initialState = {
   search_val: null,
   userLogedIn: false,
   userToken: null,
-  product_list: []
+  product_list: [],
+  sub_products: []
 };
 
 const InitUserReducer = (state = initialState, action) => {
@@ -192,25 +196,44 @@ const InitUserReducer = (state = initialState, action) => {
         }
       };
     }
-    case INIT_RATE :{
+    case INIT_RATE: {
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          rate : action.rate
+          rate: action.rate
         }
       };
     }
-    case INIT_COMMENT :{
+    case INIT_COMMENT: {
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-        comment : action.comment
-          }
+          comment: action.comment
         }
       };
-    
+    }
+    case NEXT_FIELD :{
+      return{
+        ...state,
+        currentUser :{
+          ...state.currentUser,
+          next_field : action.next
+        }
+      }
+    }
+    // case ADD_SUB_PRODUCT: {
+    //   let choice = state.currentUser.sub_products;
+    //   choice.push(new_choice.action);
+    //   return {
+    //     ...state,
+    //     currentUser: {
+    //       ...state.currentUser,
+    //       sub_products: choice
+    //     }
+    //   };
+    // }
     default:
       return state;
   }

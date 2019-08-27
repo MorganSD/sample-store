@@ -1,45 +1,73 @@
-import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import axios from '../axios';
+import axios from "../axios";
 import { Redirect } from "react-router";
-import {logout} from '../actions/actions';
-
-class LogOut extends Component{
-   constructor(){
-       super();
-       this.state = {
-        redirectState : false
-
-       }
-   }
-    logingOut=()=>{
-      this.props.logoutUser();
-      this.setState({
-        redirectState : true
-      })
-       
-    }   
-render(){
-  const style1 ={
-    color : 'grey',
-    lineHeight: '50px'
-
+import { logout } from "../actions/actions";
+import userPro from '../Icon Simplestore/user.png'
+class LogOut extends Component {
+  constructor() {
+    super();
+    this.state = {
+      panel: false,
+      redirectState: false
+    };
   }
+  logingOut = () => {
+    this.props.logoutUser();
+    this.setState({
+      panel : false,
+      redirectState: true
+    });
+  };
+  showPanel = () =>{
+    this.setState({
+      panel : !this.state.panel
+    })
+  }
+  render() {
+    const style1 = {
+      color: "grey",
+      lineHeight: "50px",
+      cursor: "pointer"
+    };
     const { redirectState } = this.state;
+    const user = JSON.parse(localStorage.getItem("jwtToken"));
 
     return (
-        <React.Fragment>
-        <p onClick={this.logingOut} style={style1}>خروج از حساب</p>
-        {redirectState && <Redirect to={'/'} />}
-        </React.Fragment>
-    )
-}
-}
+      <React.Fragment>
+        <img src={userPro} onClick={()=>{this.showPanel()}} />
+        {this.state.panel ? (
+          <ul className='userPanel'>
+            <li onClick={()=>{{this.setState({panel : false})}}}>
+              <Link to="/user/Info"> سلام {user.user.first_name}</Link>
+            </li>
+            <li
+              onClick={() => {
+                this.logingOut();
+              }}
+            >
+              خروج از حساب
+            </li>
+          </ul>
+        ) : null}
 
-  
-  const mapDispatchToProps = {
-    logoutUser : logout 
+        {redirectState && <Redirect to={"/"} />}
+      </React.Fragment>
+    );
+  }
+}
+const mapStateToProps = state => {
+  return {
+    currentUser: state.InitUserReducer.currentUser.user
   };
-export default connect( null , mapDispatchToProps)(LogOut);
+};
+
+const mapDispatchToProps = {
+  logoutUser: logout
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LogOut);
 // export default LogOut;
