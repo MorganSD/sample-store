@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/sample-store/static/css/main.893b31ef.chunk.css",
-    "main.js": "/sample-store/static/js/main.1fb74c14.chunk.js",
-    "main.js.map": "/sample-store/static/js/main.1fb74c14.chunk.js.map",
+    "main.css": "/sample-store/static/css/main.9417b4da.chunk.css",
+    "main.js": "/sample-store/static/js/main.b2bad496.chunk.js",
+    "main.js.map": "/sample-store/static/js/main.b2bad496.chunk.js.map",
     "runtime~main.js": "/sample-store/static/js/runtime~main.93efb4dd.js",
     "runtime~main.js.map": "/sample-store/static/js/runtime~main.93efb4dd.js.map",
     "static/css/2.9522b9fe.chunk.css": "/sample-store/static/css/2.9522b9fe.chunk.css",
-    "static/js/2.f7c14896.chunk.js": "/sample-store/static/js/2.f7c14896.chunk.js",
-    "static/js/2.f7c14896.chunk.js.map": "/sample-store/static/js/2.f7c14896.chunk.js.map",
+    "static/js/2.8edf488e.chunk.js": "/sample-store/static/js/2.8edf488e.chunk.js",
+    "static/js/2.8edf488e.chunk.js.map": "/sample-store/static/js/2.8edf488e.chunk.js.map",
     "index.html": "/sample-store/index.html",
-    "precache-manifest.9c7279271b03c5d9bc7bcc24b0b995d4.js": "/sample-store/precache-manifest.9c7279271b03c5d9bc7bcc24b0b995d4.js",
+    "precache-manifest.f590e3b21eb3ba0969130801fe749aff.js": "/sample-store/precache-manifest.f590e3b21eb3ba0969130801fe749aff.js",
     "service-worker.js": "/sample-store/service-worker.js",
     "static/css/2.9522b9fe.chunk.css.map": "/sample-store/static/css/2.9522b9fe.chunk.css.map",
-    "static/css/main.893b31ef.chunk.css.map": "/sample-store/static/css/main.893b31ef.chunk.css.map",
+    "static/css/main.9417b4da.chunk.css.map": "/sample-store/static/css/main.9417b4da.chunk.css.map",
     "static/media/Asset-white.png": "/sample-store/static/media/Asset-white.c3e570eb.png",
     "static/media/Asset.png": "/sample-store/static/media/Asset.70fbe50e.png",
     "static/media/Group 771.png": "/sample-store/static/media/Group 771.f7361ed9.png",
@@ -25,6 +25,7 @@
     "static/media/search.png": "/sample-store/static/media/search.0586bdad.png",
     "static/media/shopping-cart (2).png": "/sample-store/static/media/shopping-cart (2).9814e765.png",
     "static/media/star (1).png": "/sample-store/static/media/star (1).a0ffb106.png",
-    "static/media/star.png": "/sample-store/static/media/star.d62f4a47.png"
+    "static/media/star.png": "/sample-store/static/media/star.d62f4a47.png",
+    "static/media/user.png": "/sample-store/static/media/user.9825d465.png"
   }
 }
