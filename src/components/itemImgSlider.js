@@ -65,7 +65,7 @@ this.setState({
   translateRight = images => {
     const carousel_control = Math.floor(images.length / 5);
 
-    console.log(carousel_control, images.length, "carousel");
+    // console.log(carousel_control, images.length, "carousel");
     if (images.length > 5) {
       if (this.state.currentIndex === 0) {
         this.setState({
@@ -74,11 +74,10 @@ this.setState({
         });
       } else if (this.state.currentIndex < images.length) {
         if ((this.state.currentIndex - images.length) % 5 === 0) {
-          alert ('no more')
          }else{
            
           let translator = (this.state.currentIndex + 1 ) * 62 + "px";
-          console.log(translator);
+          // console.log(translator);
           this.setState({
             transition: {
               transform: "translateX(" + translator + ")"
@@ -90,19 +89,19 @@ this.setState({
     } else {
       return null
     }
-    console.log(this.state);
+    // console.log(this.state);
   };
   translateLeft = images => {
     const carousel_control = Math.floor(images.length / 5);
 
-    console.log(carousel_control, images.length, "carousel");
+    // console.log(carousel_control, images.length, "carousel");
     if (images.length > 5) {
       if (this.state.currentIndex === 0) {
         return null;
       } else if (this.state.currentIndex < images.length) {
        
         let translator = (this.state.currentIndex - 1) * 62 + "px";
-        console.log(translator);
+        // console.log(translator);
         this.setState({
           transition: {
             transform: "translateX(" + translator + ")"
@@ -115,7 +114,7 @@ this.setState({
     } else {
       return null
     }
-    console.log(this.state);
+    // console.log(this.state);
   };
 
   lightBox = () => {
@@ -142,7 +141,7 @@ this.setState({
   }
   render() {
     const img = this.props.product.images;
-    console.log('imgs',img)
+    // console.log('imgs',img)
     const { photoIndex, bannerZoomDispaly } = this.state;
         return (
       <React.Fragment>

@@ -53,7 +53,7 @@ isValid(){
   }
 
   render() {
-    console.log(this.props.loginToken ,'usertoken')
+    // console.log(this.props.loginToken ,'usertoken')
     const { redirectState } = this.state;
     return (
       <>

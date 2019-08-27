@@ -38,7 +38,7 @@ class Favourite extends Component {
   };
   render() {
     var commaNumber = require("comma-number");
-    console.log(this.state.favourite_ptoduct, "fav dis");
+    // console.log(this.state.favourite_ptoduct, "fav dis");
     return (
       <div className="favourite">
         <div

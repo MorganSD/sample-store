@@ -38,7 +38,7 @@ class GiveRate extends Component {
     this.props.init_rate(e.target.id);
   };
   render() {
-    console.log("rate", this.state.rate);
+    // console.log("rate", this.state.rate);
     return (
       <div id="give_rate">
         <input

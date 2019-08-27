@@ -34,7 +34,7 @@ class Carousel extends Component {
       relatedItems.length / this.state.column
     );
 
-    console.log(carousel_control, relatedItems.length, "carousel");
+    // console.log(carousel_control, relatedItems.length, "carousel");
     if (relatedItems.length > this.state.column) {
       if (this.state.currentIndex === 0) {
         this.setState({
@@ -50,7 +50,7 @@ class Carousel extends Component {
           return null;
         } else {
           let translator = (this.state.currentIndex + 1) * 100 + "%";
-          console.log(translator);
+          // console.log(translator);
           this.setState({
             transition: {
               transform: "translateX(" + translator + ")"
@@ -59,11 +59,8 @@ class Carousel extends Component {
           });
         }
       }
-    } else {
-      // return null
-      alert("no right");
-    }
-    console.log(this.state);
+    } 
+    // console.log(this.state);
   };
 
   translateLeft = relatedItems => {
@@ -71,13 +68,13 @@ class Carousel extends Component {
       relatedItems.length / this.state.column
     );
 
-    console.log(carousel_control, relatedItems.length, "carousel");
+    // console.log(carousel_control, relatedItems.length, "carousel");
     if (relatedItems.length > this.state.column) {
       if (this.state.currentIndex === 0) {
         return null;
       } else if (this.state.currentIndex < relatedItems.length) {
         let translator = (this.state.currentIndex - 1) * 100 + "%";
-        console.log(translator);
+        // console.log(translator);
         this.setState({
           transition: {
             transform: "translateX(" + translator + ")"
@@ -90,10 +87,10 @@ class Carousel extends Component {
     } else {
       return null;
     }
-    console.log(this.state);
+    // console.log(this.state);
   };
   render() {
-    console.log(this.state.style1.width);
+    // console.log(this.state.style1.width);
     return (
       <React.Fragment>
         <div>

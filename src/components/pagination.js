@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Pagination extends Component {
     render(){
-      console.log('page count',this.props.list.page_count)
+      // console.log('page count',this.props.list.page_count)
       const diActive = {
         display : 'none'
       }

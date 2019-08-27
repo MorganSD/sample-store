@@ -64,7 +64,7 @@ export function add_to_card_options(slug){
     return axios.post(`/shelves/product/${slug}/sub_products/`).then(res =>{
       if(res.status < 400){
         // dispatch(next_field(res.data.data.next_field.slug))
-        console.log(res.data.data.next_field.slug,'slug')
+        // console.log(res.data.data.next_field.slug,'slug')
       }
     }).catch(error =>{
       dispatch(post_load_failed(error.response.data.errors))
@@ -95,15 +95,16 @@ export function add_to_card(slug) {
               }
             })
             .catch(error => {
-              console.log(error, "add cart error with catch");
+              dispatch(card_requset_failed(error.responsive.data.errors))
+              // console.log(error, "add cart error with catch");
             });
           // dispatch (display_card_product(res.data))
           // localStorage.setItem('card' , JSON.stringify(res.data.data))
         } 
       }).catch(error => {
         dispatch(post_load_failed(error.response.data.errors))
-        dispatch(card_requset_failed())
-        console.log('errrrrr',error.response.data.errors)
+        dispatch(card_requset_failed(error.response.data.errors))
+        // console.log('errrrrr',error.response.data.errors)
       })
   };
 }
@@ -121,7 +122,7 @@ export function init_card() {
         }
       })
       .catch(error => {
-        console.log(error.response, "init cart error with catch");
+        // console.log(error.response, "init cart error with catch");
         dispatch(card_requset_failed(error.response.data.errors));
       });
   };
@@ -176,7 +177,7 @@ export function delete_product(slug) {
         }
       }).catch(error => {
         dispatch(post_load_failed(error.response.data.errors));
-        console.log(error.res, "dec count error with catch");
+        // console.log(error.res, "dec count error with catch");
       });
   };
 }
@@ -207,12 +208,12 @@ export function init_fav() {
             JSON.stringify(response.data.data.favorites)
           );
           dispatch(card_requset_success());
-          console.log("add favourite");
+          // console.log("add favourite");
         }
       })
       .catch(error => {
         dispatch(card_requset_failed(error.response.data.errors));
-        console.log(error.response, "update fav error with catch");
+        // console.log(error.response, "update fav error with catch");
       });
   };
 }
@@ -231,7 +232,7 @@ export function add_favourite(slug) {
       })
       .catch(error => {
         dispatch(card_requset_failed(error.response.data.errors));
-        console.log(error.res, "add fav error with catch");
+        // console.log(error.res, "add fav error with catch");
       });
   };
 }
@@ -250,7 +251,7 @@ export function delete_favourite(slug) {
       })
       .catch(error => {
         dispatch(card_requset_failed(error.response.data.errors));
-        console.log(error.res, "remove fav error with catch");
+        // console.log(error.res, "remove fav error with catch");
       });
   };
 }
@@ -301,7 +302,7 @@ export function guest() {
       })
       .catch(error => {
         dispatch(post_load_failed(error.response.data.errors));
-        console.log(error, "login error with catch");
+        // console.log(error, "login error with catch");
       });
   };
 }
@@ -329,7 +330,7 @@ export function loginUser(username, password) {
       })
       .catch(error => {
         dispatch(post_load_failed(error.response.data.errors));
-        console.log(error, "login error with catch");
+        // console.log(error, "login error with catch");
       });
   };
 }
@@ -349,7 +350,7 @@ export function logout() {
       })
       .catch(error => {
         dispatch(post_load_failed(error.response.data.errors));
-        console.log(error, "logout error with catch");
+        // console.log(error, "logout error with catch");
       });
   };
 }
@@ -394,7 +395,7 @@ export function all_list() {
       .catch(error => {
         
         dispatch(post_load_failed(error.response.data.errors));
-        console.log(error, "all list error with catch");
+        // console.log(error, "all list error with catch");
       });
   };
 }
@@ -422,7 +423,7 @@ export function filter_list(category, filter) {
           // console.log('feilds',category,field,filter)
         })
         .catch(error => {
-          console.log(error, "list by cat error with catch");
+          // console.log(error, "list by cat error with catch");
           dispatch(post_load_failed(error.response.data.errors));
         });
     } else {
@@ -447,7 +448,7 @@ export function filter_list(category, filter) {
           }
         })
         .catch(error => {
-          console.log(error, "list by cat error with catch");
+          // console.log(error, "list by cat error with catch");
           dispatch(post_load_failed(error.response.data.errors));
         });
     }
@@ -466,7 +467,7 @@ export function sort_list(cat, sort) {
           }
         })
         .catch(error => {
-          console.log(error, "all list error with catch");
+          // console.log(error, "all list error with catch");
           dispatch(post_load_failed(error.response.data.errors));
         });
     } else {
@@ -479,7 +480,7 @@ export function sort_list(cat, sort) {
           }
         })
         .catch(error => {
-          console.log(error, "list by sort error with catch");
+          // console.log(error, "list by sort error with catch");
           dispatch(post_load_failed(error.response.data.errors));
         });
     }
@@ -497,7 +498,7 @@ export function nextPaginate(next) {
         }
       })
       .catch(error => {
-        console.log(error, "next paginate list error with catch");
+        // console.log(error, "next paginate list error with catch");
         dispatch(post_load_failed(error.response.data.errors));
       });
   };
@@ -514,7 +515,7 @@ export function prevPaginate(prev) {
         }
       })
       .catch(error => {
-        console.log(error, "prev paginate list error with catch");
+        // console.log(error, "prev paginate list error with catch");
         dispatch(post_load_failed(error.response.data.errors));
       });
   };
@@ -532,7 +533,7 @@ export function search_filter(search) {
         }
       })
       .catch(error => {
-        console.log(error, "search list error with catch");
+        // console.log(error, "search list error with catch");
         dispatch(post_load_failed(error.response.data.errors));
       });
   };

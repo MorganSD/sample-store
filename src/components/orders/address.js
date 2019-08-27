@@ -36,7 +36,7 @@ class Address extends Component {
       .get("/locations/states/")
       .then(res => {
         if (res.status < 400) {
-          console.log("states", res.data.data);
+          // console.log("states", res.data.data);
           this.setState({
             states: res.data.data
           });
@@ -73,11 +73,16 @@ class Address extends Component {
     });
    
   };
-  removeAdd = slug => {
-    this.props.removeAddress(slug);
+  removeAdd = (slug , length)=> {
+    if(length > 1 ){
+      this.props.removeAddress(slug);
+
+    }else{
+      alert('داشتن حداقل یک آدرس الزامی است')
+    }
   };
   submitEditAdd = (e, address_slug) => {
-    this.props.post_req();
+    // this.props.post_req();
     e.preventDefault();
     if (this.state.edited != null) {
       axios
@@ -97,7 +102,7 @@ class Address extends Component {
               edited: {},
               isEdit: false
             });
-            this.props.post_load_success();
+            // this.props.post_load_success();
           }
         })
         .catch(error => {
@@ -134,7 +139,7 @@ class Address extends Component {
     let address = this.props.prop;
     let states = this.state.states.states;
 
-    console.log("edit address error", this.state.edited);
+    // console.log("edit address error", this.state.edited);
     return (
       <section>
         <div>
@@ -162,7 +167,7 @@ class Address extends Component {
             <span onClick={this.editAdd}>ویرایش</span>
             <span
               onClick={() => {
-                this.removeAdd(address.slug);
+                this.removeAdd(address.slug , this.props.addLength );
               }}
             >
               حذف

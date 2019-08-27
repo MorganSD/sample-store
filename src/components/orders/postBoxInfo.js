@@ -8,7 +8,7 @@ class PostBoxInfo extends Component {
 
   }
   editAddress = () => {
-    console.log('ff')
+    // console.log('ff')
     this.props.changeState()
   }
   render() {

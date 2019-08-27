@@ -19,15 +19,7 @@ class CostumerInfo extends Component {
       errors: []
     };
   }
-  componentDidMount(){
-    // this.setState({
-    //   first_name : this.props.cart.first_name,
-    //   phone_number : this.props.cart.phone_number,
-    //   email : this.props.cart.email
-    // })
-    console.log('edit props' , this.props.cart)
-    
-  }
+ 
   changeState = e => {
     this.setState({
       [e.target.name]: e.target.value

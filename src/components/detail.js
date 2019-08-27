@@ -45,7 +45,7 @@ const FavImg = props => {
 };
 
 const Options = props => {
-  console.log("options", props.isEnable);
+  // console.log("options", props.isEnable);
   if (props.options.choice_type === "color") {
     return <Choice options={props.options} selectOptionFunc={props.func} />;
   } else {
@@ -65,13 +65,13 @@ class Detail extends Component {
       isFavourite: false,
       comment: false,
       subProducts: [],
-      sub_pro : null,
+      sub_pro: null,
       ableToAddToCart: false
     };
   }
   componentWillMount() {
     const { address } = this.props.match.params;
-    console.log(address);
+    // console.log(address);
     this.props.post_req();
 
     axios
@@ -109,10 +109,10 @@ class Detail extends Component {
               this.setState({
                 ableToAddToCart: true
               });
-              console.log(error.response.data.errors.general_errors);
+              // console.log(error.response.data.errors.general_errors);
             });
 
-          console.log(response.data.data.product);
+          // console.log(response.data.data.product);
         }
       })
       .catch(error => this.props.post_load_failed(error.response.data.errors));
@@ -121,7 +121,6 @@ class Detail extends Component {
   componentDidUpdate(prevProps) {
     let { address } = this.props.match.params;
     if (prevProps.match.params != this.props.match.params) {
-
       axios
         .get(`/shelves/product/address/${address}`)
         .then(response => {
@@ -131,7 +130,9 @@ class Detail extends Component {
             });
           }
         })
-        .catch(error => this.props.post_load_failed(error.response.data.errors));
+        .catch(error =>
+          this.props.post_load_failed(error.response.data.errors)
+        );
     }
   }
 
@@ -164,27 +165,28 @@ class Detail extends Component {
             }
           } else {
             this.setState({
-              sub_pro : res.data.data.result.sub_product,
+              sub_pro: res.data.data.result.sub_product,
               ableToAddToCart: true
             });
           }
         }
       });
-    
   };
-  checkCartProduct = () =>{
-    if(this.state.sub_pro != null){
-      this.addToCard( this.state.sub_pro.max_order_count,
+  checkCartProduct = () => {
+    if (this.state.sub_pro != null) {
+      this.addToCard(
+        this.state.sub_pro.max_order_count,
         this.state.sub_pro.slug,
-        this.state.sub_pro.options)
-    }else{
+        this.state.sub_pro.options
+      );
+    } else {
       this.addToCard(
         this.state.product.max_order_count,
         this.state.product.slug,
         this.state.product.options
       );
     }
-  }
+  };
   addToCard = (max_order, slug) => {
     let cardStorage = JSON.parse(localStorage.getItem("card"));
     let item = cardStorage.cart_products.find(
@@ -202,7 +204,7 @@ class Detail extends Component {
     } else {
       this.props.addProductToCart(slug);
     }
-    console.log("add", item, slug, max_order);
+    // console.log("add", item, slug, max_order);
   };
 
   handleFavourite = slug => {
@@ -239,13 +241,12 @@ class Detail extends Component {
       comment: !this.state.comment
     });
   };
- 
 
   render() {
     let disableButton = { display: "none" };
     var commaNumber = require("comma-number");
-    console.log(this.props, "props");
-    console.log(this.state, "props");
+    // console.log(this.props, "props");
+    // console.log(this.state, "props");
     return (
       <>
         <Header />
@@ -300,17 +301,18 @@ class Detail extends Component {
                 {this.state.product.in_stock ? (
                   <>
                     <p>{commaNumber(this.state.product.price)} تومان</p>
-
-                    <button
-                      className="basket-btn"
-                      style={!this.state.ableToAddToCart ? disableButton : null}
-                      onClick={() => {
-                        this.checkCartProduct()
-                      }}
-                    >
-                      <img src={Addbasket} />
-                      اضافه کردن به سبد خرید
-                    </button>
+                    {this.state.ableToAddToCart ? (
+                      <button
+                        className="basket-btn"
+                        // style={!this.state.ableToAddToCart ? disableButton : null}
+                        onClick={() => {
+                          this.checkCartProduct();
+                        }}
+                      >
+                        <img src={Addbasket} />
+                        اضافه کردن به سبد خرید
+                      </button>
+                    ) : <p style={{color:'grey',fontSize:'12px',marginTop:'10px'}}>برای خرید محصول یکی از ویژگی های آن را انتخاب نمایید</p>}
                   </>
                 ) : (
                   <h4>موجود نمی باشد</h4>

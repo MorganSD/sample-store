@@ -39,7 +39,7 @@ class ContactInfo extends Component {
     });
   };
   render() {
-    console.log("contact", this.state.info);
+    // console.log("contact", this.state.info);
     return (
       <form
         id="contact-info"

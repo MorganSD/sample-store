@@ -27,7 +27,7 @@ isaddAddress = () =>{
         <div className="address">
           {this.props.address ? (
             this.props.address.map(add => (
-              <Address prop={add} />
+              <Address prop={add} addLength={this.props.address.length}/>
             ))
           ) : (
             <h2>ادرسی موجود نیست</h2>

@@ -27,9 +27,6 @@ instance.interceptors.request.use(request => {
           request.headers.Authorization = `Token ${token}`;
 
         }
-      }else{
-        console.log('!token')
-
       }
 
       }else{
@@ -42,10 +39,8 @@ instance.interceptors.request.use(request => {
           request.headers.Authorization = `Token ${token}`;
 
         
-      }else{
-        console.log('!token')
-
       }
+      
       }
        
   

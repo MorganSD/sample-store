@@ -10,7 +10,7 @@ const cardState = {
 const CardReducer = (state = cardState, action) => {
   switch (action.type) {
     case CARD_REQ : {
-    console.log('init card jkabskjdjl')
+    // console.log('init card jkabskjdjl')
       return {
         ...state,
         card_req: true

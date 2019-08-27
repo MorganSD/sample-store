@@ -42,19 +42,7 @@ class SidebarMain extends Component {
           currentCategory : this.props.product_list.category.slug
         });
         this.props.filtering(category , filter_list)
-        console.log("filters", filter_list);
-      // } else {
-      //   const list = [];
-      //   list.push(`${field_slug}=${choice_slug}`);
-      //   this.setState({
-      //     filters: list,
-      //     currentCategory : this.props.product_list.category.slug
-
-      //   });
-      //   console.log("list", list);
-      //   this.props.filtering(category , list)
-
-      // }
+       
     } else {
       const filter_list = this.state.filters;
       const new_list = filter_list.filter(
@@ -63,7 +51,7 @@ class SidebarMain extends Component {
       this.setState({
         filters: new_list
       });
-      console.log("filters new", new_list);
+      // console.log("filters new", new_list);
       this.props.filtering(category , new_list)
 
     }

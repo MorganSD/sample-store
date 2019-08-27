@@ -23,11 +23,12 @@ class PostInfo extends Component {
     };
   }
   componentWillMount() {
+    // this.props.car
     axios
       .get("/locations/states/")
       .then(res => {
         if (res.status < 400) {
-          console.log("states", res.data.data);
+          // console.log("states", res.data.data);
           this.setState({
             states: res.data.data
           });
@@ -109,7 +110,7 @@ class PostInfo extends Component {
   };
   render() {
     let states = this.state.states.states;
-    console.log("staaaaa", this.state.errors);
+    // console.log("staaaaa", this.state.errors);
     return (
       <form
         id="postInfo"

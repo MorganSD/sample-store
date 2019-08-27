@@ -59,7 +59,7 @@ class SignUp extends Component {
         .post("/profiles/profile/", this.state.signUpInfo)
         .then(res => {
           const token = res.data.data.token;
-          console.log("token", token);
+          // console.log("token", token);
           localStorage.setItem("jwtToken", JSON.stringify(res.data.data));
           this.props.loginUser(this.state.signUpInfo.email , this.state.signUpInfo.password);
           this.setState({
@@ -84,7 +84,7 @@ class SignUp extends Component {
     }
   };
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     const isFormValid = this.isFormValid();
     const { redirectState } = this.state;
 

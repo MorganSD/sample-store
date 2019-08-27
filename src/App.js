@@ -64,11 +64,11 @@ class App extends Component {
       }
     }
   }
-  componentWillUpdate(nextProps) {
-    if (nextProps.currentUser != this.props.currentUser) {
-      console.log("user changed", nextProps.currentUser);
-    }
-  }
+  // componentWillUpdate(nextProps) {
+  //   if (nextProps.currentUser != this.props.currentUser) {
+  //     // console.log("user changed", nextProps.currentUser);
+  //   }
+  // }
 
   render() {
     if (this.state.userLogedIn) {

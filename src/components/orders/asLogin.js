@@ -57,18 +57,20 @@ class AsLogin extends Component {
   };
 
   patchShippingMethod = method => {
+    this.props.post_req();
     axios
       .patch(`/v2/orders/cart/update/`, {
         shipping_method: method
       })
       .then(res => {
         if (res.status < 400) {
+          this.props.post_load_success();
           if (this.props.selected_shipping_date != null) {
             axios
               .patch("/v2/orders/cart/update/", {
                 shipping_interval: this.props.selected_shipping_date.hour
               })
-              .catch(error => console.log(error, "patch hour error"));
+              .catch(error => this.props.post_load_failed(error.responsive.data.errors));
           }
           this.props.init_card();
           this.setState({
@@ -78,10 +80,8 @@ class AsLogin extends Component {
           });
         }
       })
-      .catch(error => {
-        console.log("error patch", error);
-        alert("خطایی رخ داده است ! دوباره تلاش کنید");
-      });
+      .catch(error => this.props.post_load_failed(error.responsive.data.errors));
+
   };
 
   submitSelectedShipping = () => {
@@ -99,7 +99,7 @@ class AsLogin extends Component {
     });
   };
   isShipping = () => {
-    console.log(this.state.shipping);
+    // console.log(this.state.shipping);
     this.setState({
       postInfo: false,
       shipping: true,
@@ -134,7 +134,7 @@ class AsLogin extends Component {
             shipping: false,
             payment: false
           });
-          console.log("create order successfull", res.data.data);
+          // console.log("create order successfull", res.data.data);
           if (res.data.data.order.payment_method_data.gateway != null) {
             window.location.href =
               res.data.data.order.payment_method_data.payment_url;
@@ -151,8 +151,8 @@ class AsLogin extends Component {
       })
       .catch(error => {
         this.props.post_load_failed(error.response.data.errors)
-        console.log("error patch");
-        console.log(error);
+        // console.log("error patch");
+        // console.log(error);
         // alert("خطایی رخ داده است ! دوباره تلاش کنید");
       });
   };

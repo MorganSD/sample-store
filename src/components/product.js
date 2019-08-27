@@ -35,7 +35,7 @@ class Product extends Component{
     } else {
       this.props.addProductToCart(slug);
     }
-    console.log("add", item, slug, max_order);
+    // console.log("add", item, slug, max_order);
   };
   render(){
     var commaNumber = require('comma-number')

@@ -24,7 +24,7 @@ class OrderCard extends Component {
 
   updateCard = () => {
     axios.get("/orders/cart/show/").then(res => {
-      console.log("updated card", res.data.data.cart);
+      // console.log("updated card", res.data.data.cart);
       if (res.status < 400) {
         localStorage.setItem("card", JSON.stringify(res.data.data.cart));
         this.props.addProductToCart(res.data.data.cart);
@@ -89,7 +89,7 @@ class OrderCard extends Component {
     var commaNumber = require("comma-number");
     // const { redirectState } = this.state.redirectState;
 
-console.log('coupen',this.state.coupon)
+// console.log('coupen',this.state.coupon)
     return (
         <div className="card">
           {this.renderRedirect()}

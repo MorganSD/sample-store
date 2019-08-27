@@ -13,7 +13,7 @@ class SelectOption extends Component {
       // alert(e.target.value)
     }
   render() {
-    console.log(this.props.options.choice_items,'options')
+    // console.log(this.props.options.choice_items,'options')
     return (
       <div className="select-option">
        {this.props.options.choice_items ? (

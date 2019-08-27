@@ -35,7 +35,7 @@ class SubmitForm extends Component {
   componentWillMount(){
     axios.get("/locations/states/").then(res => {
       if(res.status < 400){  
-        console.log('states',res.data.data)
+        // console.log('states',res.data.data)
       this.setState({
         states : res.data.data
       })
@@ -90,7 +90,7 @@ class SubmitForm extends Component {
     axios.post('/v2/profiles/address/add/',this.state.postInfo).then(res => {
       if(res.status < 400 ){
         this.props.existing_address();
-        console.log('add add rs', res.data.data)
+        // console.log('add add rs', res.data.data)
    
         
         axios.patch('/v2/orders/cart/update/',{
@@ -120,8 +120,8 @@ class SubmitForm extends Component {
   }
   render() {
     let states = this.state.states.states
-    console.log('cityyyy',this.state.postInfo,
-    this.state.contactInfo)
+    // console.log('cityyyy',this.state.postInfo,
+    // this.state.contactInfo
     return (
       <form id="formOrder" onSubmit={(e) =>{this.addInfo(e)}}>
         <h2>اطلاعات تماس</h2>

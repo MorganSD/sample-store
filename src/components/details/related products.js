@@ -4,7 +4,7 @@ import Carousel from './carousel';
 const Related = (props) => {
     if (props.related.related_products) {
       let relatedProduct = props.related.related_products.length;
-      console.log("length", relatedProduct);
+      // console.log("length", relatedProduct);
       if (relatedProduct === 0) {
         return null;
       } else {

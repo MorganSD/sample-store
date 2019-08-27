@@ -14,7 +14,8 @@ const loggerMiddleware = createLogger()
 const store = createStore(
   mainReducer,
   compose(
-    applyMiddleware(thunk , loggerMiddleware) /* preloadedState, */
+    applyMiddleware(thunk)
+    // applyMiddleware(thunk , loggerMiddleware) /* preloadedState, */
     // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );

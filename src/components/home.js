@@ -53,8 +53,8 @@ componentWillMount(){
   render() {
     const { selectedOption } = this.state;
 
-    console.log("w cat", this.state.category);
-    console.log("home props", this.props);
+    // console.log("w cat", this.state.category);
+    // console.log("home props", this.props);
     return (
       <>
       <Header />

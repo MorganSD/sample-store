@@ -21,7 +21,7 @@ class Main extends Component{
     render() {
         // console.log("token g", this.props.userToken);
         // console.log(JSON.parse(localStorage.getItem("card")));
-        console.log("consoool", this.props.isLoading);
+        // console.log("consoool", this.props.isLoading);
     
           return (
             <React.Fragment>

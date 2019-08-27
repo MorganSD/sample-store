@@ -41,7 +41,7 @@ class GiveComment extends Component{
         // }
     }
 render(){
-    console.log(this.state.errors)
+    // console.log(this.state.errors)
     return(
         <div id='give_comment'>
             <GiveRate />

@@ -1,5 +1,6 @@
 import axios from "../axios";
 import { init_card } from "../actions/actions";
+import { post_req, post_load_success, post_load_failed } from "./post";
 export const INIT_ADDRESS = "INIT_ADDRESS";
 export const CLEAR_ADDRESS = "CLEAR_ADDRESS";
 export const INIT_SELECTED_ADD = "INIT_SELECTED_ADD";
@@ -27,38 +28,48 @@ export const clear_address = () => {
 // }
 export function existing_address() {
   return function(dispatch) {
+    dispatch(post_req())
     return axios
       .get(`/profiles/address/list/`)
       .then(res => {
-        dispatch(init_address(res.data.data));
+        if(res.status < 400){
+          dispatch(init_address(res.data.data));
+          dispatch(post_load_success())
+        }
       })
-      .catch(error => console.log(error, "exiting address error"));
+      .catch(error => dispatch(post_load_failed(error.responsive.data.errors)));
   };
 }
 export function update_address(address_slug, new_address) {
   return function(dispatch) {
+    dispatch(post_req())
+
     return axios
       .patch(`/v2/profiles/address/${address_slug}/update/`, new_address)
       .then(res => {
         if (res.status < 400) {
           dispatch(existing_address());
+          dispatch(post_load_success())
+
         }
       })
-      .catch(error => console.log(error, "update address"));
+      .catch(error => dispatch(post_load_failed(error.responsive.data.errors)));
   };
 }
 
 export function remove_address(address_slug) {
   return function(dispatch) {
+    dispatch(post_req())
     return axios
       .delete(`/v2/profiles/address/${address_slug}/update/`)
       .then(res => {
         if (res.status < 400) {
           dispatch(existing_address());
+          dispatch(post_load_success())
           alert("ادرس انتخاب شده حذف شد");
         }
       })
-      .catch(error => console.log(error, "remove address"));
+      .catch(error => dispatch(post_load_failed(error.responsive.data.errors)));
   };
 }
 export const init_selected_add = address => {

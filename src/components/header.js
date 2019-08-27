@@ -48,7 +48,7 @@ class Header extends Component {
         }
       })
       .catch(error => {
-        console.log("categories", error);
+        // console.log("categories", error);
         this.props.post_load_failed(error.response.data.errors);
       });
     document.addEventListener("keydown", this.escFunction, false);
@@ -87,9 +87,9 @@ class Header extends Component {
   render() {
     const user = JSON.parse(localStorage.getItem("jwtToken"));
 
-    console.log("redux login", this.props.userLogedIn);
-    console.log("redux header", this.props.currentUser);
-    console.log("display", this.props.cardDisplay);
+    // console.log("redux login", this.props.userLogedIn);
+    // console.log("redux header", this.props.currentUser);
+    // console.log("display", this.props.cardDisplay);
     return (
       <React.Fragment>
         <header>

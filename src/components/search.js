@@ -42,7 +42,7 @@ searching(event){
             searchState:false
         })
     }
-    console.log(this.state.filterVal)
+    // console.log(this.state.filterVal)
 
 }
 onSearch(event){
